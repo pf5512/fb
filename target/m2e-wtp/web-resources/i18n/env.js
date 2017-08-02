@@ -1,8 +1,0 @@
-const GLOBAL_VAR_DOMAIN="http://localhost:8080/"
-//const GLOBAL_VAR_DOMAIN="http://dev.footballer.cc/"
-//const GLOBAL_VAR_DOMAIN="http://footballer.cc/"
-
-
-const GLOBAL_VAR_SUFFIX="03a68667-05dc-11e6-af3b-00163e021542/100000/e7afdd55291a3e3796a6d3d83e70d6dd"
-const GLOBAL_VAR_APPTOKEN_SUFFIX="100000/e7afdd55291a3e3796a6d3d83e70d6dd"
-const GLOBAL_VAR_IDENTITY = '03a68667-05dc-11e6-af3b-00163e021542'
