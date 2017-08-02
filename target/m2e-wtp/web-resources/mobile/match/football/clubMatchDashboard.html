@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title></title>
+        <link rel="stylesheet" href="../../css/frozen.css">
+        <link rel="stylesheet" href="../../css/match.css">
+        <link rel="stylesheet" href="../../../css/justin_mobile_common.css">
+    </head>
+
+<body>
+	<div class="ui-loading-block show">
+	    <div class="ui-loading-cnt">
+	        <i class="ui-loading-bright"></i>
+	        <p>loading...</p>
+	    </div>
+	</div>
+	<div id="app" v-cloak>
+		
+		<header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="historyBack('football')"></i>
+            <h1>{{match_details}}</h1>
+            <button id="langBtn" class="ui-btn" v-on:click="toggleLanguage">{{changeToLang}}</button>
+        </header>
+	
+		<section class="ui-container">
+			<ul class="ui-row-flex ui-border-tb f-datagrid" style="background-color: white;" >
+				<li class="ui-col ui-col-2 ui-align-center matchdashboard_hostteam" style="text-align:center;">
+					<img src="http://static.footballer.cc/{{hostTeamData.teamLogo}}" class="matchdashboard_teamlogo">
+					<br/>{{hostTeamData.teamName}}
+				</li>
+			    <li class="ui-col ui-col-2 ui-align-center" style="align-items: center;">
+			    	<div class="matchdashboard_result">
+			    		<span style="font-size:13px;font-weight:bold;color:white">{{ hostTeamData.goals + (guestTeamData.ownGoals ? guestTeamData.ownGoals : 0)  }}:{{ guestTeamData.goals + (hostTeamData.ownGoals ? hostTeamData.ownGoals : 0) }}</span>
+			    	</div>
+			    	<div style="font-size: 12px;text-align: center;">
+			    		{{videoInfo.date}}
+			    	</div>
+			    </li>
+			    <li class="ui-col ui-col-2 ui-flex ui-flex-ver  ui-flex-align-end ui-flex-pack-end matchdashboard_guestteam">
+			    	<img src="http://static.footballer.cc/{{guestTeamData.teamLogo}}" class="matchdashboard_teamlogo">
+					<br/>{{guestTeamData.teamName}}
+			    </li>
+			</ul>
+		</section>
+        
+       <section class="ui-container2 matchdashboard_tab">
+       		<div class="demo-block">
+				<div class="ui-tab">
+				    <ul class="ui-tab-nav ui-border-b">
+				        <li class="current">{{match_team_data}}</li>
+				        <li>{{match_player_data}}</li>
+				        <li>MVP</li>
+				        <li>{{match_highlights}}</li>
+				    </ul>
+				    <ul class="ui-tab-content" style="width:300%">
+				    	
+				    	
+				    	<!--  球队数据  -->
+				        <li style="margin-bottom: 20px;">
+					        <div v-if="statsContent.goals" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top:10px">
+							    <div class="ui-col ui-col div25 {{hostTeamData.goalsColor}}">{{ hostTeamData.goals }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/goals.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{goal}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25 {{guestTeamData.goalsColor}}">{{ guestTeamData.goals }}</div>
+							</div>
+							
+							<div v-if="statsContent.shots" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25 {{ hostTeamData.shotsColor}}">{{ hostTeamData.shots }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/football/shoot300_3u.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{shot}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25 {{ guestTeamData.shotsColor}}">{{ guestTeamData.shots }}</div>
+							</div>
+							
+							<div v-if="statsContent.assists" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25 {{ hostTeamData.assistColor}}">{{ hostTeamData.assists }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/assists.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{assist}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25 {{ guestTeamData.assistColor}}">{{ guestTeamData.assists }}</div>
+							</div>
+							
+							<div v-if="statsContent.passFinalBall" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25 {{ hostTeamData.passFinalBallColor}}">{{ hostTeamData.passFinalBall }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/pass_finalball.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{kpass}}</label>
+							    	</div>
+							   	</div>
+							    <div class="ui-col ui-col div25  {{guestTeamData.passFinalBallColor}}">{{ guestTeamData.passFinalBall }}</div>
+							</div>
+							
+							<div v-if="statsContent.keyDefense" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.keyDefenseColor}}">{{ hostTeamData.keyDefense }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/key_defense.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{kdefense}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.keyDefenseColor}}">{{ guestTeamData.keyDefense }}</div>
+							</div>
+							
+							<div v-if="statsContent.save" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.saveColor}}">{{ hostTeamData.save }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/save.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{save}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.saveColor }}">{{ guestTeamData.save }}</div>
+							</div>
+							
+							<div v-if="statsContent.fouls" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.foulsColor}}">{{ hostTeamData.fouls }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/foul.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{foul}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.foulsColor}}">{{ guestTeamData.fouls }}</div>
+							</div>
+							
+							<div v-if="statsContent.yellowCard" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.yellowCardColor}}">{{ hostTeamData.yellowCard }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/yellowCard.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{yellowCard}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.yellowCardColor}}">{{ guestTeamData.yellowCard }}</div>
+							</div>
+							
+							<div v-if="statsContent.redCard" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.redCardColor}}">{{ hostTeamData.redCard }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/redCard.png" style="width:20px;height:20px;margin-top: 2px;">
+							    		<label class="span14" style="margin: 3px 0 0 5px;">{{redCard}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.redCardColor}}">{{ guestTeamData.redCard }}</div>
+							</div>
+							
+							<div v-if="statsContent.ownGoals" class="ui-row-flex ui-whitespace" style="text-align:center;margin-top: 2px;">
+							    <div class="ui-col ui-col div25  {{ hostTeamData.ownGoalsColor}}">{{ hostTeamData.ownGoals }}</div>
+							    <div class="ui-col ui-col txtAg-l">
+							    	<div class="divInLine" style="padding-left:15px;">
+							    		<img src="../../../img/analysis/ownGoals.png" style="width:40px;height:25px;margin: 2px 0 0 -2px">
+							    		<label class="span14" style="margin: 3px 0 0 0px;">{{ownGoal}}</label>
+							    	</div>
+							    </div>
+							    <div class="ui-col ui-col div25  {{ guestTeamData.ownGoalsColor }}">{{ guestTeamData.ownGoals }}</div>
+							</div>
+							
+						</li>
+						
+						<!--  球员数据  -->
+				        <li>
+							<div class="ui-btn-group" style="margin:5px;">
+							    <button v-on:click="showCurrentTeamData" class="ui-btn ui-btn-primary" id="{{hostTeamData.teamId}}">
+							        {{hostTeamData.teamName}}
+							    </button>
+							    <button v-on:click="showCurrentTeamData" class="ui-btn" id="{{guestTeamData.teamId}}">
+							        {{guestTeamData.teamName}}
+							    </button>
+							</div>
+							
+				        	<div class="ui-row-flex" style="margin-bottom:100px;">
+								<div class="ui-col">
+									<ul v-for="p in currentTeamResultList" class="ui-list ui-border-b" v-on:click="clickPlayerItem" id="{{p.playerId}}">
+							    		<li v-if="$index==0" class="ui-flex ui-flex-pack-end" style="margin-left: 5px;padding: 1px 0 0 0;">
+									        <div class="ui-list-text ui-col" style="width:0px;">     
+									             <div class="ui-txt-info" style="padding: 2px 0px 0px 0px;text-align: center;width: 20px;color: #25b359;">#</div>
+									        </div>
+									        <div class="ui-list-thumb-s" style="margin: 0px 5px 0px 0px;background-color: darkgray;">
+												<span style="background-image:url(../../../img/app/football_career_edited_1.png)"></span>
+											</div>
+									        <div class="ui-col ui-border-r" style="width:30px;">
+									            {{labelPlayerTitle}}
+									        </div>
+									        <div v-if="statsContent.goals" class="ui-list-text ui-col txtAg-c" style="background-color: azure;">
+									             <img src="../../../img/analysis/goals.png" style="width:20px;height:20px;padding-left:2px;">
+									        </div>
+									        <div v-if="statsContent.shots" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/football/shoot300_3u.png" style="width:20px;height:20px;">
+									        </div>
+									        <div v-if="statsContent.assists" class="ui-list-text ui-col txtAg-c" style="background-color: aliceblue;">
+									             <img src="../../../img/analysis/assists.png" style="width:20px;">
+									        </div>
+									        <div v-if="statsContent.passFinalBall" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/pass_finalball.png" style="width:20px;">
+									        </div>
+									        <div v-if="statsContent.keyDefense" class="ui-list-text ui-col txtAg-c" style="background-color: ghostwhite;">
+									             <img src="../../../img/analysis/key_defense.png" style="width:20px;height:20px;">
+									        </div>
+									        <div v-if="statsContent.save" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/save.png" style="width:20px;height:20px;">
+									        </div>
+									        <div v-if="statsContent.fouls" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/foul.png" style="width:20px;height:20px;">
+									        </div>
+									        <div v-if="statsContent.yellowCard" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/yellowCard.png" style="width:20px;">
+									        </div>
+									        <div v-if="statsContent.redCard" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/redCard.png" style="width:20px;">
+									        </div>
+									        <div v-if="statsContent.ownGoals" class="ui-list-text ui-col txtAg-c">
+									             <img src="../../../img/analysis/ownGoals.png" style="width:25px;height:20px;">
+									        </div>
+									    </li>
+							    		<li class="ui-flex ui-flex-pack-end ui-border-b" style="margin-left:5px;">
+									        <div class="ui-list-text ui-col" style="width:0px;">
+									            <div class="ui-txt-info" style="padding: 13px 0px 10px 0px;text-align: center;width: 20px;color: #25b359;">{{p.playerNumber}}</div> 
+									        </div>
+									        <div v-if="p.playerImg" class="ui-list-thumb-s" style="margin: 10px 5px 0px 0px;">
+									            
+									            <span v-if="p.showWXLogo" style="background-image:url({{p.playerImg}})"></span>
+									            <span v-else style="background-image:url(http://static.footballer.cc/{{p.playerImg}})"></span> 
+									        </div>
+											<div v-else class="ui-list-thumb-s" style="margin: 10px 5px 0px 0px;">
+												<span style="background-image:url(../../../img/app/football_career_edited_2.png)"></span>
+											</div>
+									        <div class="ui-col ui-border-r" style="width:30px;">
+									            <span class="font_long_ellipsis" style="font-size:12px;margin-top: 17px;display: block;">{{p.playerName}}</span>
+									        </div>
+									        <div v-if="statsContent.goals"  class="ui-list-text ui-col" style="background-color: azure;">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.goals}}</div> 
+									        </div>
+									        <div v-if="statsContent.shots" class="ui-list-text ui-col">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.shots}}</div> 
+									        </div>
+									        <div v-if="statsContent.assists" class="ui-list-text ui-col" style="background-color: aliceblue;">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.assists}}</div> 
+									        </div>
+									        <div v-if="statsContent.passFinalBall" class="ui-list-text ui-col">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.passFinalBall}}</div> 
+									        </div>
+									        <div v-if="statsContent.keyDenfense" class="ui-list-text ui-col" style="background-color: ghostwhite;">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.keyDefense}}</div> 
+									        </div>
+									        <div v-if="statsContent.save" class="ui-list-text ui-col">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.save}}</div> 
+									        </div>
+									        <div v-if="statsContent.fouls" class="ui-list-text ui-col">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;text-align:center;width: 100%;">{{p.fouls}}</div> 
+									        </div>
+									        <div v-if="statsContent.yellowCard" class="ui-list-text ui-col txtAg-c">
+									            <div v-if="p.yellowCard > 0" class="ui-txt-info c_yellow" style="padding: 13px 10px 10px 0px;width: 100%;">{{p.yellowCard}}</div>
+									            <div v-else class="ui-txt-info" style="padding: 13px 10px 10px 0px;width: 100%;">{{p.yellowCard}}</div> 
+									        </div>
+									        <div v-if="statsContent.redCard" class="ui-list-text ui-col txtAg-c">
+									            <div v-if="p.redCard > 0" class="ui-txt-info c_red" style="padding: 13px 10px 10px 0px;width: 100%;">{{p.redCard}}</div>
+									            <div v-else class="ui-txt-info" style="padding: 13px 10px 10px 0px;width: 100%;">{{p.redCard}}</div> 
+									        </div>
+									        <div v-if="statsContent.ownGoals" class="ui-list-text ui-col txtAg-c">
+									            <div class="ui-txt-info" style="padding: 13px 10px 10px 0px;width: 100%;">{{p.ownGoals}}</div> 
+									        </div>
+									    </li>
+									</ul>
+								</div>
+							</div>
+					       
+				        </li>
+				        
+				        <!-- MVP & Team Mvp -->
+				        <li>
+				        	<ul class="ui-flex-ver ui-whitespace" style="margin-top:5px;padding: 10px 5px 1px 10px;background-color: white;">
+							    <div class="divInLine">
+							    	<img src="../../../img/analysis/MVP.png" style="margin: 10px 0 0 0;width:130px;height:50px">
+							    	<table width=50%>
+							    		<tr>
+							    			<td width=50px>
+							    				<img src="http://static.footballer.cc/{{mvpPlayer.teamLogo}}" style="width:50px;margin: 0 0 -8px 15px;">
+							    			</td>
+							    			<td width=80px>
+							    				<div class="ui-avatar-lg" style="margin:0 auto;width:60px;height:60px;">
+				                        			<span v-if="mvpPlayer.showWXLogo" style="background-image:url({{mvpPlayer.playerImg}})"></span>
+				                        			<span v-else style="background-image:url(http://static.footballer.cc/{{mvpPlayer.playerImg}})"></span>
+				                    			</div>
+	                    					</td>
+							    			
+							    		</tr>
+							    		<tr style="text-align: center;">
+							    			<td width=50px>
+	                    						<label style="color:cornflowerblue;margin-top: -8px;display: block;font-size:25px;">{{ mvpPlayer.playerNumber }}</label>
+	                    					</td>
+							    			<td width=80px>
+							    				<label class="span16cfblue">{{ mvpPlayer.playerName }}</label>		
+							    			</td>
+							    			
+							    		</tr>
+							    	</table>
+							    </div>
+							   </ul>
+							   <ul class="ui-flex-ver" style="background-color: white;padding: 2px;">
+							    	<div class="divInLine" style="margin-top:0px;margin-left:5px;">
+							    	<table width=100% style="text-align: center;">
+											<tr>
+												<td v-if="statsContent.goals">
+													<img src="../../../img/analysis/goals.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.shots"><img src="../../../img/football/shoot300_3u.png"
+													style="width:30px;"></td>
+												<td v-if="statsContent.assists">
+													<img src="../../../img/analysis/assists.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.passFinalBall" >
+													<img src="../../../img/analysis/pass_finalball.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.keyDefense">
+													<img src="../../../img/analysis/key_defense.png" style="width:30px;height: 30px;">
+												</td>
+												<td v-if="statsContent.save">
+													<img src="../../../img/analysis/save.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.foul">
+													<img src="../../../img/analysis/foul.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.yellowCard">
+													<img src="../../../img/analysis/yellowCard.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.redCard">
+													<img src="../../../img/analysis/redCard.png" style="width:30px;">
+												</td>
+												<td v-if="statsContent.ownGoals">
+													<img src="../../../img/analysis/ownGoals.png" style="width: 40px; height: 20px;">
+												</td>
+											</tr>
+											<tr style="background-color: azure;">
+												<td v-if="statsContent.goals"><label style="color:gold">{{mvpPlayer.goals}}</label></td>
+												<td v-if="statsContent.shots"><label class="span16cfblue">{{mvpPlayer.shots}}</label></td>
+												<td v-if="statsContent.assists"><label class="span16cfblue">{{mvpPlayer.assists}}</label></td>
+												<td v-if="statsContent.passFinalBall"><label class="span16cfblue">{{mvpPlayer.passFinalBall}}</label></td>
+												<td v-if="statsContent.keyDefense">{{mvpPlayer.keyDefense}}</td>
+												<td v-if="statsContent.save">{{mvpPlayer.save}}</td>
+												<td v-if="statsContent.foul">{{mvpPlayer.fouls}}</td>
+												<td v-if="statsContent.yellowCard">{{mvpPlayer.yellowCard}}</td>
+												<td v-if="statsContent.redCard">{{mvpPlayer.redCard}}</td>
+												<td v-if="statsContent.ownGoals">{{mvpPlayer.ownGoals}}</td>
+											</tr>
+	
+										</table>
+							    	</div>
+							</ul>
+							
+							<ul v-show="teamMvpPlayer" class="ui-whitespace ui-border-tb" style="margin:5px 0 50px 0;background-color: white;padding: 10px;">
+								<div class="divInLine">
+									<img src="../../../img/analysis/teamMVP.png" style="width: 30%; height: 100%;">
+									<img src="http://static.footballer.cc/{{teamMvpPlayer.teamLogo}}" style="width: 30px; height:30px;margin: 4px 5px 0 14px;">
+									<!-- <label style="margin: 10px 5px 0 5px;">{{ teamMvpPlayer.teamName }}</label> -->
+									<div class="ui-avatar-s" style="width: 35px;height: 35px;">
+										<span style="background-image: url(http://static.footballer.cc//{{teamMvpPlayer.playerImg}})"></span>
+									</div>
+									<label style="margin: 13px 5px 0 5px;font-size: 14px;">{{ teamMvpPlayer.playerNumber }}</label>
+									<label style="margin: 13px 5px 0 0px; font-size:14px;">{{ teamMvpPlayer.playerName }}</label>
+											
+								</div>
+							</ul>
+							
+				        </li>
+				        
+				        <!-- Highlights -->
+				        
+				        <li>
+				        	<ul class="ui-list ui-list-one ui-border-t">
+								<li class="ui-border-t ui-flex-ver" style="margin: 0px;height:200px;" id="matchVideo">
+									<iframe height='200px' width='100%' src='{{videoInfo.url}}'  frameborder=0 'allowfullscreen'></iframe>
+								</li>
+								<ul class="ui-row-flex">
+									    <li class="ui-col ui-flex ui-flex-pack-start"  style="width:100%">
+									    	<div>
+												<span class="span14" style="padding-left: 10px;">{{videoInfo.name}}</span>
+												<br> 
+												<span class="span14" style="padding-left: 10px;">{{videoInfo.date}}</span>
+									    	</div>
+									    </li>
+									    <li class="ui-col ui-flex ui-flex-ver  ui-flex-align-end ui-flex-pack-end">
+									    	<div>
+												<ul class="ui-list ui-flex">
+													<li>
+											            <i id="videoSupportBtn" class="ui-icon-like" data-video-id="{{videoInfo.id}}" v-on:click="clickSupport"></i>
+											            <span style="display: block;padding-top: 11px;color: darkcyan;">{{supportList.length}}</span>
+											        </li>
+											        <li>
+											            <i class="ui-icon-comment"></i>
+											            <span style="display: block;padding-top: 11px;color: cornflowerblue;">{{commentsList.length}}</span>
+											        </li>
+											        <li>
+											            <i class="ui-icon-share"></i>
+											            <span style="display: block;padding: 11px 10px 0 0;color: green;">{{shareRecordList.length}}</span>
+											        </li>
+											     </ul>
+											</div>
+									    </li>
+								</ul>
+							</ul>	
+								
+
+							<ul class="ui-flex-ver" style="margin-bottom:30px;">
+									
+								<!-- 点赞 -->
+								<li style="display:inline-flex;border-bottom: lightgray 1px solid;background-color: transparent">
+									    	<i class="ui-icon-like" style="padding-left: 5px;"></i>
+									        <ul class="ui-justify" style="margin:10px;">
+										        <li v-for="s in supportList" >
+										        	<!-- <div v-show="!s.showWXLogo" class="ui-avatar-tiled" style="margin: 10px 5px 0px 0px;">
+										            	<span style="background-image:url(http://static.footballer.cc/{{s.playerLogo}})"></span>
+										        	</div>
+										        	<div v-show="s.showWXLogo" class="ui-avatar-tiled" style="margin: 10px 5px 0px 0px;">
+												            <span style="background-image:url({{s.playerLogo}})"></span>
+												    </div> -->
+												    <span class="span12" style="color:darkcyan;">{{s.playerName}}&nbsp;&nbsp;</span>
+										        </li>
+									        </ul>
+									    </li>
+									    
+								<!-- 评论 -->
+								<li style="border-bottom: lightgray 1px solid;margin-bottom:20px;">
+										    <ul v-for="c in commentsList" class="ui-list ui-list-one" style="padding:3px 0 3px 0">
+											    <li style="height: 50px;margin-left: 5px;">
+											        <div v-show="!c.showWXLogo" class="ui-avatar-tiled" style="margin: 0px 5px 0px 0px;">
+											            <span style="background-image:url(http://static.footballer.cc/{{c.playerLogo}})"></span>
+											        </div>
+											        <div v-show="c.showWXLogo" class="ui-avatar-tiled" style="margin: 0px 5px 0px 0px;">
+											            <span style="background-image:url({{c.playerLogo}})"></span>
+											        </div>
+											        <div style="width:100%">
+											        	<!-- <span style="font-size: 12px;color:forestgreen;margin: -8px 0 0 5px;display: block;height: 16px;">{{c.playerName}}</span>
+											            <span style="font-size: 14px;margin: 3px 0 0 5px;display: block;">{{c.comments}}</span> -->
+											            <table style="width:100%">
+											            	<tr style="line-height: 15px;">
+											            		<td width=50%>
+											            			<span style="font-size: 12px;color:forestgreen;padding-left:5px;" >{{c.playerName}}</span>
+											            			<span style="font-size: 12px;padding-left:6px;" >{{c.commentsTime}}</span>
+											            		</td>
+											            		<td style="width:50%;text-align:right;" ></td>
+											            	</tr>
+											            	<tr>
+											            		<td colspan="2"><textarea readonly="readonly" style="border:none;height:32px;width:92%;font-size: 14px;padding-left:5px;">{{c.comments}}</textarea></td>
+											            		<!-- <td colspan="3" nowrap="false"><span class="ui-txt-justify" style="font-size: 14px;padding-left:5px;word-wrap: break-word; word-break: normal; ">{{c.comments}}</span></td> -->
+											            	</tr>
+											            	
+											            
+											            </table>
+											        </div>
+											    </li>
+											</ul>
+											
+										</li> 
+										
+								<!-- 分享 -->
+								<li >
+											<ul class="ui-flex-ver">
+												<li style="display:inline-flex;style="background-color: ghostwhite;">
+													<i class="ui-icon-share" style="padding-left: 5px;"></i>
+													<span v-if="shareRecordList.length >0" style="font-size: 14px;padding-left:5px;word-break:keep-all;margin: auto; "><b style="color:green;">{{shareRecordList.length}}</b> {{labelShareLable}}</span>
+													<span v-else style="font-size: 14px;padding-left:5px;word-break:keep-all; margin: auto;">{{labelUnShareLable}}</span>
+												</li>
+											</ul>
+											<ul class="ui-justify" style="margin-bottom:70px;padding: 0 0 10px 10px;">
+										        <li v-for="sr in shareRecordList">
+													<div v-show="!sr.showWXLogo" class="ui-avatar-tiled" style="margin: 10px 5px 0px 0px;">
+												   		<span style="background-image:url(http://static.footballer.cc/{{sr.playerLogo}})"></span>
+													</div>
+												    <div v-show="sr.showWXLogo" class="ui-avatar-tiled" style="margin: 10px 5px 0px 0px;">
+														<span style="background-image:url({{sr.playerLogo}})"></span>
+												    </div>
+												</li>
+										    </ul>
+										</li>
+							</ul>
+						</li>		
+					</ul>
+				</div>
+			</div>
+		</section>
+								
+		
+		<div v-show="!toggleComments" class="ui-footer ui-footer-stable ui-btn-group ui-border-t" onclick="aufFooterRedirect()">
+			<img style="display:block;" src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="170px" height="25px" >
+		</div>
+		
+		<div v-show="toggleComments" class="ui-footer ui-footer-stable ui-btn-group ui-border-t">
+				<i class="ui-icon-comment" style="margin:0px"></i>
+				<div class="ui-input ui-border-radius">
+					<input type="text" id="say" value="" placeholder="{{labelPlaceHolder}}...">
+				</div>
+				
+				<!-- <i id="videoSupportBtn" class="ui-icon-like" v-on:click="clickSupport" data-video-id="{{videoInfo.id}}"></i> -->
+				<button v-on:click="addComments" class="ui-btn">{{labelComment}}</button>
+		</div>
+		
+	</div>
+
+<script src="../../../i18n/env.js"></script>
+<script src="../../js/sha1.js"></script>
+<script src="../../js/sha1_v2.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../../../js/jquery-1.11.2.min.js" type="text/javascript"></script>     
+<script src="../../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../../js/frozen.js"></script>
+<script src="../../js/server/service.js"></script>
+<script src="../../../js/justin_common.js"></script>
+<script src="../../js/lib/vue.min.js"></script>
+<script src="../../js/lib/underscore-min.js"></script>
+<script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript" ></script>
+
+<script>
+
+h5Init()
+accessStats()
+
+$(document).ready(function() {
+        	
+			lang = f$.cache('lang') 
+			
+    		var vm, shareTitle, shareDesc,currentShareURL
+    		currentPlayer={};
+    		/* json = $.parseJSON(decodeURIComponent(getParameter(window.location.href ,"json")))
+	        tournamentId = json.tournamentId		
+	        matchId = json.matchId */
+
+	        //特殊处理 之前json 方式 出来得url 与需要分享时到微信浏览器上会出现不一致
+	        tournamentId = getParameter(window.location.href ,"tournamentId")		
+	        matchId = getParameter(window.location.href ,"matchId")
+	        mainTeamId = getParameter(window.location.href ,"mainTeamId")
+	        
+    		
+	    	vm = new Vue({
+	    		el   : '#app',
+	    		data : {
+	    			domain:'',
+	    			suffix:'',
+	    			changeToLang:'',
+	    			TDtabteam:'',
+					TDtabSponsors:'',
+				    TDtabStats:'',
+				    TDtabVideo:'',
+				    loggedUserSessionKey:'',
+				    playerMatchResultList:[],
+				    currentTeamResultList:[],
+				    hostTeamData:null,
+				    guestTeamData:null,
+				    mvpPlayer:null,
+				    teamMvpPlayer:null,
+				    match_details:'',
+				    match_team_data:'',
+				    match_player_data:'',
+				    match_highlights:'',
+				    mvp:'',
+				    teamMvp:'',
+				    goal:'',
+				    shot:'',
+				    assist:'',
+				    kpass:'',
+				    kdefense:'',
+				    save:'',
+				    foul:'',
+				    yellowCard:'',
+				    redCard:'',
+				    ownGoal:'',
+				    tackle:'',
+				    labelPlayerNumber:'',
+					labelPlayerTitle:'',
+					labelPlaceHolder:'',
+    		        labelComment:'',
+    		        labelShareLable:'',
+    		        labelUnShareLable:'',
+					videoInfo:{},
+					commentsList:[],
+					supportList:[],
+					shareRecordList:[],
+					toggleComments:false,
+					shareContent:'',
+					statsContent:{}
+	    		},
+	    		methods: {
+	    			init:function() {			
+	    				vm.$data.domain =  GLOBAL_VAR_DOMAIN;
+				        vm.$data.suffix = GLOBAL_VAR_APPTOKEN_SUFFIX;
+				        //vm.$data.loggedUserSessionKey = f$.cache('uesr_current_accountIdentity');
+				        vm.$data.loggedUserSessionKey = '03a68667-05dc-11e6-af3b-00163e021542';
+				        if(lang == 'ch'){
+	    					vm.$data.changeToLang = 'Eng'
+				        }else if(lang == 'en'){
+				        	vm.$data.changeToLang = '中文'
+				        }
+				       	vm.langI18n(lang)
+				        				        
+	    				$('title').text(vm.$data.match_details)
+	    				tabinit();
+				       	vm.loadTournamentDataStats();
+	    				vm.loadMatchData();
+	    				
+	    				currentPlayer = f$.cacheObj('currentPlayer')
+	    				if(currentPlayer.logo.indexOf('mmopen')>0){
+    						currentPlayer.showWXLogo = true;
+	    				}else{
+	    					currentPlayer.showWXLogo = false;
+	    				}
+	    			},
+	    			langI18n : function(lang){
+	    				$.i18n.properties({// 加载中文properties文件  
+	    	    		    name:'lan', // properties文件名称  
+	    	    		    path:'../../../i18n/', // properties文件路径  
+	    	    		    mode:'map', // 用 Map 的方式使用资源文件中的值  
+	    	    		    language:lang,
+	    	    		    checkAvailableLanguages: true,
+	    	    		    callback: function() {// 加载成功后设置显示内容  
+	    	    		        vm.$data.matchListName=$.i18n.prop('match_list_name');
+	    	    		        vm.$data.match_details=$.i18n.prop('match_details');
+	    	    		        vm.$data.match_team_data=$.i18n.prop('match_team_data');
+	    	    		        vm.$data.match_player_data=$.i18n.prop('match_player_data');
+	    	    		        vm.$data.match_highlights=$.i18n.prop('match_highlights');
+	    	    		        
+	    	    		        vm.$data.mvp=$.i18n.prop('mvp');
+	    	    		        vm.$data.teamMvp=$.i18n.prop('teamMvp');
+	    	    		        vm.$data.goal=$.i18n.prop('goal');
+	    	    		        vm.$data.shot=$.i18n.prop('shot');
+	    	    		        vm.$data.assist=$.i18n.prop('assist');
+	    	    		        vm.$data.kpass=$.i18n.prop('kpass');
+	    	    		        vm.$data.kdefense=$.i18n.prop('kdefense');
+	    	    		        vm.$data.save=$.i18n.prop('save');
+	    	    		        vm.$data.foul=$.i18n.prop('foul');
+	    	    		        vm.$data.yellowCard=$.i18n.prop('yellowCard');
+	    	    		        vm.$data.redCard=$.i18n.prop('redCard');
+	    	    		        vm.$data.ownGoal=$.i18n.prop('ownGoal');
+	    	    		        vm.$data.tackle=$.i18n.prop('tackle');
+	    	    		        
+	    	    		        vm.$data.labelPlayerNumber=$.i18n.prop('playerNumber');
+	    	    		        vm.$data.labelPlayerTitle=$.i18n.prop('player');
+	    	    		        
+	    	    		        vm.$data.labelPlaceHolder=$.i18n.prop('placeHolder');
+	    	    		        vm.$data.labelComment=$.i18n.prop('comment');
+	    	    		        
+	    	    		        shareTitle = $.i18n.prop('matchHightlights');
+	    	    		        shareDesc = $.i18n.prop('comeAndSeeMyGame');
+	    	    		        vm.$data.labelShareLable = $.i18n.prop('shareLabel');
+	    	    		        vm.$data.labelUnShareLable = $.i18n.prop('unShareLabel');
+	    	    		    }
+	    	    		});
+	    			},
+	    			toggleLanguage : function(){
+	    				if(lang == 'ch'){
+	    					vm.$data.changeToLang = '中文'
+				        	lang = 'en'
+				        }else if(lang == 'en'){
+				        	vm.$data.changeToLang = 'Eng'
+				        	lang = 'ch'
+				        }
+	    				vm.langI18n(lang)
+	    			},
+	    			loadTournamentDataStats : function(){
+	    				f$.loadTournamentDataStats(vm.$data.domain,tournamentId,vm.$data.loggedUserSessionKey,vm.$data.suffix).done(function(data) {
+	    					if(data.status =='success'){
+	    						vm.$data.statsContent = data.statsContent
+	    					}else{
+	    						//alert(data.message);
+	    					}
+	    	    		});
+	    			},
+	    			loadMatchData:function() {
+	    				f$.loadMatchTeamResultData(vm.$data.domain,matchId,vm.$data.loggedUserSessionKey,vm.$data.suffix).done(function(data) {
+	    					var status = data.status;
+	    	    			if(status=='error') {
+	    	    				alert(data.message);
+	    	    				return;
+	    	    			}
+	    	    			
+	    	    			if(data.teamMatchResultList && data.teamMatchResultList.length>1) {
+	    	    				vm.$data.hostTeamData = data.teamMatchResultList[0];
+		    	    			vm.$data.guestTeamData = data.teamMatchResultList[1];
+		    	    			
+		    	    			if(!vm.$data.hostTeamData.ownGoals)
+		    	    				vm.$data.hostTeamData.ownGoals = 0;
+		    	    			
+		    	    			if(!vm.$data.guestTeamData.ownGoals)
+		    	    				vm.$data.guestTeamData.ownGoals = 0;
+		    	    			
+		    	    			
+		    	    			vm.teamDataPrepare(vm.$data.hostTeamData, vm.$data.guestTeamData)
+	    	    			}
+	    	    			
+	    	    			vm.loadPlayerMatchData();
+	    	    		});
+	    			},
+	    			teamDataPrepare:function(host,guest){
+	    				host.goalsColor = host.goals > guest.goals ? 'matchdatadeepskyblue':'matchdatagray'
+	    				guest.goalsColor = guest.goals > host.goals ? 'matchdatadeepskyblue':'matchdatagray'
+	    						
+	    				host.shotsColor = host.shots > guest.shots ? 'matchdatadeepskyblue':'matchdatagray'
+	    	    		guest.shotsColor = guest.shots > host.shots ? 'matchdatadeepskyblue':'matchdatagray'
+	    	    		
+	    	    		host.passFinalBallColor = host.passFinalBall > guest.passFinalBall ? 'matchdatadeepskyblue':'matchdatagray'
+	    	    	    guest.passFinalBallColor = guest.passFinalBall > host.passFinalBall ? 'matchdatadeepskyblue':'matchdatagray'
+	    	    				
+	    	    		host.assistColor = host.assists > guest.assists ? 'matchdatadeepskyblue':'matchdatagray'
+	    	    	    guest.assistColor = guest.assists > host.assists ? 'matchdatadeepskyblue':'matchdatagray'		
+	    	    				
+	    	    						
+	    	    		host.keyDefenseColor = host.keyDefense > guest.keyDefense ? 'matchdatagreen':'matchdatagray'
+	    	    	    guest.keyDefenseColor = guest.keyDefense > host.keyDefense ? 'matchdatagreen':'matchdatagray'		
+	    	    				
+	    	    	    host.saveColor = host.save > guest.save ? 'matchdatagreen':'matchdatagray'
+	    	    		guest.saveColor = guest.save > host.save ? 'matchdatagreen':'matchdatagray'
+	    	    						
+	    	    		host.foulsColor = host.fouls > guest.fouls ? 'matchdatared':'matchdatagray'
+	    	    	    guest.foulsColor = guest.fouls > host.fouls ? 'matchdatared':'matchdatagray'
+	    	    	    		
+	    	    	    host.yellowCardColor = host.yellowCard > guest.yellowCard ? 'matchdatared':'matchdatagray'
+	    	    	    guest.yellowCardColor = guest.yellowCard > host.yellowCard ? 'matchdatared':'matchdatagray'
+	    	    	    						
+	    	    	    host.redCardColor = host.redCard > guest.redCard ? 'matchdatared':'matchdatagray'
+	    	    	    guest.redCardColor = guest.redCard > host.redCard ? 'matchdatared':'matchdatagray'
+	    	    	    
+	    	    	    host.ownGoalsColor = host.ownGoals > guest.ownGoals ? 'matchdatapalevioletred':'matchdatagray'
+	    	    	    guest.ownGoalsColor = guest.ownGoals > host.ownGoals ? 'matchdatapalevioletred':'matchdatagray'
+	    						
+	    			},
+	    			loadPlayerMatchData:function() {
+	    				if(vm.$data.playerMatchResultList && vm.$data.playerMatchResultList.length > 0) {
+	    					return;
+	    				}
+	    				
+	    				$('.ui-loading-block').addClass("show");
+	    				f$.loadMatchPlayerData(vm.$data.domain,matchId,vm.$data.loggedUserSessionKey,vm.$data.suffix).done(function(data) {
+	    					var status = data.status;
+	    	    			if(status=='error') {
+	    	    				alert(data.message);
+	    	    				return;
+	    	    			}
+	    	    			vm.$data.playerMatchResultList = data.playerMatchResultList || [];
+	    	    			
+	    	    			$.each(vm.$data.playerMatchResultList, function(i,v){
+								if(v.playerImg && v.playerImg.indexOf('mmopen')>0){
+									v.showWXLogo = true;
+			    				}else{
+			    					v.showWXLogo = false;
+			    				}	
+							})	 
+	    	    			
+	    	    			
+
+	    	    			vm.$data.currentTeamResultList = _.where(vm.$data.playerMatchResultList, {teamId:vm.$data.hostTeamData.teamId}) 		
+	    	    			$('.ui-loading-block').removeClass("show");
+	    	    			
+	    	    			vm.loadVideoData();
+	    	    		});
+	    				
+	    			},
+	    			loadMVPData:function() {
+	    				
+	    				if(vm.$data.playerMatchResultList && vm.$data.playerMatchResultList.length > 0) {
+	    					$.each(vm.$data.playerMatchResultList, function(i,v) {
+	    	    				if(v.mvp=="1" || v.mvp==1) {
+	    	    					vm.$data.mvpPlayer = v;
+	    	    				}
+	    	    				if(v.teamMVP == '1' || v.teamMVP==1){
+	    	    					vm.$data.teamMvpPlayer = v;
+	    	    				}
+	    	    			});
+	    					return;
+	    				}
+	    			},
+	    			loadVideoData:function(){
+	    				$('#app').show();
+    	    			$('.ui-loading-block').removeClass("show");
+	    				currentShareURL = decodeURIComponent(location.href.split('#')[0])
+	    				params = {
+	    					matchId:matchId,
+	    					shareUrl:shareUrlhandle(currentShareURL),
+	    					content: 'Highlights'
+	    				}
+	    				//alert(currentShareURL)
+	    				f$.loadMatchVideoData(vm.$data.domain, GLOBAL_VAR_SUFFIX, params).done(function(data) {
+	    					var status = data.status;
+	    	    			if(status=='error') {
+	    	    				alert(data.message);
+	    	    				return;
+	    	    			}
+														
+	    	    			vm.$data.videoInfo = data.videoInfo
+	    	    			if(vm.$data.videoInfo != void 0){
+	    	    				vm.$data.videoInfo.date =  formatToDateTimeString(new Date(vm.$data.videoInfo.date))	
+	    	    			}
+	    	    			
+	    	    			//wechat sharing
+	    	    			currentPlayerSTeamItem = _.find(vm.$data.playerMatchResultList, function(i){ return i.playerId == Number(currentPlayer.id); })  
+	    	    			if(currentPlayerSTeamItem == void 0 ){
+	    	    				//如果当前用户不属于某一只球队，则获取主球队的logo
+	    	    				shareImgUrl = 'http://static.footballer.cc/'+ vm.$data.hostTeamData.teamLogo
+	    	    			}else{
+	    	    				//获取当前用户所属球队得logo
+	    	    				shareImgUrl = 'http://static.footballer.cc/'+ currentPlayerSTeamItem.teamLogo
+	    	    			}
+	    	    			
+	    	    			vm.$data.commentsList = _.sortBy(data.commentsList, 'commentsTime')
+	    	    			$.each(vm.$data.commentsList, function(i,v){
+	    	    				v.commentsTime = formatToDateTimeString(new Date(v.commentsTime))
+	    	    				if(v.playerLogo.indexOf('mmopen')>0){
+	    	    					v.showWXLogo = true;
+	    	    				}else{
+	    	    					v.showWXLogo = false;
+	    	    				}
+	    	    			})
+	    	    			
+	    	    			vm.$data.supportList = data.supportList
+	    	    			$.each(vm.$data.supportList, function(i,v){
+	    	    				//v.commentsTime = formatToDateTimeString(new Date(v.commentsTime))
+	    	    				if(v.playerLogo.indexOf('mmopen')>0){
+	    	    					v.showWXLogo = true;
+	    	    				}else{
+	    	    					v.showWXLogo = false;
+	    	    				}
+	    	    			})
+	    	    			
+	    	    			if(_.findWhere(data.supportList, {playerId: Number(currentPlayer.id)}) != void 0){
+	    	    				//已点赞 则激活当前点赞按钮
+	    	    				$('#videoSupportBtn').attr('class', 'ui-icon-liked')
+	    	    			}
+	    					
+	    					
+	    					vm.$data.shareRecordList = data.shareRecordList
+	    					$.each(vm.$data.shareRecordList, function(i,v){
+	    	    				if(v.playerLogo && v.playerLogo.indexOf('mmopen')>0){
+	    	    					v.showWXLogo = true;
+	    	    				}else{
+	    	    					v.showWXLogo = false;
+	    	    				}
+	    	    			})
+	    	    		});
+	    			},
+	    			showCurrentTeamData:function(e){
+	    				$('.ui-btn').removeClass('ui-btn-primary');
+	    				var $target = $(e.target)
+	    				$target.addClass('ui-btn-primary');	    				
+	    				
+                    	var currentTeamId = $target.attr('id')
+                    	vm.$data.currentTeamResultList = _.where(vm.$data.playerMatchResultList, {teamId:Number(currentTeamId)})
+	    			},
+	    			clickSupport:function(e){
+	    				currentVideoId = $(e.target).attr('data-video-id')
+	    				var params = {
+	    	    					videoId: currentVideoId,	
+	    	    					playerId:currentPlayer.id
+							}
+	    				if($(e.target).attr('class') == 'ui-icon-liked'){
+	    					//取消赞
+	    					f$.removeUserSupportFromVideoItem(vm.$data.domain, vm.$data.loggedUserSessionKey, vm.$data.suffix, params).done(function(data) {
+	    						$(e.target).toggleClass('ui-icon-like ui-icon-liked');
+	    						
+		    	    			vm.$data.supportList = _.without(vm.$data.supportList, _.findWhere(vm.$data.supportList, {playerId: Number(currentPlayer.id)}));
+		    	    		});  	    					
+	    				}else{
+	    					//点赞
+	    					f$.addSupportToVideoItem(vm.$data.domain, vm.$data.loggedUserSessionKey, vm.$data.suffix, params).done(function(data) {
+	    						$(e.target).toggleClass('ui-icon-like ui-icon-liked');
+	    						
+	    						var newSuppotItem={
+	    	    						playerId : Number(currentPlayer.id),
+	    	    	    				playerName : decodeURI(currentPlayer.name),
+	    	    	    				playerLogo : currentPlayer.logo,
+	    	    	    				showWXLogo: currentPlayer.showWXLogo,
+	    	    	    				status : true,
+	    	    	    				type : "AGREE"
+	    	    					}
+	    	    				vm.$data.supportList.push(newSuppotItem)
+		    	    		});  
+	    				}
+	    			},
+	    			addComments:function(){
+	    				comments = $('#say').val().trim()
+	    				
+	    				var params = {
+	    					videoId: vm.$data.videoInfo.id,	
+	    					playerId:currentPlayer.id,
+	    					comments:comments
+	    				}
+	    				
+	    				f$.addCommentsToVideo(vm.$data.domain, vm.$data.loggedUserSessionKey, vm.$data.suffix, params).done(function(data) {
+	    					var newCommentItem={
+	    						playerId : currentPlayer.id,
+	    	    				playerName : decodeURI(currentPlayer.name),
+	    	    				playerLogo : currentPlayer.logo,
+	    	    				showWXLogo: currentPlayer.showWXLogo,
+	    	    				comments : comments,
+	    	    				commentsTime : formatToDateTimeString(new Date(_.now()))		
+	    					}
+	    					vm.$data.commentsList.push(newCommentItem)
+	    					$('#say').val('')
+	    	    		});    				
+	    			},
+	    			clickPlayerItem:function(e) {
+	                	var $target = $(e.target)
+	                	$target = $target.is('ul') ? $target : $(e.target).parents('ul')
+	                	var playerId = $target.attr('id')
+	                	
+	                    var jsonObj = {
+	                		"playerId" : playerId,
+	                		"tournamentId":tournamentId,
+	                	}
+	    				var json= encodeURIComponent(JSON.stringify(jsonObj))	
+	                	location.href = vm.$data.domain+'footballer/mobile/match/football/clubPlayerDashboard.html'+'?json='+json;		
+	    			}
+	    		}
+	    	});
+	    	
+    		vm.init();
+    		//$('.ui-loading-block').removeClass("show");
+    		
+			function tabinit()
+    		{
+    			var tab = new fz.Scroll('.ui-tab', {
+			        role: 'tab',
+			        autoplay: false,
+				});
+    			//第一次进入就分享
+    			aufSportsLogoUrl = 'http://wx.qlogo.cn/mmopen/ibiaAb10J1JUnJBDU8DaEOKaibp4ndpSupicESq88MYj2bHfzZ0aEdj4tHcO8PuicTjIsFWAiaoHYK97d6LJ0micVGgU50TkPNwWURe/0'
+    			wxJSSDKInit(0, 'wx8fcb7dc481af1d3c', currentShareURL, vm.$data.videoInfo.date + ' ' + vm.$data.videoInfo.name, shareDesc, aufSportsLogoUrl, 'TeamData')
+				
+				tab.on('scrollEnd', function(curPage) {
+					if(curPage ==0) {
+						vm.$data.toggleComments = false;
+						vm.$data.shareContent='TeamData' 
+					} else if(curPage==1){
+						vm.$data.toggleComments = false;
+						vm.$data.shareContent='PlayerData'
+					} else if(curPage==2){
+						vm.$data.toggleComments = false;
+						if(vm.$data.mvpPlayer==null) {
+							vm.loadMVPData();
+						}
+						vm.$data.shareContent='MVP'
+					} else if (curPage==3) {
+						vm.$data.toggleComments = true;
+						vm.$data.shareContent='Highlights'
+					}
+					
+					if(vm.$data.videoInfo){
+						//切换tab后分享
+						wxJSSDKInit(0, 'wx8fcb7dc481af1d3c', currentShareURL, vm.$data.videoInfo.date + ' ' + vm.$data.videoInfo.name, shareDesc, shareImgUrl, vm.$data.shareContent)	
+					}else{
+						wxJSSDKInit(0, 'wx8fcb7dc481af1d3c', currentShareURL, '赛事分享', '赛事分享', shareImgUrl, vm.$data.shareContent)
+					}
+			    });
+			}
+			
+    		$('.ui-list li,.ui-tiled li').click(function(){
+    		        if($(this).data('href')){
+    		            location.href= $(this).data('href')+'?arenaId='+f$.cache('arenaId')
+    		        }
+    		});        	
+        });
+          
+</script>
+    </body>
+</html>

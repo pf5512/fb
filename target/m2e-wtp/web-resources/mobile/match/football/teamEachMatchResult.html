@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title></title>
+        <link rel="stylesheet" href="../../css/frozen.css">
+        <link rel="stylesheet" href="../../css/match.css">
+        <link rel="stylesheet" href="../../../css/justin_mobile_common.css">
+    </head>
+
+<body class="drawer drawer--left">
+	<div class="ui-loading-block show">
+	    <div class="ui-loading-cnt">
+	        <i class="ui-loading-bright"></i>
+	        <p>正在加载中...</p>
+	    </div>
+	</div>
+	<div id="app" v-cloak>
+		
+		<header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="historyBack('football')"></i>
+            <h1>{{labelFixtures}}</h1>
+        </header>
+
+        <section class="ui-container" style="margin-bottom:100px;">
+            <section id="tab">
+            	<div class="demo-item">
+            	  <div v-for="item in tournamentMatchList" name="matchItem" v-on:click="clickMatchItem" id="{{item.id}}" data-result="{{item.result}}" data-matchtime="{{item.displayTime}}" data-videoUrl="{{item.videoUrl}}">
+            		
+            		<p class="demo-desc" style="padding-left: 10px; color: black;">R{{$index+1}}</p>
+            		<ul class="ui-tiled" style="background-color: white">
+					    <li style="width:30%">
+	        				<div class="ui-list-thumb" style="margin: auto;">
+	        					<img style="margin:auto;width:100%; height:100%;" src="http://static.footballer.cc/{{item.hostTeamLogo}}">
+	        				</div>
+							<i class="ui-nowrap-flex fs14" >{{item.hostTeamName}}</i>
+							
+						</li>
+
+
+        				<li style="width:40%">
+						    <div style="width:65%;padding-top: 5px;">
+							    <p v-if="item.result" class="ui-txt-white" style="background:green;height: 33px;font-size: 23px;">{{item.result}}</p>
+	        				</div>
+	        				<h6 style="font-size: 10px; margin: 2px 0; ">{{item.displayTime.substr(0, item.displayTime.length-3)}}</h6>
+	        				<h6 style="font-size: 10px; color: #cacccd">{{item.fieldName}}</h6>
+        				</li>
+
+
+					    <li style="width:30%">	
+	        				<div class="ui-list-thumb" style="margin: auto;">
+	        					<img style="margin:auto;width:100%; height:100%;" src="http://static.footballer.cc/{{item.guestTeamLogo}}">
+	        				</div>
+	        				
+							<i class="ui-nowrap-flex fs14" >{{item.guestTeamName}}</i>
+						</li>
+					</ul>
+				</div>
+            	</div>
+            </section>
+        </section>
+		
+		<footer class="ui-footer ui-footer-btn" onclick="aufFooterRedirect()">
+			<div class="ui-flex ui-flex-pack-center" >
+			    <img src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="160px" height="20px" >
+			</div>
+		</footer>
+		
+	</div>
+
+<script src="../../../i18n/env.js"></script>
+<script src="../../../js/jquery-1.11.2.min.js" type="text/javascript"></script>     
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>    
+<script src="../../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../../js/frozen.js"></script>
+<script src="../../js/server/service.js"></script>
+<script src="../../../js/justin_common.js"></script>
+<script src="../../js/lib/vue.min.js"></script>
+<script src="../../js/lib/underscore-min.js"></script>
+<script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript" ></script>
+
+<script>
+accessStats()
+
+$(document).ready(function() {
+	
+	var vm,
+	playerId = f$.cache('playerid'), 
+	lang = f$.cache('lang') 
+	tournamentId = getParameter(window.location.href ,"tournamentId");
+	teamId = getParameter(window.location.href ,"teamId");
+	mainTeamId = getParameter(window.location.href ,"mainTeamId")
+	
+	vm = new Vue({
+		el   : '#app',
+		data : {
+			domain:'',
+			suffix:'',
+			matchListName:'loading',
+			tournamentMatchList:[],
+			loggedUserAvatar:'',
+			matchListUrl:'',
+			tmessage:'hello all',
+			matchNotStartHint:'',
+			labelFixtures:'',
+		},
+		methods: {
+			init:function() {	    				
+				vm.$data.domain =  GLOBAL_VAR_DOMAIN;
+		        vm.$data.suffix = GLOBAL_VAR_SUFFIX;
+		        vm.$data.loggedUserAvatar = f$.cache('uesr_current_peopleImgUrl');
+		        vm.loadData();
+				
+ 				$.i18n.properties({// 加载中文properties文件  
+	    		    name:'lan', // properties文件名称  
+	    		    path:'../../../i18n/', // properties文件路径  
+	    		    mode:'map', // 用 Map 的方式使用资源文件中的值
+	    		    language:lang,
+	    		    checkAvailableLanguages: true,
+	    		    callback: function() {// 加载成功后设置显示内容  
+	    		        vm.$data.matchListName =  $.i18n.prop('match_list_name');
+	    		        vm.$data.matchNotStartHint =  $.i18n.prop('matchNotStartHint');
+	    		        vm.$data.labelFixtures = $.i18n.prop('fixtures');
+	    		    }
+	    		});
+ 				
+ 				$('title').text(vm.$data.labelFixtures);
+				
+			},
+			loadData:function(){
+				f$.getTeamTournamentCalendar(vm.$data.domain, tournamentId, teamId, vm.$data.suffix).done(function(data) {
+	    			vm.$data.tournamentMatchList = _.sortBy(data.tournamentMatchList || [], "time")
+	    			$('.ui-loading-block').removeClass("show");
+	    		})		    				
+			},
+			clickMatchItem:function(e) {
+				if(teamId == mainTeamId){
+	            	var $target = $(e.target).parents('[name=matchItem]')
+	            	var matchId = $target.attr('id');
+	            	var matchResult = $target.attr('data-result');
+	            	if(!matchResult || matchResult.length<=0) {
+	            		alert(vm.$data.matchNotStartHint);
+	            		return;
+	            	}
+	            	
+					var time= encodeURIComponent($target.attr('data-matchtime'));
+					var videoUrl = encodeURIComponent($target.attr('data-videoUrl'));
+	            	
+	            	location.href = vm.$data.domain+'footballer/mobile/match/football/matchDashboard.html?matchId='+ matchId + '&tournamentId='+tournamentId;	
+				}
+			},
+		}
+	});
+	
+	vm.init();
+});
+          
+</script>
+    </body>
+
+</html>

@@ -1,0 +1,1 @@
+alter table video add thumbnail VARCHAR(400);

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PlayerRecordMapper" >
+
+  <!-- 字段映射  -->
+  <resultMap id="BaseResultMap" type="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  
+   	<id column="id" property="id" jdbcType="INTEGER" />
+ 
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="years" property="years" jdbcType="INTEGER" />
+    <result column="matches" property="matches" jdbcType="INTEGER" />
+    <result column="hours" property="hours" jdbcType="DOUBLE" />
+    <result column="minutes" property="minutes" jdbcType="INTEGER" />
+    <result column="player_count" property="playerCount" jdbcType="INTEGER" />
+    <result column="eventType" property="eventType" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="DATE" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  
+  </resultMap>
+  
+  <!-- 共用sql -->
+  <sql id="Base_Column_List" >
+     id,player_id,years,matches,hours,player_count,create_dt,update_dt,minutes,eventType 
+  </sql>
+
+  <!-- 查询 -->  
+  <select id="findPlayerRecordById" resultMap="BaseResultMap" parameterType="int" >
+   	select 
+    <include refid="Base_Column_List" />
+    from player_record_count
+    where id= #{id}
+  </select>
+  
+  
+  <!-- 查询 列表 -->  
+  <select id="findPlayerRecord" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+     from player_record_count
+    
+  </select>
+  
+    <!-- 查询 球员汇总信息 --> 
+  <select id="findPlayerRecordTotal" resultMap="BaseResultMap" parameterType="int" >
+    select player_id,sum(matches) as matches,sum(hours) as hours,sum(player_count) as playerCount,sum(minutes) minutes,eventType
+     from player_record_count prc where prc.player_id = #{playerId,javaType=Long} group by eventType  
+  </select> 
+  
+      <!-- 查询 球员年度信息 -->  
+  <select id="findPlayerRecordYear" resultMap="BaseResultMap" parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+    select 
+    <include refid="Base_Column_List" /> 
+     from player_record_count prc where prc.player_id = #{playerId,javaType=Long} and years = #{years} 
+  </select>
+  
+  
+  <!-- 删除 -->
+  
+  <delete id="deleteById" parameterType="int" >
+    delete from player_record_count
+    where id= #{id}
+  </delete>
+  
+  <!-- 插入操作 -->
+  <insert id="savePlayerRecord"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.PlayerRecord">
+	 	<![CDATA[
+    insert into player_record_count (player_id,years,matches,hours,minutes,player_count,create_dt,update_dt,eventType)
+    values (
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{years,jdbcType=INTEGER},
+	 		#{matches,jdbcType=INTEGER},
+	 		#{hours,jdbcType=DOUBLE},
+	 		#{minutes,jdbcType=INTEGER},
+	 		#{playerCount,jdbcType=INTEGER},
+	 		#{createDt,jdbcType=DATE},
+			#{updateDt,jdbcType=DATE},
+			#{eventType,jdbcType=VARCHAR}
+     )
+     ]]>
+  </insert>
+ <update id="increasePlayerRecordById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	update player_record_count
+    set
+     	 matches = matches + #{matches,jdbcType=INTEGER},
+     	 hours = hours + #{hours,jdbcType=DOUBLE},
+     	 minutes = minutes + #{minutes,jdbcType=INTEGER},
+     	 player_count = player_count +  #{playerCount,jdbcType=INTEGER},
+   		 update_dt = #{updateDt,jdbcType=DATE}
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+ </update> 
+ 
+   <update id="decreasePlayerRecordMinuteById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	<![CDATA[
+  	update player_record_count
+    set
+   		 update_dt = #{updateDt,jdbcType=DATE},
+   		 minutes = minutes - #{minutes,jdbcType=INTEGER}
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+    	and hours >= #{hours,jdbcType=DOUBLE}
+    	 ]]> 
+ </update> 
+ 
+  <update id="decreasePlayerRecordHourById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	<![CDATA[
+  	update player_record_count
+    set
+     	 hours = hours - #{hours,jdbcType=INTEGER},
+   		 update_dt = #{updateDt,jdbcType=DATE}
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+    	and hours >= #{hours,jdbcType=DOUBLE}
+    	 ]]> 
+ </update> 
+ 
+   <update id="decreasePlayerRecordPlayerCountById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	<![CDATA[
+  	update player_record_count
+    set
+     	  player_count = player_count -  #{playerCount,jdbcType=INTEGER},
+   		 update_dt = #{updateDt,jdbcType=DATE}
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+    	and player_count >= #{playerCount,jdbcType=INTEGER}
+    	 ]]> 
+ </update> 
+ 
+   <update id="decreasePlayerRecordMatchById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	<![CDATA[
+  	update player_record_count
+    set
+     	 matches = matches - #{matches,jdbcType=INTEGER},
+   		 update_dt = #{updateDt,jdbcType=DATE}
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+    	and matches >= #{matches,jdbcType=INTEGER}
+    	 ]]> 
+ </update> 
+ 
+    <update id="decreasePlayerRecordById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+  	<![CDATA[
+  	update player_record_count
+    set
+     	 matches = match - #{matches,jdbcType=INTEGER},
+     	 player_count = player_count -  #{playerCount,jdbcType=INTEGER},
+     	 hours = hour - #{hours,jdbcType=DOUBLE},
+     	 minutes = minutes - #{minutes,jdbcType=INTEGER},
+   		 update_dt = #{updateDt,jdbcType=DATE},
+    where player_id= #{playerId}
+    	and years =#{years}
+    	and eventType = #{eventType}
+    	and matches >= #{matches,jdbcType=INTEGER}
+    	 ]]> 
+ </update> 
+ 
+ 
+  <!-- 更新 -->
+  <update id="updatePlayerRecordById"  parameterType="com.footballer.rest.api.v2.vo.PlayerRecord" >
+   <![CDATA[
+    update player_record_count
+    set
+     	 player_id = #{playerId,jdbcType=INTEGER},
+     	 years = #{years,jdbcType=INTEGER},
+     	 matches = #{matches,jdbcType=INTEGER},
+     	 hours = #{hours,jdbcType=DOUBLE},
+     	 minutes = #{minutes,jdbcType=INTEGER},
+     	 player_count = #{playerCount,jdbcType=INTEGER},
+     	 create_dt = #{createDt,jdbcType=DATE},
+   		update_dt = #{updateDt,jdbcType=DATE}
+    where id= #{id}
+    ]]> 
+  </update>
+</mapper>

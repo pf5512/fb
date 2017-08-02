@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EventComments" >
+
+  <!-- 字段映射  -->
+  <resultMap id="BaseResultMap" type="com.footballer.rest.api.v2.vo.EventComments" >
+
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="event_id" property="eventId" jdbcType="INTEGER" />
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  </resultMap>
+  
+  
+  <resultMap id="EventCommentsResultMap" type="com.footballer.rest.api.v2.result.EventCommentsResult" >
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerImgUrl" property="playerImgUrl" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="commentTime" property="commentTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+    
+  
+  
+      <!-- 插入操作 -->
+  <insert id="saveEventComments"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.EventComments">
+	<![CDATA[
+   		 insert into event_comments (event_id,player_id,comments,create_by,create_dt,update_by,update_dt)
+    	 values (
+    		#{eventId,jdbcType=INTEGER},
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{comments,jdbcType=VARCHAR},
+			#{createBy,jdbcType=VARCHAR},
+	 		#{createDt},
+	 		#{updateBy,jdbcType=VARCHAR},
+			#{updateDt}
+     	)
+     ]]>
+  </insert>
+  
+  <!-- 共用sql -->
+  <sql id="Base_Column_List" >
+     id,event_id,player_id,comments,create_by,create_dt,update_by,update_dt
+  </sql>
+  
+  <!-- 查询 球员某场比赛的留言 -->  
+  <select id="findEventCommentsByEventIdAndPlayerId" resultMap="BaseResultMap" parameterType="com.footballer.rest.api.v2.vo.EventComments" >
+    select 
+    <include refid="Base_Column_List" /> 
+     from event_comments ec 
+     where ec.event_id = #{eventId,javaType=Long} and ec.player_id = #{playerId,javaType=Long}  
+  </select>
+  
+  <!-- 查询 -->  
+  <select id="findEventCommentsById" resultMap="BaseResultMap" parameterType="int" >
+   	select 
+    <include refid="Base_Column_List" />
+    from event_comments
+    where id= #{id}
+  </select>
+  
+  <!-- 查询 某场比赛的所有球员留言-->  
+  <select id="findEventCommentsListByEventId" resultMap="EventCommentsResultMap" parameterType="com.footballer.rest.api.v2.vo.EventComments" >
+    select 
+     ec.player_id as playerId, fp.`nick_name` as playerName	, fp.`imageUrl` as playerImgUrl, ec.`comments` as comments, ec.`create_dt` as commentTime 
+     from event_comments ec
+     inner join football_player fp on fp.`id` = ec.`player_id`
+     where ec.event_id = #{eventId,javaType=Long}
+     order by commentTime desc 
+  </select>
+  
+  
+</mapper>

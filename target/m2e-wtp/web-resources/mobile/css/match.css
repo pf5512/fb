@@ -1,0 +1,202 @@
+@charset "UTF-8";
+body {
+     font-family: "Microsoft Yahei",Helvetica,Arial,sans-serif;
+}
+.small-font {
+     font-size: 14px;
+}
+.ui-btn {
+    padding: 0px;
+    height: 30px;
+    line-height: 30px;
+    min-width: 35px;
+    display: inline-block;
+    font-size: 15px;
+}
+.ui-avatar {
+	width: 40px;
+    height: 40px;
+    -webkit-border-radius: 200px;
+    overflow: hidden;
+}
+.ui-header-positive, .ui-footer-positive {
+    background-color: #25b359;
+    color: #fff;
+}
+.ui-btn-primary-login {
+    background-color: #25b359;
+    border-color: #0baae4;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.5,#25b359),to(#25b359));
+    color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.ui-loading-bright {
+    background-image: url(../image/loading_sprite_white.png);
+}
+
+.drawer-hamburger {
+	padding-top: 12px;
+}
+
+.drawer-hamburger-icon, .drawer-hamburger-icon:after, .drawer-hamburger-icon:before {
+    background-color: #90c183;
+}
+
+.drawer-brand .drawer-menu-item {
+    text-decoration: underline;
+    color: #222;
+    background-color: transparent;
+}
+
+.drawer-nav {
+    background-color: #25b359;
+    
+}
+
+.drawer-menu-item:hover {
+	color: #555;
+}
+
+.drawer-nav .ui-avatar-lg {
+	margin:auto;
+	margin-top:20px;
+	width:100px;
+	height:100px;
+}
+
+.drawer-nav .drawer-menu {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.demo-desc{
+    padding: 10px;
+    font-size: 16px;
+    color: #7CAE23;
+}
+.demo-block{
+    position: relative;
+}
+.demo-block .ui-header,
+.demo-block .ui-footer{
+    position: absolute;
+}
+.demo-block > .ui-list,.demo-block >.ui-form,.demo-block >.ui-tooltips{margin-bottom: 20px;}
+
+
+.personalCenter .ui-avatar-lg {
+	margin:auto;
+	width:100px;
+	height:100px;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.matchdashboard_result {
+	background-color: green;
+    height: 28px;
+    margin-top: 40px;
+    text-align: center;
+    width: 100%;
+}
+
+.matchdashboard_teamlogo {
+	max-width: 120px;
+	max-height: 90px;
+	margin: 5px 5px 0px 0px;
+}
+
+.matchdashboard_hostteam {
+	/* margin-left: 20px;
+    margin-right: 20px; */
+    text-align: center;
+    font-size:13px;
+}
+
+.matchdashboard_guestteam {
+	/* margin-left: 20px;
+    margin-right: 20px; */
+    text-align: center;
+    font-size:13px;
+}
+
+.matchdashboard_tab {
+	margin-top:10px;
+}
+
+.playerdata {
+	text-align:center;
+}
+
+.matchdatagreen {
+	background-color:green;
+	color:white;
+}
+
+.matchdatared {
+	background-color:red;
+	color:white;
+}
+
+.matchdatapalevioletred {
+	background-color:palevioletred;
+	color:white;
+}
+
+
+.matchdatadeepskyblue {
+	background-color:deepskyblue;
+	color:white;
+}
+
+.matchdatagray {
+	background-color:darkgray;
+	color:white;
+}
+
+.img_avatar {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -webkit-border-radius: 200px;
+}
+
+.input-upload-image {
+	border: none;
+	position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    left: 65%;
+    top: 45%;
+    width:60px;
+    height:65px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload_wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-btn-img {
+	width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 68%;
+    top: 65%;
+}
+
+.ui-header .ui-icon-return {
+    z-index:9999;
+}

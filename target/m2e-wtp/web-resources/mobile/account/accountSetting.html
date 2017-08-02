@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>踢球者</title>
+        <link rel="stylesheet" href="../css/frozen.css">
+        <style type="text/css">
+            body {
+                font-family: "Microsoft Yahei",Helvetica,Arial,sans-serif;
+            }
+            .small-font {
+                font-size: 14px;
+            }
+            h6 {
+                font-size: 12px;
+            }
+            .ui-footer {
+                bottom: 0;
+                height: 70px;
+            }
+        </style>
+    </head>
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <h1>个人中心</h1>
+        </header>
+        <footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled ui-border-t">
+                <li data-href="../field/orderField.html"><div><i class="ui-icon-hall"></i></div><i>预定球场</i></li>
+                <li data-href="../order/orders.html"><div><i class="ui-icon-wallet"></i></div><i>我的订单</i></li>
+                <li><div><i class="ui-icon-personal"></i></div><i>个人中心</i></li>
+            </ul>
+        </footer>
+        <section class="ui-container">
+			
+			<!-- 
+            <ul class="ui-tiled">
+                <li><div></div><i></i></li>
+                <li><div><div class="ui-avatar">
+                        <span style="background-image:url(http://placeholder.qiniudn.com/100x100)"></span>
+                    </div></div><i>Ian</i></i></li>
+                <li><div></div><i></i></li>                               
+            </ul>
+             -->
+
+            <ul class="ui-tiled">
+                <li class="ui-border-l"><div>折扣卷</div><i>1</i></li>
+                <li class="ui-border-l"><div>代金券</div><i>2</i></li>
+                <li class="ui-border-l"><div>积分</div><i>3</i></li>
+                <li class="ui-border-l"><div>余额</div><i>3</i></li>
+            </ul>
+                
+            <ul class="ui-list ui-list-link ui-border-tb">
+                <li class="ui-border-t">
+                    <div class="ui-list-thumb">
+                        <i class="ui-icon-cart"></i>
+                    </div>
+                    <div class="ui-list-info">
+                        <h4 class="ui-nowrap nav" data-href="../charge/charge.html">余额充值</h4>
+                    </div>
+                </li>
+
+                <li class="ui-border-t">
+                    <div class="ui-list-thumb">
+                        <i class="ui-icon-star"></i>
+                    </div>
+                    <div class="ui-list-info">
+                        <h4 class="ui-nowrap">积分兑换</h4>
+                    </div>
+                </li>
+
+                <li class="ui-border-t">
+                    <div class="ui-list-thumb">
+                        <i class="ui-icon-order"></i>
+                    </div>
+                    <div class="ui-list-info">
+                        <h4 class="ui-nowrap">发票申请</h4>
+                        
+                    </div>
+                </li>
+
+                <li class="ui-border-t">
+                    <div class="ui-list-thumb">
+                        <i class="ui-icon-refresh"></i>
+                    </div>
+                    <div class="ui-list-info">
+                        <h4 class="ui-nowrap">完善资料</h4>
+                        
+                    </div>
+                </li>
+                
+            </ul>                    
+        
+        </section>
+        <script src="../js/lib/zeptojs/zepto.min.js"></script>
+        <script src="../js/frozen.js"></script>
+        <script src="../js/server/service.js"></script>
+        <script>
+        	$(document).ready(function() {
+        		var openid = f$.urlParam('openid'),
+            		date = f$.urlParam('date')
+        		
+        		$('.ui-list li,.ui-tiled li').click(function(){
+                    if($(this).data('href')){
+                        location.href= $(this).data('href') + '?openid=' + openid + '&date=' + date
+                    }
+                });
+                $('.nav').click(function(){
+                    if($(this).data('href')){
+                        location.href= $(this).data('href') + '?openid=' + openid + '&date=' + date
+                    }
+                });
+                $('.ui-header .ui-btn').click(function(){
+                    location.href= 'index.html'
+                });	
+        	})
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>statistics</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" href="../img/analysis/auf_title.png" type="image/x-icon"/>
+<link rel="stylesheet" href="../css/fakeLoader.min.css">
+<link rel="stylesheet" type="text/css" href="../css/button.min.css">
+<link rel="stylesheet" type="text/css" href="../css/justin_common.css">
+<link href="../css/jquery-ui.dialog.1.11.4.min.css" rel="stylesheet" type="text/css">
+
+
+<script src="assets/javascripts/1.3.0/adminflare-demo-init.min.js"
+	type="text/javascript"></script>
+
+<script type="text/javascript">
+	// Include Bootstrap stylesheet 
+	document
+			.write('<link href="assets/css/' + DEMO_ADMINFLARE_VERSION + '/' + DEMO_CURRENT_THEME + '/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" id="bootstrap-css">');
+	// Include AdminFlare stylesheet 
+	document
+			.write('<link href="assets/css/' + DEMO_ADMINFLARE_VERSION + '/' + DEMO_CURRENT_THEME + '/adminflare.min.css" media="all" rel="stylesheet" type="text/css" id="adminflare-css">');
+</script>
+
+<script src="assets/javascripts/1.3.0/modernizr-jquery.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/adminflare-demo.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/bootstrap.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/adminflare.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/vue.min.js" type="text/javascript"></script>
+<script src="../js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="../js/justin_common.js" type="text/javascript"></script>
+<script src="../mobile/js/lib/underscore-min.js" type="text/javascript"></script>
+<script src="../js/fakeLoader.min.js" type="text/javascript"></script>
+<script src="../js/jquery-ui.dialog.1.11.4.min.js" type="text/javascript"></script>
+
+<style type="text/css">
+.well, .box {
+	padding-bottom: 0;
+}
+</style>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		prettyPrint();
+	});
+</script>
+</head>
+<body>
+	<div id="fakeLoader" style="display:none;"></div>
+	<script type="text/javascript">
+		demoSetBodyLayout();
+	</script>
+	<!-- Main navigation bar
+		================================================== -->
+	
+	
+	<header class="navbar navbar-fixed-top" id="main-navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<img id="arenaLogo" onerror="this.style.display='none'"  style="float: left;margin: 6px 0px 0px 5px;width: 28px;height: 28px;">
+				<a class="logo"
+					style="width: 200px;color: cornsilk; font-size: 15px;font-weight: bold; margin: 10px 8px 0px 8px;">Auf-Backend</a>
+				<a class="btn nav-button collapsed" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-reorder"></span>
+				</a>
+
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active">
+							<a href="/footballer/backadmin/fieldReservation.html">预定</a></li>
+						<li class="complete">
+							<a href="/footballer/backadmin/battleMgmt.html" style="color: greenyellow;">约战</a></li>
+						<li class="complete">
+							<a href="/footballer/backadmin/soloMgmt.html" style="color: aqua;">单飞</a></li>
+						<li class="divider-vertical"></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<i class=" icon-caret-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="/footballer/backadmin/memberList.html">会员</a></li>
+								<li><a href="/footballer/backadmin/nonmemberList.html">用户</a></li>
+								<li><a href="/footballer/backadmin/fieldManagement.html">场次/价格</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">高级功能</li>
+								<li><a href="/footballer/backadmin/dataStatistics.html">数据统计</a></li>
+								<li><a href="/footballer/backadmin/automationConfig.html">固定场次自动预定</a></li>
+							</ul></li>
+						<li class="divider-vertical"></li>
+					</ul>
+					<!-- <form class="navbar-search pull-left" action="" _lpchecked="1">
+						<input type="text" class="search-query" placeholder="Search" style="width: 120px">
+					</form> -->
+					<ul class="nav pull-right">
+						<li>
+							<!-- <ul class="messages">
+								<li><a href="#"><i class="icon-warning-sign"></i> 2<span class="responsive-text"> alerts</span></a></li>
+								<li><a href="#"><i class="icon-envelope"></i> 25<span class="responsive-text"> new messages</span></a></li>
+							</ul> -->
+						</li>
+						<li class="separator"></li>
+						<li class="dropdown">
+							<img onerror="this.style.display='none'" class="headIcon" src="../img/common/admin_spy.png" style="margin: 3px 0 0 1px;">
+							<a href="#" class="dropdown-toggle usermenu" data-toggle="dropdown"> 
+								<span id="adminName" style="width: 100px;display: block;">管理员名</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a onclick="updatePwdPopup();" href="#">修改密码</a></li>
+								<!-- <li><a href="#">设置</a></li> -->
+								<li class="divider"></li>
+								<li><a onclick="loginOut();" href="/footballer/backadmin/fieldReservation.html" >登出</a></li>
+							</ul>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- / Main navigation bar -->
+
+	<div id="dialog-form" title="请先登陆"  style="display:none;">
+		  <p class="validateTips"></p>
+		 
+		  <form>
+		    <fieldset>
+		      <div class="HBox">
+		      	<label for="name">用户</label>
+		      	<input type="text" name="name" id="name"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <br>
+		      <div class="HBox">
+		      	<label for="password">密码</label>
+		      	<input type="password" name="password" id="password"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		    </fieldset>
+		  </form>
+	</div>
+	
+	<div id="dialog-updatePwd" title="修改密码"  style="display:none;">
+		  <p class="validateTips"></p>
+		 
+		  <form>
+		    <fieldset>
+		      <div class="HBox">
+		      	<label for="newPwd" class="forInput">新密码</label>
+		      	<input type="password" name="newPwd" id="newPwd"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <br>
+		      <div class="HBox">
+		      	<label for="confirmPwd" class="forInput">确认密码</label>
+		      	<input type="password" name="confirmPwd" id="confirmPwd"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		    </fieldset>
+		  </form>
+	</div>
+
+	<section class="container" id="app">
+	
+		<section class="row-fluid">
+			<h3 class="box-header">All User Reservation Sum Statistics</h3>
+			<div class="box">
+				<div class="left" style="padding-left: 24px;">
+					<label for="timeFrame"
+						style="padding-left: 5px; padding-top: 5px; padding-right: 17px;">To</label>
+					<input id="datePicker" type="date" v-on:change="datePickerChange">
+				</div>
+				<div class="span11">
+
+					<table class="table table-hover">
+						<!-- <thead>
+							<tr>
+								<th>会员</th>
+								<th>用户</th>
+								<th>微信用户</th>
+								<th>总预定</th>
+							</tr>
+						</thead> -->
+						<tbody>
+							<template v-for="row in allArenaUserReservationStatisticsList">
+							<tr>
+								<td style="width:110px">
+									<div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/reservationIcon.png" style="margin-right: 10px;">
+										<label class="headIconTitle">总预定量</label>
+									</div>
+								</td>
+								<td><label class="outsetOrange" style="width:60px;">{{row.allReservations}}</label></td>
+							</tr>
+							<tr>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/memberIcon.png" style="margin-right: 10px;">
+										<label class="headIconTitle">后台会员</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.member}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/userIcon.png" style="margin-right: 10px;">
+										<label class="headIconTitle">后台用户</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.user}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/wechatUser.png" style="margin-right: 10px;">
+										<label class="headIconTitle">微信用户</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.wechatUser}}</label></td>
+							</tr>
+							<br></br>
+							<th colspan="1" style="width:140px">
+								<div class="HBox">
+									<img onerror="this.style.display='none'" class="headIcon" src="../img/common/piechart128.png" style="margin-right: 10px;">
+									<label class="headIconTitle">平台预定详情</label>
+								</div>
+							</th>
+								
+							<tr>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/paid.png" style="margin-right: 10px;">
+										<label class="headIconTitle">后台整场</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.backendFullField}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/paid_yue.png" style="margin-right: 10px;">
+										<label class="headIconTitle">后台约战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.backendYuezhan}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/paid_ying.png" style="margin-right: 10px;">
+										<label class="headIconTitle">后台应战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.backendYingzhan}}</label></td>
+							</tr>
+							<tr>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/wechatpaid.png" style="margin-right: 10px;">
+										<label class="headIconTitle">微信整场</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.wechatFullField}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/wechatpaid_yue.png" style="margin-right: 10px;">
+										<label class="headIconTitle">微信约战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.wechatYuezhan}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="assets/images/wechatpaid_ying.png" style="margin-right: 10px;">
+										<label class="headIconTitle">微信应战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.wechatYingzhan}}</label></td>
+							</tr>
+<!--							<tr>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/app_paid.png" style="margin-right: 10px;">
+										<label class="headIconTitle">APP整场</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.appFullField}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/app_yue.png" style="margin-right: 10px;">
+										<label class="headIconTitle">APP约战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.appYuezhan}}</label></td>
+								<td style="width:110px"><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/app_ying.png" style="margin-right: 10px;">
+										<label class="headIconTitle">APP应战</label>
+									</div>
+								</td>
+								<td><label class="green" style="width:60px;">{{row.appYingzhan}}</label></td>
+							</tr>
+							
+							<br></br>
+ 							<th colspan="1" style="width:140px">
+								<div class="HBox">
+									<img onerror="this.style.display='none'" class="headIcon" src="../img/common/auf_logo.png" style="margin-right: 10px;">
+									<label class="headIconTitle">傲赴体育数据</label>
+								</div>
+							</th>
+							<tr>
+								<td><div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/common/wechat.png" style="margin-right: 10px;">
+										<label class="headIconTitle">总微信用户</label>
+									</div>
+								</td>
+								<td style="width:110px"><label class="outsetGreen" style="width:60px;">{{row.allWechatUser}}</label></td>
+								<td>
+									<div class="HBox">
+										<img onerror="this.style.display='none'" class="headIcon" src="../img/analysis/zqsy_logo.png" style="margin-right: 10px;">
+										<label class="headIconTitle">APP用户</label>
+									</div>
+								</td>
+								<td style="width:110px"><label class="outsetGreen" style="width:60px;">{{row.appUser}}</label></td>
+							</tr> -->
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="row-fluid">
+			<h3 class="box-header">Reservation Sum Statistics</h3>
+			<div class="box">
+				<div class="left" style="padding-left: 24px;">
+					<label for="year"
+						style="padding-left: 5px; padding-top: 5px; padding-right: 17px;">年度:</label>
+					<select id="year" style="width: 160px;"
+						v-on:change="yearChange">
+						<option value="2016" selected="selected">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+						<option value="2019">2019</option>
+						<option value="2020">2020</option>
+						<option value="2021">2021</option>
+						<option value="2022">2022</option>
+						<option value="2023">2023</option>
+						<option value="2024">2024</option>
+						<option value="2025">2025</option>
+					</select>
+				</div>
+				
+
+				<div class="span11">
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<template v-for="th in tableTh">
+								<th>{{th}}</th>
+								</template>
+							</tr>
+						</thead>
+						<tbody>
+							<template v-for="row in displayData">
+							<tr>
+								<td>{{row.month}}</td>
+								<template v-for="f in row.fields">
+								<td>{{f}}</td>
+								</template>
+								<td>{{row.total}}</td>
+							</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="row-fluid">
+			<h3 class="box-header">Player Reservation Statistics</h3>
+			<div class="box">
+				<div class="left" style="padding-left: 24px;">
+					<label for="timeFrame"
+						style="padding-left: 5px; padding-top: 5px; padding-right: 17px;">时间范围:</label>
+					<select id="timeFrame" style="width: 160px;"
+						v-on:change="dateChange">
+						<option value="all" selected="selected">总计</option>
+						<option value="m1">1月</option>
+						<option value="m2">2月</option>
+						<option value="m3">3月</option>
+						<option value="m4">4月</option>
+						<option value="m5">5月</option>
+						<option value="m6">6月</option>
+						<option value="m7">7月</option>
+						<option value="m8">8月</option>
+						<option value="m9">9月</option>
+						<option value="m10">10月</option>
+						<option value="m11">11月</option>
+						<option value="m12">12月</option>
+						<option value="s1">1季度</option>
+						<option value="s2">2季度</option>
+						<option value="s3">3季度</option>
+						<option value="s4">4季度</option>
+					</select>
+				</div>
+				<div class="span11">
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>排名</th>
+								<th>用户类型</th>
+								<th>头像</th>
+								<th>用户名</th>
+								<th>球队名</th>
+								<th>整场</th>
+								<th>约战</th>
+								<th>Sum</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template v-for="row in playerReservationStatisticsList">
+							<tr>
+								<td>{{$index+1}}</td>
+								<td>{{row.type}}</td>
+								<td>
+									 <img v-if="row.imageUrl != null" onerror="this.style.display='none'" class="headIcon" src="{{row.imageUrl}}">
+								</td>
+								<td>{{row.name}}</td>
+								<td>{{row.teams}}</td>
+								<td>{{row.fullFieldBookNumber}}</td>
+								<td>{{row.battleBookNumber}}</td>
+								<td>{{row.bookTotalNumber}}</td>
+							</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		
+		
+		<!-- Page footer
+			================================================== -->
+		<footer id="main-footer">
+			Copyright © 2015 <!-- <a href="http://www.footballer.cc"> -->成都傲赴体育有限公司 
+			all rights reserved. <a href="#" class="pull-right" id="on-top-link">
+				On Top &nbsp;<i class="icon-chevron-up"></i>
+			</a>
+		</footer>
+		<!-- / Page footer -->
+	</section>
+</body>
+<script type="text/javascript">
+	(function() {
+		var host ='';
+		var urlPre ='',iaa='';
+
+		var arenaId;
+		var year = new Date().getFullYear();
+		var startDate = year+'-01-01';
+		var endDate = year+'-12-31';
+
+		var temp ={"status":"success","statisticsList":["1月-18-12-4-1-1","2月-18-12-3-2-1","3月-0-0-0-0-0","4月-0-0-0-0-0","5月-0-0-0-0-0","6月-0-0-0-0-0","7月-0-0-0-0-0","8月-0-0-0-0-0","9月-0-0-0-0-0","10月-0-0-0-0-0","11月-3-3-0-0-0","12月-0-0-0-0-0","-","1季度-36-24-7-3-2","2季度-0-0-0-0-0","3季度-0-0-0-0-0","4季度-3-3-0-0-0"]};
+		var testdata = {"status":"success","arenaUserReservationStatisticsList":[{"id":null,"arenaId":null,"playerId":111,"memberId":null,"number":null,"name":"张先生","teams":"益佳汽修","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":73,"memberId":null,"number":null,"name":"钟先生","teams":"6780聚乐部","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":69,"memberId":null,"number":null,"name":"杨世奇","teams":"左脚右脚","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":87,"memberId":null,"number":null,"name":"薛嵘俊","teams":"叔叔不约","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":80,"memberId":null,"number":null,"name":"万先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":112,"memberId":null,"number":null,"name":"梁峰","teams":"卓锦城","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":1,"battleBookNumber":0,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":58,"memberId":null,"number":13,"name":"敬明俊","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":1,"battleBookNumber":0,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":105,"memberId":null,"number":null,"name":"小稂","teams":"甲乙丙丁","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":1,"battleBookNumber":0,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":52,"memberId":null,"number":7,"name":"黄璜","teams":"东山坡","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":109,"memberId":null,"number":23,"name":"雷宇","teams":"SPA","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":84,"memberId":null,"number":null,"name":"蒲先生_小胖_每周五20点","teams":"银河战舰队","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":49,"memberId":null,"number":4,"name":"陈俊","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":1,"battleBookNumber":0,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":110,"memberId":null,"number":null,"name":"曾欢欢","teams":"锦江城市花园队","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":1,"battleBookNumber":0,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":86,"memberId":null,"number":null,"name":"刘先生","teams":"金刚芭比队","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":79,"memberId":null,"number":null,"name":"苏先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":1,"bookTotalNumber":1},{"id":null,"arenaId":null,"playerId":60,"memberId":null,"number":15,"name":"周宇","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":76,"memberId":null,"number":null,"name":"郭先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":57,"memberId":null,"number":12,"name":"曹代强","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":102,"memberId":null,"number":null,"name":"Test","teams":"Test","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":54,"memberId":null,"number":9,"name":"唐玮俊","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":51,"memberId":null,"number":6,"name":"宋雨","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":67,"memberId":null,"number":22,"name":"阿杰","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":83,"memberId":null,"number":null,"name":"赵先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":64,"memberId":null,"number":19,"name":"黄禹","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":48,"memberId":null,"number":3,"name":"陈开弟","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":61,"memberId":null,"number":16,"name":"陈东","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":77,"memberId":null,"number":null,"name":"贺先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":74,"memberId":null,"number":null,"name":"杜先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":55,"memberId":null,"number":10,"name":"李一川","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":70,"memberId":null,"number":null,"name":"陈睿","teams":"洪河老友记","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":89,"memberId":null,"number":null,"name":"俸先生","teams":"一塌糊涂","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":65,"memberId":null,"number":20,"name":"陈煜","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":81,"memberId":null,"number":null,"name":"王先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":62,"memberId":null,"number":17,"name":"钟坤","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":78,"memberId":null,"number":null,"name":"交行","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":1,"memberId":null,"number":1,"name":"保留号","teams":"踢球者,Madrid,t1,踢球者二队","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":59,"memberId":null,"number":14,"name":"贾韬","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":75,"memberId":null,"number":null,"name":"桂先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":56,"memberId":null,"number":11,"name":"黄俊","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":72,"memberId":null,"number":null,"name":"袁先生","teams":"东拉西扯","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":90,"memberId":null,"number":null,"name":"张仁数","teams":"龙城一号","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":53,"memberId":null,"number":8,"name":"何天野","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":68,"memberId":null,"number":null,"name":"宁先生","teams":"草木人禾","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":50,"memberId":null,"number":5,"name":"焦坤","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":66,"memberId":null,"number":21,"name":"刘同","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":82,"memberId":null,"number":null,"name":"徐先生","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":63,"memberId":null,"number":18,"name":"曾勇","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0},{"id":null,"arenaId":null,"playerId":47,"memberId":null,"number":2,"name":"廖敏魁","teams":"/","level":null,"disCount":null,"balance":null,"wechatNo":null,"cellphone":null,"createDt":null,"fullFieldBookNumber":0,"battleBookNumber":0,"bookTotalNumber":0}]};
+		
+		var vm = new Vue(
+				{
+					el : '#app',
+					data : {
+						
+						//getAllUserReservationSumStatisticsUrl: host + 'footballer/api/mobile/v2/reservation-service/getArenaAllUsersReservationStatisticsByDate/'+ arenaId +'/'+ startDate + "/"+ endDate + '/e30ea6d0-5273-4ba2-9cf7-155af789418c/100000/e7afdd55291a3e3796a6d3d83e70d6dd',										  
+						playerReservationStatisticsList:[],
+						statisticsList:[],
+						fieldNumber:0,
+						tableTh:[],
+						displayData:[],
+						runOnceTag:false,
+						allArenaUserReservationStatisticsList:[],
+						allArenaUserReservationStatistics:{}
+					},
+					methods : {
+						init:function(){
+							arenaId = window.localStorage["arenaId"]
+							urlPre = window.localStorage["urlPre"]
+					 		iaa = window.localStorage["iaa"]
+						},
+						getDataStatisticsList : function() {
+							 loading();	 
+							 var getDataStatisticsUrl = urlPre+'reservation-service/getArenaReservationStatisticsByDate/'+ arenaId +'/'+ year +iaa
+							$.GetJSON(getDataStatisticsUrl, null,function(data) {
+								if (data) {
+									
+									var dataList = [];
+									
+									$.each(data.statisticsList, function(index,value){
+										
+										var s = this.split('-');
+										var size = s.length;
+										var fieldsNumber = s.length-2;
+										
+										//根据返回值 生成动态表头
+										if(!vm._data.runOnceTag){
+											vm.dynamicGenerateTableTh(fieldsNumber);	
+										}
+
+										//内容
+										var monthData = {};
+										monthData.month = s[0];
+										monthData.total = s[1];
+										monthData.fields = new Array(fieldsNumber);
+										
+										$.each(monthData.fields, function(i,v){
+											monthData.fields[i] = s[size-fieldsNumber+i];
+										})
+										
+										dataList.push(monthData);
+									});
+									
+									vm._data.displayData = dataList;
+									hideLoading();
+								}
+							}); 
+							var getPlayerReservationStatisticsUrl = urlPre+'reservation-service/getArenaUsersFieldReservationStatisticsByDate/'+ arenaId +'/'+ startDate + "/"+ endDate + iaa
+							
+ 							$.GetJSON(getPlayerReservationStatisticsUrl, null,function(data) {
+								if (data) {
+									vm._data.playerReservationStatisticsList = data.arenaUserReservationStatisticsList;
+								}
+							});  
+ 							
+							var getAllUserReservationSumStatisticsUrl = urlPre+'reservation-service/getArenaAllUsersReservationStatisticsByDate/'+ arenaId +'/'+ startDate + "/"+ endDate + iaa
+								
+ 							$.GetJSON(getAllUserReservationSumStatisticsUrl, null,function(data) {
+								if (data) {
+									vm._data.allArenaUserReservationStatistics = data.allArenaUserReservationStatistics;
+									vm.$data.allArenaUserReservationStatisticsList.push(vm._data.allArenaUserReservationStatistics);
+								}
+							}); 
+							
+							
+							//开发测试时 使用的MockData
+							/* 
+ 							var dataList = [];
+							
+							$.each(temp.statisticsList, function(index,value){
+								
+								var s = this.split('-');
+								var size = s.length;
+								var fieldsNumber = s.length-2;
+								
+								//根据返回值 生成动态表头
+								if(!vm._data.runOnceTag){
+									vm.dynamicGenerateTableTh(fieldsNumber);	
+								}
+
+								//内容
+								var monthData = {};
+								monthData.month = s[0];
+								monthData.total = s[1];
+								monthData.fields = new Array(fieldsNumber);
+								
+								$.each(monthData.fields, function(i,v){
+									monthData.fields[i] = s[size-fieldsNumber+i];
+								})
+								
+								dataList.push(monthData);
+							});
+							
+							vm._data.displayData = dataList;
+							vm._data.playerReservationStatisticsList = testdata.arenaUserReservationStatisticsList; 
+							 */
+						},
+						getYearStatisticsList:function(year){
+							loading();
+							var newUrl = urlPre+'reservation-service/getArenaReservationStatisticsByDate/'+ arenaId +'/'+ year + iaa
+							
+							$.GetJSON(newUrl, null,function(data) {
+								if (data) {
+									
+									var dataList = [];
+									
+									$.each(data.statisticsList, function(index,value){
+										
+										var s = this.split('-');
+										var size = s.length;
+										var fieldsNumber = s.length-2;
+										
+										//根据返回值 生成动态表头
+										if(!vm._data.runOnceTag){
+											vm.dynamicGenerateTableTh(fieldsNumber);	
+										}
+
+										//内容
+										var monthData = {};
+										monthData.month = s[0];
+										monthData.total = s[1];
+										monthData.fields = new Array(fieldsNumber);
+										
+										$.each(monthData.fields, function(i,v){
+											monthData.fields[i] = s[size-fieldsNumber+i];
+										})
+										
+										dataList.push(monthData);
+									});
+									
+									vm._data.displayData = dataList;
+									hideLoading();
+								}
+							}); 
+						},
+						getPlayerReservationStatisticsList : function(startDate,endDate) {
+							loading();	 
+							newUrl = urlPre+'reservation-service/getArenaUsersFieldReservationStatisticsByDate/'+ arenaId +'/'+ startDate + "/"+ endDate + iaa;
+							
+							$.GetJSON(newUrl, null,function(data) {
+								if (data) {
+									vm._data.playerReservationStatisticsList = data.arenaUserReservationStatisticsList;
+									hideLoading();
+								}
+							}); 
+						},
+						dynamicGenerateTableTh : function(fieldsNumber){
+
+							var tableTh = [];
+							tableTh.push('time/field');
+							for(var i=0;i< fieldsNumber;i++){
+								tableTh.push('F'+(i+1));								
+							}
+							tableTh.push('Sum');
+							vm._data.tableTh = tableTh;
+							
+							vm._data.runOnceTag = true;
+						},
+						dateChange:function(e){
+							var selectOption = e.target.value;
+							var currentYear = (new Date()).getFullYear() +"-";
+							
+							switch(selectOption){
+							case 'm1': vm.getPlayerReservationStatisticsList(currentYear+'01-01', currentYear+'01-31');break;
+							case 'm2': vm.getPlayerReservationStatisticsList(currentYear+'02-01', currentYear+'02-29');break;
+							case 'm3': vm.getPlayerReservationStatisticsList(currentYear+'03-01', currentYear+'03-31');break;
+							case 'm4': vm.getPlayerReservationStatisticsList(currentYear+'04-01', currentYear+'04-30');break;
+							case 'm5': vm.getPlayerReservationStatisticsList(currentYear+'05-01', currentYear+'05-31');break;
+							case 'm6': vm.getPlayerReservationStatisticsList(currentYear+'06-01', currentYear+'06-30');break;
+							case 'm7': vm.getPlayerReservationStatisticsList(currentYear+'07-01', currentYear+'07-31');break;
+							case 'm8': vm.getPlayerReservationStatisticsList(currentYear+'08-01', currentYear+'08-31');break;
+							case 'm9': vm.getPlayerReservationStatisticsList(currentYear+'09-01', currentYear+'09-30');break;
+							case 'm10':vm.getPlayerReservationStatisticsList(currentYear+'10-01', currentYear+'10-31');break;
+							case 'm11':vm.getPlayerReservationStatisticsList(currentYear+'11-01', currentYear+'11-30');break;
+							case 'm12':vm.getPlayerReservationStatisticsList(currentYear+'12-01', currentYear+'12-31');break;
+							case 's1': vm.getPlayerReservationStatisticsList(currentYear+'01-01', currentYear+'03-31');break;
+							case 's2': vm.getPlayerReservationStatisticsList(currentYear+'04-01', currentYear+'06-30');break;
+							case 's3': vm.getPlayerReservationStatisticsList(currentYear+'07-01', currentYear+'09-30');break;
+							case 's4': vm.getPlayerReservationStatisticsList(currentYear+'10-01', currentYear+'12-31');break;
+							default:
+								//从开始使用算起
+								vm.getPlayerReservationStatisticsList('2016-02-15', '2099-12-31');
+							}
+						},
+						datePickerChange:function(e){
+							if(e.target.value != "" && e.target.value!= null){
+								var selectedEndDate = e.target.value
+								
+								var newUrl=  urlPre+'reservation-service/getArenaAllUsersReservationStatisticsByDate/'+ arenaId +'/'+ startDate + "/"+ selectedEndDate + iaa
+								
+								vm.$data.allArenaUserReservationStatisticsList = [] 
+								$.GetJSON(newUrl, null,function(data) {
+									if (data) {
+										vm._data.allArenaUserReservationStatistics = data.allArenaUserReservationStatistics;
+										vm.$data.allArenaUserReservationStatisticsList.push(vm._data.allArenaUserReservationStatistics);
+									}
+								}); 
+								
+								
+							}
+						},
+						yearChange:function(e){
+							var selectYear = e.target.value;
+							vm.getYearStatisticsList(selectYear);
+						}
+					}
+				});
+	
+		loginStatusCheck(pageInit);
+		 
+		function pageInit(){
+			loadingInit();
+			vm.init()
+			vm.getDataStatisticsList();
+			hidesomeloadingpart('theme_switcher');
+		}
+		
+		
+	})()
+</script>
+</html>

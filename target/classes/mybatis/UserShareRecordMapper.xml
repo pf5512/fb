@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserShareRecordMapper" >
+
+  <resultMap id="BaseResultMap" type="com.footballer.rest.api.v2.vo.UserShareRecord" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="UserShareInfo" type="com.footballer.rest.api.v2.domain.UserShareInfo">
+ 	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="videoId" property="videoId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerLogo" property="playerLogo" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+    
+  <insert id="saveUserShareRecord"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserShareRecord">
+    insert into share (player_id, url, content, date)
+    values (
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{url,jdbcType=VARCHAR},
+            #{content,jdbcType=VARCHAR},
+			#{date,jdbcType=TIMESTAMP}
+     )
+  </insert>
+  
+  <insert id="saveUserShareVideosRecord"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserShareRecord">
+    insert into share_video (share_id, video_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+	 		#{videoId,jdbcType=INTEGER}
+     )
+  </insert> 
+  
+  <insert id="saveUserShareMomentRecord"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserShareRecord">
+    insert into share_moment (share_id, moment_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+	 		#{momentId,jdbcType=INTEGER}
+     )
+  </insert>   
+    
+  <select id="getUserShareRecordByUrlAndContent" resultMap="UserShareInfo" parameterType="com.footballer.rest.api.v2.vo.UserShareRecord" >
+	select s.id id, fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, date from share s
+	join football_player fp on fp.id= s.player_id  
+	where url = #{url} and content = #{content}
+  </select>
+  
+  <select id="getUserShareRecordByVideoId" resultMap="UserShareInfo" parameterType="long" >
+	select s.id id, fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, date from share s
+	join share_video sv on sv.share_id = s.id
+	join football_player fp on fp.id= s.player_id  
+	where sv.video_id = #{videoId}
+	group by playerId      
+	order by date
+  </select>
+  
+  <select id="getUserShareRecordByMomentId" resultMap="UserShareInfo" parameterType="long" >
+	select s.id id, fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, date from share s
+	join share_moment sm on sm.share_id = s.id
+	join football_player fp on fp.id= s.player_id  
+	where sm.moment_id = #{momentId}
+	group by playerId      
+	order by date
+  </select>
+  
+ 
+  <select id="findUserShareRecord" resultMap="UserShareInfo" parameterType="com.footballer.rest.api.v2.vo.UserShareRecord" >
+	select s.id id, fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, date from share s
+	join football_player fp on fp.id= s.player_id  
+	where url = #{url} and content = #{content} and s.player_id = #{playerId}
+  </select>
+ 
+</mapper>

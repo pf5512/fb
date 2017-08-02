@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BattleWish" >
+
+  <resultMap id="BattleWishInfo" type="com.footballer.rest.api.v2.domain.BattleWishInfo" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerHeadIcon" property="playerHeadIcon" jdbcType="VARCHAR" />
+    <result column="teamId" property="teamId" jdbcType="INTEGER" />
+    <result column="teamName" property="teamName" jdbcType="VARCHAR" />
+    <result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+    <result column="cellphone" property="cellphone" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BattleActiveCustomers" type="com.footballer.rest.api.v2.domain.BattleActiveCustomersInfo" >
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerHeadIcon" property="playerHeadIcon" jdbcType="VARCHAR" />
+    <result column="teamId" property="teamId" jdbcType="INTEGER" />
+    <result column="teamName" property="teamName" jdbcType="VARCHAR" />
+    <result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+    <result column="cellphone" property="cellphone" jdbcType="INTEGER" />
+    <result column="useTimes" property="useTimes" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BattleWish" type="com.footballer.rest.api.v2.vo.BattleWish" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="teamId" property="teamId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="arenaFieldsReservationDetailResult"  type="com.footballer.rest.api.v2.domain.FieldReservationDetail" >
+  	<result column="type" property="type" jdbcType="VARCHAR" />
+  	<result column="fieldId" property="fieldId" jdbcType="INTEGER" />
+    <result column="fieldName" property="fieldName" jdbcType="VARCHAR" />
+    <result column="fieldChargeStandardId" property="fieldChargeStandardId" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="guestPlayerId" property="guestPlayerId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <insert id="addWeChatBattleWish"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.BattleWish">
+	<![CDATA[
+   		 insert into battle_wish (arena_id,date,player_id,team_id)
+    	 values (
+    		#{arenaId,jdbcType=INTEGER},
+    		#{date},
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{teamId,jdbcType=INTEGER}
+     	)
+     ]]>
+  </insert>
+  
+  <insert id="arenaOwnerAddBattleReservation"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+	<![CDATA[
+     	INSERT INTO field_reservation (field_id, type, field_charge_standard_id, player_id, guest_player_id, use_date, book_date, cancel_date, book_status, payment_status, guest_payment_status, video_service, create_by, create_dt, update_by, update_dt)
+		VALUES (
+			#{fieldId,jdbcType=INTEGER},
+			'battle',
+			#{fieldChargeStandardId,jdbcType=INTEGER},
+			#{playerId,jdbcType=INTEGER},
+			#{guestPlayerId,jdbcType=INTEGER},
+			#{useDate,jdbcType=VARCHAR},
+			now(),
+			NULL,
+			1,
+			#{paymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+			#{guestPaymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}, 
+			0,
+			'adminBattleReservation',
+			now(),
+			NULL, 
+			NULL
+		)
+     ]]>
+     	<selectKey resultType="long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+   		</selectKey>
+  </insert>
+  
+  <select id="findWeChatBattleWishsOfNext7Days" resultMap="BattleWishInfo" parameterType="long">
+  	select bw.id id, bw.date date, bw.player_id playerId, fp.nick_name playerName, a.wechat_pic_url playerHeadIcon, a.cellphone cellphone,bw.team_id teamId, t.name teamName, t.logo teamLogo from battle_wish bw
+	join account a on a.id = bw.player_id
+	join football_player fp on fp.id = bw.player_id
+	join team t on t.id = bw.team_id
+	where arena_id = #{arenaId} and date between  curdate() and date_add(curdate(), interval 7 day)
+  </select> 
+  
+  <select id="findBackendAvailableBattleOfNext7Days" resultMap="BattleWishInfo" parameterType="long">
+  	select null id, concat(fr.use_date, ' ',fcs.start_time) date, fr.player_id playerId, fp.nick_name playerName, a.wechat_pic_url playerHeadIcon, a.cellphone cellphone,t.id teamId, t.name teamName, t.logo teamLogo from field_reservation fr
+	join field f on f.id = fr.field_id
+	join field_charge_standard fcs on fcs.id = fr.field_charge_standard_id
+	join account a on a.id = fr.player_id
+	join football_player fp on fp.id = fr.player_id
+	join team_player tp on tp.player_id = fr.player_id
+	join team t on t.id = tp.team_id
+	where f.arena_id = #{arenaId} and fr.type = 'battle' and fr.guest_player_id is null and fr.cancel_date is null and fr.use_date between  curdate() and date_add(curdate(), interval 7 day)
+  </select>
+  
+  <select id="findBattleActiveCustomersOrderByTimes" resultMap="BattleActiveCustomers" parameterType="long">
+  	select N.playerId, N.playerName, N.playerHeadIcon, N.cellphone,N.teamId, N.teamName, N.teamLogo, sum(N.number) useTimes  from 
+	(select fr.player_id playerId, fp.nick_name playerName, a.wechat_pic_url playerHeadIcon, a.cellphone cellphone,
+	 t.id teamId, t.name teamName, t.logo teamLogo, 
+	count(*) number from field_reservation fr
+	join field f on f.id = fr.field_id
+	join account a on a.id = fr.player_id
+	join football_player fp on fp.id = fr.player_id
+	left join team t on t.id = (select team_id from team_player where player_id = fr.player_id limit 1)
+	where fr.type='battle' and f.arena_id = #{arenaId}
+	group by fr.player_id
+	
+	union
+	
+	select fr.guest_player_id playerId, fp.nick_name playerName, a.wechat_pic_url playerHeadIcon, a.cellphone cellphone,
+	 t.id teamId, t.name teamName, t.logo teamLogo, 
+	count(*) number from field_reservation fr
+	join field f on f.id = fr.field_id
+	join account a on a.id = guest_player_id
+	join football_player fp on fp.id = fr.guest_player_id
+	left join team t on t.id = (select team_id from team_player where player_id = fr.player_id limit 1)
+	where fr.type='battle' and guest_player_id is not null and f.arena_id = #{arenaId}
+	group by guest_player_id
+	) as N
+	
+	group by N.playerId
+	order by useTimes desc
+  </select>
+  
+  <select id="getArenaFieldsReservationDetailOnSpecifyTime" resultMap="arenaFieldsReservationDetailResult" parameterType="com.footballer.rest.api.v2.request.AvaliableFieldRequest">
+  	select field_id fieldId, f.name fieldName,field_charge_standard_id fieldChargeStandardId, fr.type type,player_id playerId, guest_player_id guestPlayerId from field_reservation fr 
+	join field f on f.id = fr.field_id
+	where field_charge_standard_id in (select id from field_charge_standard where start_time = #{startTime} and arena_id = #{arenaId} ) 
+	and use_date= #{useDate} 
+	and cancel_date is null
+  </select>
+  
+  <select id="getArenaFieldChargeStandardInfoOnSpecifyTime" resultMap="arenaFieldsReservationDetailResult" parameterType="com.footballer.rest.api.v2.request.AvaliableFieldRequest">
+  	select f.id fieldId, f.name fieldName, fcs.id fieldChargeStandardId from field_charge_standard fcs
+	join field f on f.id = fcs.field_id
+	where fcs.start_time = #{startTime} and fcs.arena_id =#{arenaId}
+  </select>
+  
+  
+  
+  
+  <delete id="removeBattleWishById" parameterType="long" >
+    delete from battle_wish 
+    where id = #{battleWishId}
+  </delete>  
+  
+</mapper>

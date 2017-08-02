@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title></title>
+        <link rel="stylesheet" href="../../css/frozen.css">
+        <link rel="stylesheet" href="../../css/drawer.min.css">
+        <link rel="stylesheet" href="../../css/match.css">
+        <link rel="stylesheet" href="../../../css/justin_mobile_common.css">
+        
+        <style>
+        	.ui-btn-primary {
+        		background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0.5,#25b359),to(#25b359));
+        	}
+        	.numberCircle {
+        	  background: #e5e6e7;
+			  border-radius: 0.8em;
+			  -moz-border-radius: 0.8em;
+			  -webkit-border-radius: 0.8em;
+			  color: #ffffff;
+			  display: inline-block;
+			  font-weight: bold;
+			  line-height: 1.6em;
+			  margin-right: 15px;
+			  text-align: center;
+			  width: 1.6em;
+			}
+        </style>
+    </head>
+    
+<body class="drawer drawer--left">
+	
+	<div class="ui-loading-block show">
+	    <div class="ui-loading-cnt">
+	        <i class="ui-loading-bright"></i>
+	        <p>loading...</p>
+	    </div>
+	</div>
+
+	<div id="app" v-cloak>
+    	<header class="ui-header ui-header-positive ui-border-b">
+    	    <i class="ui-icon-return" onclick="historyBack('football')"></i>    	
+    		<center>联赛赛程列表</center>
+            <button id="langBtn" class="ui-btn" v-on:click="toggleLanguage">{{changeToLang}}</button>	
+        </header>
+        
+       <section class="ui-container">
+       
+            <!-- 联赛logo -->
+       		<ul class="ui-row-flex ui-border-t f-datagrid" style="background-color: white;" >
+				<li class="ui-col ui-col-2 ui-align-center ">
+					<img src="{{tournament.tournamentLogo}}" style="width:105%; height:100%;">
+				</li>
+			    <li class="ui-col ui-col-3 ui-ver" style="padding: 5px;">
+			    	<div class="ui-nowrap" style="margin-top: 16px;">
+			    		<span class="fs18"><b>{{tournament.tournamentName}}</b></span>
+			    	</div>
+			    	<div>
+			    		<span class="fs12" style="color: darkgrey;">{{lableDate}}: &nbsp;{{tournament.tournamentDate}}</span>
+			    	</div>
+			    	<div>
+			    		<!--  
+			    		<span class="fs14"><b style="color:deepskyblue;">{{totalTeams}}</b>&nbsp;<i>{{labelTeams}}</i></span>
+			    		<span class="fs14"><b style="color:green">{{totalPlayers}}</b>&nbsp;<i>{{labelPlayers}}</i></span>
+			    		-->
+			    		<span class="fs14"><b style="color:deepskyblue;">{{roundSize}}</b>&nbsp;<i>Round(s)</i></span>
+			    	</div>
+			    	<div><img src="{{tournament.tournamentOrgLogo}}" style="width:33.13px; height:20.19px; float: left;"><span class="fs12 pl5">{{tournamentOrgName}}</span></div>
+			    </li>
+			</ul>
+			
+       	  <!--  
+         <div class="ui-form">
+		    <form action="#">
+		        <div class="ui-form-item ui-form-item-link ui-border-b">
+		            <a href="#" v-on:click="clickMatchDay">
+			            <span class="numberCircle">1.</span>
+			            
+			            比赛日
+		            </a>
+		        </div>
+		        
+		        
+		        <div class="ui-form-item ui-form-item-link ui-border-b">
+		            <a href="#"><span class="numberCircle">2.</span> 比赛日</a>
+		        </div>
+		        
+		        
+		        <div class="ui-form-item ui-form-item-link ui-border-b">
+		            <a href="#"><span class="numberCircle">3.</span> 比赛日</a>
+		        </div>
+		        <div class="ui-form-item ui-form-item-link ui-border-b">
+		            <a href="#"><span class="numberCircle">4.</span> 比赛日</a>
+		        </div>
+		        <div class="ui-form-item ui-form-item-link ui-border-b">
+		            <a href="#"><span class="numberCircle">5.</span> 比赛日</a>
+		        </div>
+		    </form>
+		</div>
+		-->
+		
+		
+		<!--  
+		<ul v-for="r in matchScheduleRoundList" class="ui-list ui-list-link ui-border-tb">
+		    <li v-on:click="clickMatchDay(r.roundNumber)">
+		        <div style="width: 75px; height: 75px; margin-top:35px" class="ui-avatar">
+		            <span style="background-image:url(http://static.footballer.cc/{{r.logo}})"></span>
+		        </div>
+		        <div class="ui-list-info ui-border-t">
+		        	&nbsp &nbsp &nbsp&nbsp&nbsp <span class="numberCircle">{{r.roundNumber}}.</span>比赛日
+		            <h4 style="padding-top:5px" class="ui-nowrap">开赛球队：0， 完赛球队：0</h4>
+		            <p class="ui-nowrap">比赛日期：待定</p>
+		            <h4 style="padding-top:5px" class="ui-nowrap">场地分布：待选</h4>
+		            <p class="ui-nowrap">最近比分：0:0</p>
+		            
+		            <h4 style="padding-top:5px" class="ui-nowrap">最近场次：{{r.latestMatch}}</h4>
+		        </div>
+		    </li>
+		</ul>
+		-->
+			 		
+			<div>
+				<div class="divInLine"
+					style="background: white; margin: 2px 5px 2px 5px; height: 25px; width: 97%;">
+					<button class="ui-btn-s" v-on:click="preRoundBtn" name="team"
+						style="width: 20px;">
+						<i class="ui-icon-prev"
+							style="font-size: 16px; margin-top: -10px;"></i>
+					</button>
+					
+					<div style="margin: auto;" v-cloak>
+						<span>Round: </span><span id="topRoundNumber" style="background: #64bd63" class="numberCircle"> {{currentIndex}}</span>
+					</div>
+					
+
+					<button class="ui-btn-s" v-on:click="nextRoundBtn" name="team"
+						style="width: 20px;">
+						<i class="ui-icon-next"
+							style="font-size: 16px; margin-top: -10px;"></i>
+					</button>
+				</div>
+				<br>
+<br>
+				<ul id="scheduleMatchDayList" v-for="i in currentRoundList"
+					class="ui-row-flex ui-list-text border-list" 
+					v-on:click="clickMatchItem(i, $index)">
+					<li class="ui-col ui-border-t ui-flex-var ui-flex-pack-end"
+						style="width: 30%; text-align: center; padding: 5px 0px 5px 0px; ">
+						<div v-if="i.hostTeamLogo" class="ui-list-thumb" style="margin: auto;">
+							<img src="http://static.footballer.cc/{{i.hostTeamLogo}}"
+								style="margin: auto; width: 100%; height: 100%;">
+						</div>
+						<div v-else="i.hostTeamLogo" class="ui-list-thumb" style="margin: auto;">
+							轮空
+						</div>
+						<div class="font_long_ellipsis">
+							<span style="font-size: 12px;">{{i.hostTeamLabel}}</span>
+						</div>
+					</li>
+					<li class="ui-col ui-flex-pack-center"
+						style="width: 40%; text-align: center; padding: 5px 0px 5px 0px">
+						<div style="display: inline-flex;">
+							<span
+								style="font-size: 16px; background-color: darkseagreen; width: 5rem; display: inline-table; color: white;">
+								vs </span>
+						</div>
+						<div>
+							<span style="font-size: 12px;">{{i.displayTime.substr(0,
+								i.displayTime.length-3)}}</span>
+						</div>
+						<div>
+							<span style="font-size: 12px;">场地待定</span>
+						</div>
+					</li>
+					<li class="ui-col ui-flex-ver ui-flex-pack-end"
+						style="width: 30%; text-align: center; padding: 5px 0px 5px 0px">
+						<div v-if="i.guestTeamLogo" class="ui-list-thumb" style="margin: auto;">
+							<img src="http://static.footballer.cc/{{i.guestTeamLogo}}"
+								style="width: 100%; height: 100%;">
+						</div>
+						<div v-else="i.guestTeamLogo" class="ui-list-thumb" style="margin: auto;">
+							轮空
+						</div>
+						<div class="font_long_ellipsis">
+							<span style="font-size: 12px;">{{i.guestTeamLabel}}</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<br>
+			
+			<ul class="roundFooter" style="text-align: center">
+			    <li style="display: inline-block" v-for="i in scheduleMatchList" v-on:click="clickRoundFooter($index)">
+					<span class="numberCircle">{{$index + 1}}</span>
+				</li>
+			</il>
+			
+
+		</section>
+		
+
+		<div style="text-align: center;margin: 10px 0px 30px 0px" onclick="aufFooterRedirect()">
+			<img src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="160px" height="20px" >
+		</div>
+	
+	</div>
+
+<script src="../../../i18n/env.js"></script>
+<script src="../../../js/jquery-1.11.2.min.js" type="text/javascript"></script>  
+<script src="../../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../../js/frozen.js"></script>
+<script src="../../js/server/service.js"></script>
+<script src="../../../js/justin_common.js"></script>
+<script src="../../js/lib/vue.min.js"></script>
+<script src="../../js/lib/underscore-min.js"></script>
+<script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript" ></script>
+<script src="../../js/iscroll.min.js"></script>
+<script src="../../js/drawer.min.js"></script>
+<script src="../../js/lib/anime.min.js"></script>
+
+<script>
+
+h5Init()
+
+$(document).ready(function() {
+	
+    		var vm,
+				lang = f$.cache('lang')
+		    	tournamentId = getParameter(window.location.href ,"tournamentId"),
+		    	matchScheduleId = getParameter(window.location.href ,"matchScheduleId"),
+		    	urlLang = getParameter(window.location.href ,"lang") 
+		    	
+	    	if(urlLang){
+	    		lang = urlLang
+	    		f$.cache('lang', urlLang)
+	    	}
+    		
+	    	vm = new Vue({
+	    		el   : '#app',
+	    		data : {
+	    			domain:'',
+	    			suffix:'',
+	    			changeToLang:'',
+	    			title_register:'loading',
+	    			matchScheduleRoundList:[],
+	    			tournament : {
+	    				tournamentName : '',
+	    				tournamentLogo : '',
+	    				tournamentDate : '',
+	    				tournamentOrgName : '',
+	    				tournamentOrgLogo : ''
+	    			},
+	    			labelTeams:'',
+    		    	labelPlayers:'',
+    		    	lableDate:'',
+    		    	currentRoundList : [],
+    		    	scheduleMatchList : [],
+    		    	currentIndex: null,
+    		    	roundSize : null
+
+	    		},
+	    		methods: {
+	    			init:function() {
+	    				vm.$data.domain =  GLOBAL_VAR_DOMAIN;
+				        vm.$data.suffix = GLOBAL_VAR_SUFFIX;
+				        
+				        if(lang == 'ch'){
+	    					vm.$data.changeToLang = 'Eng'
+				        }else if(lang == 'en'){
+				        	vm.$data.changeToLang = '中文'
+				        }
+				        vm.langI18n(lang)
+				        
+				        vm.$data.loggedUserAvatar = f$.cache('uesr_current_peopleImgUrl');
+				        vm.loadData();
+ 	    				$('title').text(vm.$data.labelTournaments)
+	    			},
+	    			toggleLanguage : function(){
+	    				if(lang == 'ch'){
+	    					vm.$data.changeToLang = '中文'
+				        	lang = 'en'
+				        }else if(lang == 'en'){
+				        	vm.$data.changeToLang = 'Eng'
+				        	lang = 'ch'
+				        }
+	    				vm.langI18n(lang)
+	    			},
+	    			langI18n : function(lang){
+	    				$.i18n.properties({// 加载中文properties文件  
+	    	    		    name:'lan', // properties文件名称  
+	    	    		    path:'../../../i18n/', // properties文件路径  
+	    	    		    mode:'map', // 用 Map 的方式使用资源文件中的值
+	    	    		    language:lang,
+	    	    		    checkAvailableLanguages: true,
+	    	    		    callback: function() {// 加载成功后设置显示内容  
+	    	    		    	vm.$data.title_register =  $.i18n.prop('title_register');
+	    	    		    	vm.$data.labelTournamentInfo =  $.i18n.prop('tournamentInfo');
+	    	    		    	vm.$data.labelTeams =  $.i18n.prop('teams');
+	    	    		    	vm.$data.labelPlayers =  $.i18n.prop('players');
+	    	    		    	vm.$data.lableDate = $.i18n.prop('date');
+	    	    		    }
+	    	    		});
+	    			},
+	    			loadData : function() {
+	    				//TODO: add test code
+	    				var currentPlayer = f$.cacheObj('currentPlayer') || {id : 1}
+	    			    var param = {
+	    			    	tournamentId : tournamentId,
+	    			    	matchScheduleId : matchScheduleId
+	    			    }
+	    			    
+	    			    f$.loadTournamentBaseInfo(vm.$data.domain,vm.$data.suffix, tournamentId).done(function(data) {
+	    					vm.$data.tournament.tournamentName = data.tournamentBaseInfo.name
+	    					vm.$data.tournament.tournamentLogo = 'http://static.footballer.cc/'+ data.tournamentBaseInfo.logo
+	    					vm.$data.tournament.tournamentDate = data.tournamentBaseInfo.displayStartDate.substr(0,10)   + '   -   ' + data.tournamentBaseInfo.displayEndDate.substr(0,10)  
+	    					vm.$data.tournament.tournamentOrgName = data.tournamentBaseInfo.mainOrganiserName
+	    					vm.$data.tournament.tournamentOrgLogo = 'http://static.footballer.cc/'+data.tournamentBaseInfo.mainOrganiserLogo
+	    					
+	    					$('.ui-loading-block').removeClass("show");
+	    	    		})
+	    			    
+	    				f$.getTournamentMatchListByMatchScheduleId(vm.$data.domain,vm.$data.suffix, param).done(function(data) {
+	    					$('.ui-loading-block').removeClass("show");
+	    					var list = data.list,
+	    						matchScheduleList = _(list).groupBy('round')
+	    						
+	    					// save orignal list
+	    					vm.$data.scheduleMatchList = matchScheduleList
+	    					vm.$data.currentIndex = 1
+	    					vm.$data.roundSize = _(matchScheduleList).size()
+	    					
+	    					vm.$data.currentRoundList = matchScheduleList[0];
+	    					Vue.nextTick(function() {
+	    						var $this = $('.roundFooter').find('li span')[0] 
+	    						$this.style.background = '#64bd63';
+	    						setTimeout(function() {
+	    							anime({
+		    							targets : '#topRoundNumber',
+		    							background : '#64bd63',
+		    							//'line-height' : '2.0em',
+		    							//width : '2.0em',
+		    							rotate: {
+		    							    value: 360,
+		    							    duration: 500,
+		    							    easing: 'linear'
+		    						    }
+		    						})
+	    						}, 233)
+	    						
+	    						var reverseAnim = anime({
+	        						targets : '#scheduleMatchDayList',
+	        						translateX: 250,
+	        						duration: 550
+	        					})
+	        					reverseAnim.play();
+	    						reverseAnim.reverse();
+	    					})
+	    					
+	    				})
+	    			},
+	    			clickMatchItem : function(matchItem, index) {
+	    				f$.cacheObj('matchItem', JSON.stringify(matchItem))
+	    				f$.cacheObj('matchList', JSON.stringify(vm.$data.currentRoundList))
+	    				
+	    				//TODO : test code
+	    				var tournamentId = getParameter(window.location.href ,"tournamentId") || 1
+	    				var navigateParams = tournamentId + '&lang='+f$.cache('lang') + '&roundSize=' + vm.$data.roundSize + '&currentIndex=' + index + "&roundNumber=" + vm.$data.currentIndex
+                    	var mobilePath = vm.$data.domain + 'footballer/mobile/match/'
+                    	
+                    	location.href = mobilePath + 'schedule/leagueScheduleMatchEdit.html?tournamentId='+ navigateParams
+	    			},
+	    			preRoundBtn : function() {
+	    				var length = vm.$data.roundSize
+	    				    currentIndex = vm.$data.currentIndex - 2,
+	    					index = currentIndex < 0 ? length - 1 : currentIndex
+	    						
+	    				this.clickRoundFooter(index)
+	    			},
+	    			nextRoundBtn : function() {
+	    				var length = vm.$data.roundSize
+    				    	currentIndex = (vm.$data.currentIndex + 1) % length
+	    				this.clickRoundFooter(currentIndex == 0 ? length -1 : currentIndex - 1)
+	    			},
+	    			clickRoundFooter : function(index) {
+    					vm.$data.currentRoundList = vm.$data.scheduleMatchList[index];
+    					vm.$data.currentIndex = index + 1;
+    					
+    					//var span = $('.roundFooter').find('li span')[index]
+    					
+    					Vue.nextTick(function() {
+    						var reverseAnim = anime({
+        						targets : '#scheduleMatchDayList',
+        						translateX: 250,
+        						duration: 550
+        					})
+        					reverseAnim.play();
+    						reverseAnim.reverse();
+    						
+    					})
+    					
+    					$('#topRoundNumber')[0].style.transform = "none";
+    					
+    					//var $topRoundNumber = $('#topRoundNumber')
+    					var $roundFooter = $('.roundFooter').find('li span'),
+    					    $selectedRound = $roundFooter[index]
+    					
+    					$roundFooter.css({
+    						background : '#e5e6e7'
+    					})
+    					$roundFooter[index].style.background = '#64bd63'
+    					
+    					anime({
+							targets : '#topRoundNumber',
+							background : '#64bd63',
+							//'line-height' : '2.0em',
+							//width : '2.0em',
+							rotate: {
+							    value: 360,
+							    duration: 400,
+							    easing: 'linear'
+						    }
+						})
+	    			}
+	    		}
+	    	});
+	    	
+   vm.init();
+});
+          
+</script>
+    </body>
+</html>

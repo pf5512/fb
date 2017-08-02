@@ -1,0 +1,237 @@
+div.left{
+  float: left;
+  display: inline-flex;
+}
+div.right{
+  float: right;
+}
+
+.right{
+	float: right;
+}
+
+div.HBox{
+  display:inline-flex;
+}
+
+.HBox{
+  display:inline-flex;
+}
+
+div.hideBox{
+  display:none;
+}
+
+table.noline{
+	width:100%;
+	max-width: 100%;
+    background-color: transparent;
+    text-align: left;
+    border-spacing: 2px;
+    border-collapse:separate;
+  	border-spacing:10px 10px;
+}
+
+
+.table-condensed-1 td {
+  padding:0px 2px 0px 5px;
+}
+
+table.solidBorder{
+	border: aliceblue solid 2px;
+}
+
+
+th.len250{
+	width:250px;
+} 
+
+label.outset{
+    border: azure;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 5px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    height: 25px;
+}
+
+
+label.outsetBlue{
+    border: azure;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 5px;
+    color: cornflowerblue;
+    font-size: 20px;
+    font-weight: bold;
+    height: 25px;
+}
+
+label.green{
+	border: azure;
+    border-width: 3px;
+    border-style: none;
+    border-radius: 5px;
+    color: green;
+    font-size: 20px;
+    font-weight: 300;
+    height: 25px;
+    padding-top: 5px;
+}
+
+label.outsetGreen{
+    border: azure;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 5px;
+    color: green;
+    font-size: 20px;
+    font-weight: bold;
+    height: 25px;
+}
+
+label.outsetRed{
+    border: azure;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 5px;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    height: 25px;
+}
+
+label.outsetOrange{
+    border: azure;
+    border-width: 3px;
+    border-style: outset;
+    border-radius: 5px;
+    color: orange;
+    font-size: 20px;
+    font-weight: bold;
+    height: 25px;
+}
+
+label.nowrap{
+	display:block;/*内联对象需加*/
+    width:5em;
+    word-break:keep-all;/* 不换行 */
+    white-space:nowrap;/* 不换行 */
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+label.timeslot{
+	font-size: 16px;
+	color: cornflowerblue;
+}
+
+label.forSelect{
+	padding-left: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+label.forInput{
+	margin: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    width:65px;
+}
+
+label.forRadio{
+	padding-right: 10px;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+label.forCheckBox{
+	padding-right: 10px;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+label.green{
+	color:green;
+}
+
+label.red{
+	color:red;
+}
+
+.tableHeaderLabel{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.tableContentLabel{
+	font-size: 25px;
+}  
+
+label.sectionTitle{
+	font-size: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 4px;
+}
+
+label.headIconTitle{
+	font-size: 15px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 7px;
+}
+
+img.titleIcon {
+	width:30px;
+	height:30px;
+}
+
+
+ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+li {
+   display:inline;
+   /* color:cornflowerblue; */
+   font-size:25px;
+}
+
+
+.smallIcon {
+	cursor: pointer; 
+	float:left;
+	height:22px;
+	width:24px;
+	padding-right: 5px;
+}
+
+.headIcon {
+	cursor: pointer; 
+	float:left;
+	height:33px;
+	width:33px;
+	border-radius:11px;
+}
+
+
+.teamIcon {
+	cursor: pointer; 
+	float:left;
+	height:45px;
+	width:45px;
+	border-radius:11px;
+}
+
+
+/* 阻止子元素触发拖拽事件 */
+.child-elements
+{
+    pointer-events:none;
+}

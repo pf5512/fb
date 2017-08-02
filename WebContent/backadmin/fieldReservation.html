@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>预定详情</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" href="../img/analysis/auf_title.png" type="image/x-icon"/>
+<link rel="stylesheet" type="text/css" href="../css/justin_common.css">
+<link rel="stylesheet" type="text/css" href="../css/button.min.css">	
+<link href="assets/css/digitalClock.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/fakeLoader.min.css">
+<link href="../css/jquery-ui.dialog.1.11.4.min.css" rel="stylesheet" type="text/css">
+
+<script src="assets/javascripts/1.3.0/adminflare-demo-init.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	// Include Bootstrap stylesheet 
+	document
+			.write('<link href="assets/css/' + DEMO_ADMINFLARE_VERSION + '/' + DEMO_CURRENT_THEME + '/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" id="bootstrap-css">');
+	// Include AdminFlare stylesheet 
+	document
+			.write('<link href="assets/css/' + DEMO_ADMINFLARE_VERSION + '/' + DEMO_CURRENT_THEME + '/adminflare.min.css" media="all" rel="stylesheet" type="text/css" id="adminflare-css">');
+</script>
+
+<script src="assets/javascripts/1.3.0/modernizr-jquery.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/adminflare-demo.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/bootstrap.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/1.3.0/adminflare.min.js"
+	type="text/javascript"></script>
+<script src="assets/javascripts/vue.min.js" type="text/javascript"></script>
+<script src="../js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="../js/justin_common.js" type="text/javascript"></script>
+<script src="../mobile/js/lib/underscore-min.js" type="text/javascript"></script>
+<script src="../js/fakeLoader.min.js" type="text/javascript"></script>
+<script src="../js/jquery-ui.dialog.1.11.4.min.js" type="text/javascript"></script>
+
+<style type="text/css">
+.well, .box {
+	padding-bottom: 0;
+}
+</style>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		prettyPrint();
+	});
+</script>
+</head>  
+<body id="reservation">
+	<div id="fakeLoader"></div>
+	<script type="text/javascript">
+		demoSetBodyLayout();
+	</script>
+	<!-- Main navigation bar
+		================================================== -->
+	<header class="navbar navbar-fixed-top" id="main-navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<img id="arenaLogo" onerror="this.style.display='none'"  style="float: left;margin: 6px 0px 0px 5px;width: 28px;height: 28px;">
+				<a class="logo"
+					style="width: 200px;color: cornsilk; font-size: 15px;font-weight: bold; margin: 10px 8px 0px 8px;">Auf-Backend</a>
+				<a class="btn nav-button collapsed" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-reorder"></span>
+				</a>
+
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active">
+							<a href="/footballer/backadmin/fieldReservation.html">预定</a></li>
+						<li class="complete">
+							<a href="/footballer/backadmin/battleMgmt.html" style="color: greenyellow;">约战</a></li>
+						<li class="complete">
+							<a href="/footballer/backadmin/soloMgmt.html" style="color: aqua;">单飞</a></li>
+						<li class="divider-vertical"></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<i class=" icon-caret-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="/footballer/backadmin/memberList.html">会员</a></li>
+								<li><a href="/footballer/backadmin/nonmemberList.html">用户</a></li>
+								<li><a href="/footballer/backadmin/fieldManagement.html">场次/价格</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">高级功能</li>
+								<li><a href="/footballer/backadmin/dataStatistics.html">数据统计</a></li>
+								<li><a href="/footballer/backadmin/automationConfig.html">固定场次自动预定</a></li>
+							</ul></li>
+						<li class="divider-vertical"></li>
+					</ul>
+					<!-- <form class="navbar-search pull-left" action="" _lpchecked="1">
+						<input type="text" class="search-query" placeholder="Search" style="width: 120px">
+					</form> -->
+					<ul class="nav pull-right">
+						<li>
+							<!-- <ul class="messages">
+								<li><a href="#"><i class="icon-warning-sign"></i> 2<span class="responsive-text"> alerts</span></a></li>
+								<li><a href="#"><i class="icon-envelope"></i> 25<span class="responsive-text"> new messages</span></a></li>
+							</ul> -->
+						</li>
+						<li class="separator"></li>
+						<li class="dropdown">
+							<img onerror="this.style.display='none'" class="headIcon" src="../img/common/admin_spy.png" style="margin: 3px 0 0 1px;">
+							<a href="#" class="dropdown-toggle usermenu" data-toggle="dropdown"> 
+								<span id="adminName" style="width: 100px;display: block;">管理员名</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a onclick="updatePwdPopup();" href="#">修改密码</a></li>
+								<!-- <li><a href="#">设置</a></li> -->
+								<li class="divider"></li>
+								<li><a onclick="loginOut();" href="/footballer/backadmin/fieldReservation.html" >登出</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<div id="dialog-form" title="请先登陆"  style="display:none;">
+		  <p class="validateTips"></p>
+		 
+		  <form>
+		    <fieldset>
+		      <div class="HBox">
+		      	<label for="name" class="forInput">用户</label>
+		      	<input type="text" name="name" id="name"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <br>
+		      <div class="HBox">
+		      	<label for="password" class="forInput">密码</label>
+		      	<input type="password" name="password" id="password"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		      
+		    </fieldset>
+		  </form>
+	</div>
+	
+	<div id="dialog-updatePwd" title="修改密码"  style="display:none;">
+		  <p class="validateTips"></p>
+		 
+		  <form>
+		    <fieldset>
+		      <div class="HBox">
+		      	<label for="newPwd" class="forInput">新密码</label>
+		      	<input type="password" name="newPwd" id="newPwd"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <br>
+		      <div class="HBox">
+		      	<label for="confirmPwd" class="forInput">确认密码</label>
+		      	<input type="password" name="confirmPwd" id="confirmPwd"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		    </fieldset>
+		  </form>
+	</div>
+
+
+	<section class="container" id="app">
+
+		<section class="row-fluid" style="width: 1160px;">
+			<div class="time">
+				
+				<div class="left" style="padding-right:20px;">
+					<img onerror="this.style.display='none'" class="headIcon" src="../img/common/reservationIcon.png" style="margin-right: 10px;">
+					<div id="dayPick" style="display:inline-flex;">
+						<input id="datePicker" type="date" v-on:change="dateChange">
+						<div id="Date" style="padding-top: 7px;padding-left: 20px;padding-right: 20px;"></div>
+					</div>
+					
+					<div class="button-group">
+						<button v-on:click="today" type="button" class="button button-action button-small button-raised">回到今天</button>
+						<button v-on:click="thisWeek" type="button" class="button button-primary button-small button-raised">本周详情</button>
+					</div>
+				</div>	
+			<!-- <button v-on:click="yesterday"class="button button-action button-box button-small"><i class="fa fa-plus">   <  </i></button>  -->
+			<!-- 		<button v-on:click="nextday" class="button button-action button-circle button-small"><i class="fa fa-plus"> > </i></button>   -->
+		    <!-- 	<img style="float:left; padding: 0px 8px 0 0;" alt="miss" src="assets/images/Clock.png">   -->
+		     		
+		     	<ul class="right" style="margin-right: 29px;">
+				<li id="hours"> </li>
+				<li id="point">:</li>
+				<li id="min"> </li>
+				<li id="point">:</li>
+				<li id="sec"> </li>
+				</ul>
+		     	
+		    </div>
+		    
+		    <br>
+		    
+		    <div style="width:100%;display: inline-block;">
+		    	<div class="left">
+		    		<label class="timeslot"></label>
+		    	</div>
+		    	
+		    	<div id="fieldPageBtn" class="button-group left" style="margin-left:369px;">
+					    <template v-if="fields.length > 4">
+					    	<button v-on:click="show1_4" type="button" class="button button-tiny button-raised">1</button>
+					    </template>
+					    <template v-if="fields.length/4 > 1">
+					    	<button v-on:click="show5_8" type="button" class="button button-tiny button-raised">2</button>
+					   	</template>
+					   	<template v-if="fields.length/4 > 2">
+					    	<button v-on:click="show9_12" type="button" class="button button-tiny button-raised">3</button>
+					    </template>
+					    <template v-if="fields.length/4 > 3">
+					    	<button v-on:click="show13_16" type="button" class="button button-tiny button-raised">4</button>
+					    </template>
+					    <template v-if="fields.length/4 > 4">
+					    	<button v-on:click="show17_20" type="button" class="button button-tiny button-raised">5</button>
+					    </template>
+					    <template v-if="fields.length > 4">
+					    	<button v-on:click="showAll" type="button" class="button button-tiny button-raised">全部</button>
+					    </template>
+				</div>
+		    
+		    	<div class="button-group right">
+				    <button v-on:click="showAllday" type="button" class="button button-pill button-small button-highlight">全天</button>
+				    <button v-on:click="showEvening" type="button" class="button button-pill button-small button-royal">晚上</button>
+				</div>
+		    </div>
+		    
+
+			<table class="noline" style="margin-top:20px;">
+				<thead>
+					<tr class="tableHeaderLabel">
+						<th style="width:100px">时段</th>
+						  
+						<template v-for="data in fields">
+								<th v-if="groupAll" class="len250">
+									<div  class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>
+																
+								<th v-if="group1_4 && $index+1 <=4" class="len250">
+									<div class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>
+									
+								<th v-if="group5_8 && $index+1 >4 && $index+1<9" class="len250">
+									<div class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>
+								
+								<th v-if="group9_12 && $index+1 >8 && $index+1<13" class="len250">
+									<div class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>
+								
+								<th v-if="group13_16 && $index+1 >12 && $index+1<17" class="len250">
+									<div class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>
+								
+								<th v-if="group17_20 && $index+1 >16 && $index+1<21" class="len250">
+									<div class="left">
+										<label style="font-size: 16px;padding-right: 8px;font-weight: bold;">{{data.name}}</label>
+										<label style="font-size: 10px;padding-top: 2px;color: cadetblue;">{{data.type}}人制|</label>
+										<label style="font-size: 10px;padding-left: 0px;padding-top: 2px;color: cadetblue;">{{data.condition}}</label>
+									</div>
+								</th>		
+						</template>  
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="row in reservationDetailList">
+					<tr>
+						<td class="rowHeader">
+							<div v-if="row.dateTime" >
+								<label class="timeslot" style="width:100px;color:cornflowerblue;">{{row.weekDay}}</label>
+								<label class="">{{row.dateTime}}</label>
+								<br>
+							</div>
+							<label class="timeslot" style="width:100px;">{{row.timeSlot}}</label>
+						</td>
+						<template v-for="data in row.reserverations">
+						<td id="{{data.fieldReservationId}}" style="border: cornflowerblue; border-style: outset; border-width: 2px; border-radius: 15px;" 
+						    v-on:mouseenter="doMouseEnter" v-on:mouseleave="doMouseLeave" v-on:click="doMouseEnter">
+								<table id="{{row.dateTime}}" name="{{data.fieldChargeStandardId}}" data-queryDate="{{data.queryDate}}" class="table-condensed-1" style="width: 250px; height:160px;">
+									<tr>
+										<td colspan=2>
+											<div class="HBox">
+												<div v-if="data.reservationType == 'fullField'">
+													<label class="outsetBlue" style="width: 46px;">整场</label>
+												</div>
+												<div v-if="data.reservationType == 'battle'">
+													<label class="outsetRed" style="width: 46px;">约战</label>
+												</div>
+												<div v-if="data.videoService == 1" >
+													<img alt="video" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/video.png">
+												</div>
+												<!-- 		
+												<div v-if="data.reservationType == 'singleFly'">
+													<label class="outsetOrange" style="width: 46px;">单飞</label>
+												</div>  -->
+											</div>
+													
+										</td>
+										<td>
+											<div v-if="data.paymentStatus == 1" class="right">
+												<img alt="paid" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/paid.png">
+											</div> 
+											<div v-if="data.paymentStatus == 7" class="right">
+												 <img alt="Avatar" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/avatar.png">
+											</div> 
+											<div v-if="data.guestPaymentStatus == 7" class="right">
+												 <img alt="Avatar" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/avatar.png">
+											</div>
+											<div v-if="data.paymentStatus == 4" class="right">
+												<img alt="wechatpaid" style="width: 25px;height:30px; padding-bottom:4px;" src="assets/images/wechatpaid.png">
+											</div>
+											
+											<div v-if="data.guestPaymentStatus == 6" class="right">
+												<img alt="wechatpaid" style="width: 25px;height:30px; padding-bottom:4px;" src="assets/images/wechatpaid_ying.png">
+											</div>
+											<div v-if="data.paymentStatus == 5" class="right">
+												<img alt="wechatpaid" style="width: 25px;height:30px; padding-bottom:4px;" src="assets/images/wechatpaid_yue.png">
+											</div> 
+											
+											
+											<div v-if="data.guestPaymentStatus == 3" class="right">
+												<img alt="wechatpaid" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/paid_ying.png">
+											</div> 
+											<div v-if="data.paymentStatus == 2" class="right">
+												<img alt="wechatpaid" style="width: 30px;height:30px; padding-bottom:4px;" src="assets/images/paid_yue.png">
+											</div>   
+										</td>
+									</tr>
+									<div v-if="data.reservationType == 'battle' or data.reservationType == 'fullField'">
+									<tr>
+										<td>
+											<div v-if="data.weChatPicUrl !=null" class="HBox" style="width: 95px;">
+												<img onerror="this.style.display='none'" style="width: 30px;height:30px; border-radius: 5px;" src="{{data.weChatPicUrl}}">
+												<label class="nowrap" style="padding: 5px 0 0 5px;">{{data.playerName}}</label>	
+											</div>
+											<div v-if="data.weChatPicUrl ==null" style="width: 65px;">
+												<label class="nowrap">{{data.playerName}}</label>
+											</div>
+										</td>
+										<td style="width: 60px;"><label class="nowrap">{{data.teamName}}</label></td>
+										<td style="width: 74px;"><label style="font-size:12px;">{{data.hostCell}}</label></td>
+									</tr>
+									</div>
+									<div v-if="data.reservationType == 'battle'">
+									<tr>
+										<td>
+											<div v-if="data.guestWeChatPicUrl != null" class="HBox">
+												<img  onerror="this.style.display='none'" style="width: 30px;height:30px; border-radius: 5px;" src="{{data.guestWeChatPicUrl}}">
+												<label style="padding: 5px 0 0 5px;width: 80px;">{{data.guestPlayerName}}</label>
+											</div>
+											<div v-if="data.guestWeChatPicUrl ==null">
+												<label style="">{{data.guestPlayerName}}</label>
+											</div>
+										</td>
+										<td><label class="nowrap">{{data.guestTeamName}}</label></td>
+										<td><label style="font-size:12px">{{data.guestCell}}</label></td>
+									</tr>
+									</div>
+									<tr>
+										<td style="display: inline-flex;">
+										<div v-if="data.reservationType == 'singleFly'">
+											<b>共{{data.playerNameList.length}}人</b>&nbsp;&nbsp;
+										</div>
+										<template v-if="data.reservationType == 'singleFly'"
+											v-for="name in data.playerNameList">
+										<label>{{$index+1}}:{{name}}&nbsp;</label>
+										</template>
+										</td>
+									</tr>
+									<tr style="display:none;">
+										<td v-if="data.reservationType == 'fullField'" colspan="4">
+											<a id="{{data.playerId}}" v-on:click="cancelReservationBtn" class="button button-caution button-border button-rounded button-tiny">取消</a>
+										</td>
+										
+										<td v-if="data.reservationType == 'battle'" colspan="4">
+											<a v-if="data.guestPlayerId == null" v-on:click="acceptBattle"  class="button button-action button-border button-rounded button-tiny">应战</a>	
+											<a v-if="data.guestPlayerId != null" v-on:click="removeBattle" class="button button-highlight button-border button-rounded button-tiny">移除球队</a>	
+											<a id="{{data.playerId}}" name="{{data.guestPlayerId}}" v-on:click="cancelReservationBtn" class="button button-caution button-border button-rounded button-tiny">取消</a>
+											
+											<div name="operateArea" style="margin-top: 10px; display:none;border: cornflowerblue; border-style: dashed; border-width: 1px; ">
+												<div class="left">
+													<label for="reserver" style="padding-left:5px; padding-top:5px; padding-right:17px;">应战方</label>
+													<select id="reserver" style="width:160px;">
+													  <option v-for="ap in arenaPlayerList" v-bind:value="ap.playerId">
+													        {{ap.name}}  
+													        {{ap.teams}} 
+													        {{ap.cellphone}} &nbsp;&nbsp;&nbsp; 
+													        {{ap.totalCount}}次
+													      <!--   <label>{{ap.wechatNo}}</label>   -->
+													  </option>
+													</select>
+												</div>
+												
+												<a v-on:click="cancelBtn" class="button button-primary button-rounded button-tiny">取消</a>
+												<a v-on:click="acceptBattleBtn" class="button button-primary button-rounded button-tiny">应战</a>
+											</div>
+											
+											<div name="removeArea" style="margin-top: 10px;padding-bottom: 5px; display:none;border: cornflowerblue; border-style: dashed; border-width: 1px; ">
+												<div class="left">
+													<input type="radio" id="t1" value="{{data.playerId}}" v-model="removePlayerId" style="margin-left: 5px;margin-right: 5px;margin-top: 2px;">
+													<label for="t1">{{data.playerName}} - {{data.guestCell}}</label>
+												</div>
+												<br>
+												<div class="left" style="width:100%;">
+													<input type="radio" id="t2" value="{{data.guestPlayerId}}" v-model="removePlayerId" style="margin-left: 5px;margin-right: 5px;margin-top: 2px;">
+													<label for="t2">{{data.guestPlayerName}} - {{data.guestCell}}</label>
+												</div>
+												<a v-on:click="cancelBtn" class="button button-primary button-rounded button-tiny">取消</a>
+												<a id="{{data.playerId}}" name="{{data.guestPlayerId}}"  v-on:click="removeBattleBtn" class="button button-primary button-rounded button-tiny">移除</a>
+												
+											</div>
+										</td>
+										
+										<td v-if="data.reservationType == 'singleFly'" colspan="4">
+										<a class="button button-glow button-border button-rounded button-tiny">加人</a>
+										<a class="button button-royal button-border button-rounded button-tiny">移除</a>
+										<a class="button button-caution button-border button-rounded button-tiny">取消</a>
+										</td>
+										
+										<td v-if="data.reservationType == null" colspan="4">
+											<a v-on:click="fullFieldReservation" class="button button-action button-border button-rounded button-tiny">整场</a>
+											<a v-on:click="battleReservation" class="button button-caution button-border button-rounded button-tiny">约战</a>
+										<!-- 	<a class="button button-royal button-border button-rounded button-tiny">单飞</a>   -->
+											
+											<div name="operateArea" style="margin-top: 10px; display:none;border: cornflowerblue; border-style: dashed; border-width: 1px; ">
+												<div class="left">
+													<label for="reserver" style="padding-left:5px; padding-top:5px; padding-right:17px;">定场人</label>
+													<select id="reserver" style="width:160px;">
+													  <option v-for="ap in arenaPlayerList" v-bind:value="ap.playerId">
+													        {{ap.name}}  
+													        {{ap.teams}} 
+													        {{ap.cellphone}} &nbsp;&nbsp;&nbsp; 
+													        {{ap.totalCount}}次
+													      <!--   <label>{{ap.wechatNo}}</label>   -->
+													  </option>
+													</select>
+												</div><br></br>
+												<div class="left" style="display:none;">
+													<label for="checkbox" style="padding-left:5px;  padding-right:5px;">视频服务</label>
+													<input type="checkbox" id="checkbox" v-model="videoStatus" style="margin-right: 25px;">
+												</div>
+												
+												<a v-on:click="cancelBtn" class="button button-primary button-rounded button-tiny">取消</a>
+												<a id="fullField"  v-on:click="fullFieldBtn" class="button button-primary button-rounded button-tiny" style="display:none;">确定</a>
+												<a id="battle" v-on:click="battleBtn" class="button button-primary button-rounded button-tiny" style="display:none;">约战</a>
+											</div>
+										</td>
+									</tr>
+								</table>
+						</td>
+						</template>
+					</tr>
+					</template>
+				</tbody>
+			</table>
+
+		</section>
+
+		<footer id="main-footer">
+			Copyright © 2015 <!-- <a href="http://www.footballer.cc"> -->成都傲赴体育有限公司 
+			all rights reserved. <a href="#" class="pull-right" id="on-top-link">
+				On Top &nbsp;<i class="icon-chevron-up"></i>
+			</a>
+		</footer>
+	</section>
+</body>
+<script type="text/javascript">
+
+
+	(function() {
+		var amId;
+		var urlPre ='',iaa='';
+		
+
+		var source={"status":"success","arenasFieldsReservation":[{"fieldReservationId":null,"reservationType":null,"fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":1,"startTime":"10:00","endTime":"12:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":2,"startTime":"12:00","endTime":"14:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":3,"startTime":"14:00","endTime":"16:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":4,"startTime":"16:00","endTime":"18:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":6,"reservationType":"fullField","fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":5,"startTime":"18:00","endTime":"19:30","price":300,"barginPrice":200,"playerId":"10","playerName":"罗贝里","guestPlayerId":null,"bookStatus":"1","useDate":1452182400000,"bookDate":1452096000000,"paymentStatus":"1","videoService":"0","disPlayUseDate":"1月8日 星期五","teamName":"踢球者 踢球者 t1 ","hostCell":13550015054,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":6,"startTime":"19:30","endTime":"21:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":8,"reservationType":"battle","fieldId":36,"fieldName":"1号球场","fieldChargeStandardId":7,"startTime":"21:00","endTime":"22:30","price":300,"barginPrice":200,"playerId":"10","playerName":"罗贝里","guestPlayerId":1,"bookStatus":"1","useDate":1452182400000,"bookDate":1452096000000,"paymentStatus":"0","videoService":"0","disPlayUseDate":"1月8日 星期五","teamName":"踢球者 踢球者 t1 ","hostCell":13550015054,"guestPlayerName":"来碗豆腐","guestTeamName":"踢球者 踢球者 t1 ","guestCell":18180629919,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":18,"startTime":"10:00","endTime":"12:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":22,"startTime":"12:00","endTime":"14:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":23,"startTime":"14:00","endTime":"16:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":24,"startTime":"16:00","endTime":"18:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":4,"reservationType":"battle","fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":25,"startTime":"18:00","endTime":"19:30","price":300,"barginPrice":200,"playerId":"11","playerName":"测试","guestPlayerId":1,"bookStatus":"1","useDate":1452182400000,"bookDate":1452096000000,"paymentStatus":"0","videoService":"1","disPlayUseDate":"1月8日 星期五","teamName":"","hostCell":13550015055,"guestPlayerName":"来碗豆腐","guestTeamName":"","guestCell":18180629919,"playerIdList":null,"playerNameList":null},{"fieldReservationId":1,"reservationType":"fullField","fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":26,"startTime":"19:30","endTime":"21:00","price":300,"barginPrice":200,"playerId":"10","playerName":"罗贝里","guestPlayerId":null,"bookStatus":"1","useDate":1452182400000,"bookDate":1452096000000,"paymentStatus":"1","videoService":"1","disPlayUseDate":"1月8日 星期五","teamName":"踢球者 踢球者 t1 ","hostCell":13550015054,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":37,"fieldName":"2号球场","fieldChargeStandardId":27,"startTime":"21:00","endTime":"22:30","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":30,"startTime":"10:00","endTime":"12:00","price":200,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":31,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":32,"startTime":"14:00","endTime":"16:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":34,"startTime":"16:00","endTime":"18:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":35,"startTime":"18:00","endTime":"19:30","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":36,"startTime":"19:30","endTime":"21:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":48,"reservationType":"fullField","fieldId":38,"fieldName":"3号球场","fieldChargeStandardId":37,"startTime":"21:00","endTime":"22:30","price":300,"barginPrice":200,"playerId":"55","playerName":"李一川","guestPlayerId":null,"bookStatus":"1","useDate":1452182400000,"bookDate":1451750400000,"paymentStatus":"1","videoService":"1","disPlayUseDate":"1月8日 星期五","teamName":"/ ","hostCell":13981712102,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":38,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":39,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":40,"startTime":"14:00","endTime":"16:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":41,"startTime":"16:00","endTime":"18:00","price":200,"barginPrice":100,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":49,"reservationType":"singleFly","fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":42,"startTime":"18:00","endTime":"19:30","price":300,"barginPrice":200,"playerId":"70","playerName":"陈睿","guestPlayerId":null,"bookStatus":"1","useDate":1452182400000,"bookDate":1478793600000,"paymentStatus":"0","videoService":"1","disPlayUseDate":"1月8日 星期五","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":null,"reservationType":null,"fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":43,"startTime":"19:30","endTime":"21:00","price":300,"barginPrice":200,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"videoService":null,"disPlayUseDate":"1月30日 星期六","teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestCell":null,"playerIdList":null,"playerNameList":null},{"fieldReservationId":52,"reservationType":"battle","fieldId":39,"fieldName":"4号球场","fieldChargeStandardId":44,"startTime":"21:00","endTime":"22:30","price":300,"barginPrice":200,"playerId":"66","playerName":"刘同","guestPlayerId":72,"bookStatus":"1","useDate":1452182400000,"bookDate":1479657600000,"paymentStatus":"1","videoService":"1","disPlayUseDate":"1月8日 星期五","teamName":"/ ","hostCell":13111111111,"guestPlayerName":"袁先生","guestTeamName":"/ ","guestCell":18602824292,"playerIdList":null,"playerNameList":null}]};
+		var tempData={fieldReservation:[{timeSlot:'10:00-12:00',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1",videoService:1,},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0}]},{timeSlot:'12:00-14:00',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1"},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]},{timeSlot:'14:00-16:00',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1"},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0,videoService:1,},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]},{timeSlot:'16:00-18:00',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1"},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]},{timeSlot:'18:00-19:30',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1",videoService:1,},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0,videoService:1,},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]},{timeSlot:'19:30-21:00',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1"},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]},{timeSlot:'21:00-22:30',reserverations:[{reservationType:'fullField',fieldChargeStandardId:1,price:300,barginPrice:200,playerId:10,playerName:"罗贝里",teamName:'老拜仁',memberId:null,bookStatus:"1",paymentStatus:"1"},{reservationType:'battle',fieldChargeStandardId:18,price:300,barginPrice:200,playerId:1,playerName:'莱万',teamName:'场馆队',guestPlayerId:2,guestPlayerName:'应战队队长',guestTeamName:'应战方',agreementTime:'2016.2.18 21:10:15',memberId:1,guestMemberId:null,bookStatus:1,paymentStatus:0},{reservationType:'singleFly',fieldChargeStandardId:30,price:300,barginPrice:200,playerIdList:[1,2,3,4,5],playerNameList:['1','2','3','4','5'],bookStatus:1,paymentStatus:0},{reservationType:null,fieldChargeStandardId:38,price:300,barginPrice:200,playerId:null,playerName:null,memberId:null,bookStatus:null,paymentStatus:null}]}]};
+		var tempArenaUser={"status":"success","arenaUsers":[{"arenaId":null,"playerId":84,"name":"/","teams":"装饰队","cellphone":18628938602,"wechatNo":null,"member":false},{"arenaId":52,"playerId":67,"name":"阿杰","teams":"/","cellphone":13222222222,"wechatNo":null,"member":true},{"arenaId":52,"playerId":1,"name":"保留为测试号","teams":"Madrid,踢球者","cellphone":null,"wechatNo":null,"member":true},{"arenaId":52,"playerId":57,"name":"曹代强","teams":"/","cellphone":13882185327,"wechatNo":null,"member":true},{"arenaId":52,"playerId":61,"name":"陈东","teams":"/","cellphone":13541258155,"wechatNo":null,"member":true},{"arenaId":52,"playerId":49,"name":"陈俊","teams":"/","cellphone":13679055317,"wechatNo":"","member":true},{"arenaId":52,"playerId":48,"name":"陈开弟","teams":"/","cellphone":13518162188,"wechatNo":null,"member":true},{"arenaId":52,"playerId":65,"name":"陈煜","teams":"/","cellphone":13688038606,"wechatNo":null,"member":true},{"arenaId":null,"playerId":70,"name":"陈睿","teams":"洪河老友记","cellphone":13808195482,"wechatNo":"chenrui820802","member":false},{"arenaId":null,"playerId":74,"name":"杜先生","teams":"/","cellphone":15908186974,"wechatNo":"","member":false},{"arenaId":null,"playerId":75,"name":"桂先生","teams":"/","cellphone":13111866186,"wechatNo":null,"member":false},{"arenaId":null,"playerId":76,"name":"郭先生","teams":"/","cellphone":18602804631,"wechatNo":null,"member":false},{"arenaId":52,"playerId":53,"name":"何天野","teams":"/","cellphone":18628124233,"wechatNo":null,"member":true},{"arenaId":null,"playerId":77,"name":"贺先生","teams":"/","cellphone":15908127300,"wechatNo":null,"member":false},{"arenaId":52,"playerId":56,"name":"黄俊","teams":"/","cellphone":18628285329,"wechatNo":null,"member":true},{"arenaId":52,"playerId":64,"name":"黄禹","teams":"/","cellphone":15528216252,"wechatNo":null,"member":true},{"arenaId":52,"playerId":52,"name":"黄璜","teams":"/","cellphone":18982063818,"wechatNo":null,"member":true},{"arenaId":52,"playerId":59,"name":"贾韬","teams":"/","cellphone":13980475171,"wechatNo":null,"member":true},{"arenaId":52,"playerId":50,"name":"焦坤","teams":"/","cellphone":18615700025,"wechatNo":null,"member":true},{"arenaId":null,"playerId":78,"name":"交行","teams":"/","cellphone":15228819173,"wechatNo":null,"member":false},{"arenaId":52,"playerId":58,"name":"敬明俊","teams":"/","cellphone":18080811928,"wechatNo":null,"member":true},{"arenaId":52,"playerId":55,"name":"李一川","teams":"/","cellphone":13981712102,"wechatNo":null,"member":true},{"arenaId":52,"playerId":47,"name":"廖敏魁","teams":"/","cellphone":13981716398,"wechatNo":"/","member":true},{"arenaId":52,"playerId":66,"name":"刘同","teams":"/","cellphone":13111111111,"wechatNo":null,"member":true},{"arenaId":null,"playerId":86,"name":"刘先生","teams":"金刚芭比队","cellphone":15928077164,"wechatNo":null,"member":false},{"arenaId":null,"playerId":68,"name":"宁先生","teams":"草木人禾","cellphone":13980882803,"wechatNo":null,"member":false},{"arenaId":52,"playerId":51,"name":"宋雨","teams":"/","cellphone":18781947673,"wechatNo":null,"member":true},{"arenaId":null,"playerId":79,"name":"苏先生","teams":"/","cellphone":18782263332,"wechatNo":null,"member":false},{"arenaId":52,"playerId":54,"name":"唐玮俊","teams":"/","cellphone":13551239972,"wechatNo":null,"member":true},{"arenaId":null,"playerId":80,"name":"万先生","teams":"/","cellphone":15882118272,"wechatNo":null,"member":false},{"arenaId":null,"playerId":81,"name":"王先生","teams":"/","cellphone":18190872325,"wechatNo":null,"member":false},{"arenaId":null,"playerId":82,"name":"徐先生","teams":"/","cellphone":13408582947,"wechatNo":null,"member":false},{"arenaId":null,"playerId":87,"name":"薛嵘俊","teams":"叔叔不约","cellphone":18321374821,"wechatNo":"chevrillon","member":false},{"arenaId":null,"playerId":69,"name":"杨世奇","teams":"左脚右脚","cellphone":13568943137,"wechatNo":"y136984853","member":false},{"arenaId":null,"playerId":72,"name":"袁先生","teams":"东拉西扯","cellphone":18602824292,"wechatNo":"lex1948","member":false},{"arenaId":52,"playerId":63,"name":"曾勇","teams":"/","cellphone":18123377573,"wechatNo":null,"member":true},{"arenaId":null,"playerId":90,"name":"张仁数","teams":"龙城一号","cellphone":18682655030,"wechatNo":null,"member":false},{"arenaId":null,"playerId":83,"name":"赵先生","teams":"/","cellphone":18349330258,"wechatNo":null,"member":false},{"arenaId":52,"playerId":62,"name":"钟坤","teams":"/","cellphone":13882266231,"wechatNo":null,"member":true},{"arenaId":null,"playerId":73,"name":"钟先生","teams":"6780聚乐部","cellphone":13555555555,"wechatNo":"CD6780-99","member":false},{"arenaId":52,"playerId":60,"name":"周宇","teams":"/","cellphone":18602808856,"wechatNo":null,"member":true},{"arenaId":null,"playerId":89,"name":"俸先生","teams":"一塌糊涂","cellphone":13810000050,"wechatNo":"13810000050","member":false}]};
+		
+		var arenaId;
+		var currentDate =  formatToDateString(new Date());
+		
+		var vm = new Vue(
+				{
+					el : '#app',
+					data : {
+					    host : '',
+						arenaId : arenaId,
+						fields:[],
+						currentDate : currentDate,
+						dayNames : [ "星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六" ],
+						bookFullFieldUrl:'',
+						bookBattleUrl:'',
+						acceptBattleUrl:'',
+						cancelReservationUrl:'',
+						removeBattleTeamUrl:'',
+						frDayList:[],
+						frEveningList:[],
+						reservationDetailList : null,
+						arenaPlayerList:[],
+						videoStatus:0,
+						removePlayerId: null,
+						pageFlag:'day',
+						group1_4:false,
+						group5_8:false,
+						group9_12:false,
+						group13_16:false,
+						group17_20:false,
+						groupAll:true,
+						field1_4DayList:[],
+						field5_8DayList:[],
+						field9_12DayList:[],
+						field13_16DayList:[],
+						field17_20DayList:[],
+						field1_4EveningList:[],
+						field5_8EveningList:[],
+						field9_12EveningList:[],
+						field13_16EveningList:[],
+						field17_20EveningList:[],
+						affectFCSIDS:[]
+					},
+					watch : {},
+					methods : {
+						init:function(){
+							vm._data.arenaId = window.localStorage["arenaId"]
+							arenaId = vm._data.arenaId
+							urlPre = window.localStorage["urlPre"]
+					 		iaa = window.localStorage["iaa"]
+							
+							vm.$data.bookFullFieldUrl= urlPre+'reservation-service/reserveField'+iaa
+							vm.$data.bookBattleUrl= urlPre+'reservation-service/reserveField'+iaa
+							vm.$data.acceptBattleUrl= urlPre+'reservation-service/acceptBattle'+iaa
+							vm.$data.cancelReservationUrl= urlPre+'reservation-service/adminCancelReservation'+iaa
+							vm.$data.removeBattleTeamUrl= urlPre+'reservation-service/adminRemoveBattleTeam'+iaa
+						},
+						cleanData:function(){
+							vm._data.group1_4=false
+							vm._data.group5_8=false
+							vm._data.group9_12=false
+							vm._data.group13_16=false
+							vm._data.group17_20=false
+							vm._data.field1_4EveningList=[]
+							vm._data.field5_8EveningList=[]
+							vm._data.field9_12EveningList=[]
+							vm._data.field13_16EveningList=[]
+							vm._data.field17_20EveningList=[]
+							vm.$data.affectFCSIDS=[]
+							vm.$data.pageFlag='day'
+						},
+						getArenaPlayerList: function(){
+							var getArenaPlayerListUrl = urlPre+'player-service/getArenaPlayerList/'+ arenaId + iaa;
+ 							$.GetJSON(getArenaPlayerListUrl, null,function(data) {
+								 if (data) {
+									 vm._data.arenaPlayerList = data.arenaUsers;
+									 
+									 $.each(vm._data.arenaPlayerList,function(i,v){
+										 if(getBytesLength(v.name) <15){
+											 var space = ''
+											 for(var i=0;i<15-getBytesLength(v.name); i++){
+												 space +=  '\xa0';
+											 }
+											 v.name = v.name + space;
+										 }else{
+											 v.name = v.name.toString().substring(0,15)
+										 }
+										 if(getBytesLength(v.teams) <15){
+											 var space = ''
+												 for(var i=0;i<15-getBytesLength(v.teams); i++){
+													 space +=  '\xa0';
+												 }
+												 v.teams = v.teams +space;
+										 }else{
+											 v.teams = v.teams.toString().substring(0,15)
+										 }
+									 })
+								 } 
+							});	 	
+							
+							//测试
+							//vm._data.arenaPlayerList = tempArenaUser.arenaUsers;
+						},
+						getReservationDetailList : function(callback) {
+							vm.cleanData()
+						    loading();	 
+							vm._data.getReservationDetailUrl = urlPre+'reservation-service/getArenaReservationByDate/'+ arenaId + '/'+ vm._data.currentDate + iaa;
+							$.GetJSON(vm._data.getReservationDetailUrl, null,function(data) {
+							 if (data) { 
+								 hideLoading(); 
+								 $('#dayPick').show();
+								 var fieldReservation = []; 
+					//  ------- test ----------// 
+								/*  var data ={}
+								  temp = {"status":"success","arenasFieldsReservation":[{"fieldReservationId":null,"reservationType":null,"fieldId":34,"fieldName":"塑胶球场","fieldChargeStandardId":45,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":34,"fieldName":"塑胶球场","fieldChargeStandardId":46,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":34,"fieldName":"塑胶球场","fieldChargeStandardId":47,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":34,"fieldName":"塑胶球场","fieldChargeStandardId":76,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":80,"fieldName":"塑胶球场","fieldChargeStandardId":48,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":80,"fieldName":"塑胶球场","fieldChargeStandardId":49,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":80,"fieldName":"塑胶球场","fieldChargeStandardId":50,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":80,"fieldName":"塑胶球场","fieldChargeStandardId":69,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":81,"fieldName":"塑胶球场","fieldChargeStandardId":51,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":81,"fieldName":"塑胶球场","fieldChargeStandardId":52,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":81,"fieldName":"塑胶球场","fieldChargeStandardId":53,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":81,"fieldName":"塑胶球场","fieldChargeStandardId":70,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":82,"fieldName":"塑胶球场","fieldChargeStandardId":54,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":82,"fieldName":"塑胶球场","fieldChargeStandardId":55,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":82,"fieldName":"塑胶球场","fieldChargeStandardId":56,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":82,"fieldName":"塑胶球场","fieldChargeStandardId":71,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":83,"fieldName":"塑胶球场","fieldChargeStandardId":57,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":83,"fieldName":"塑胶球场","fieldChargeStandardId":58,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":83,"fieldName":"塑胶球场","fieldChargeStandardId":59,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":83,"fieldName":"塑胶球场","fieldChargeStandardId":72,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":84,"fieldName":"塑胶球场","fieldChargeStandardId":60,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":84,"fieldName":"塑胶球场","fieldChargeStandardId":61,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":84,"fieldName":"塑胶球场","fieldChargeStandardId":62,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":84,"fieldName":"塑胶球场","fieldChargeStandardId":73,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":85,"fieldName":"塑胶球场","fieldChargeStandardId":63,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":85,"fieldName":"塑胶球场","fieldChargeStandardId":64,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":85,"fieldName":"塑胶球场","fieldChargeStandardId":65,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":85,"fieldName":"塑胶球场","fieldChargeStandardId":74,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":86,"fieldName":"塑胶球场","fieldChargeStandardId":66,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":86,"fieldName":"塑胶球场","fieldChargeStandardId":67,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":86,"fieldName":"塑胶球场","fieldChargeStandardId":68,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":86,"fieldName":"塑胶球场","fieldChargeStandardId":75,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":87,"fieldName":"塑胶球场","fieldChargeStandardId":77,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":87,"fieldName":"塑胶球场","fieldChargeStandardId":78,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":87,"fieldName":"塑胶球场","fieldChargeStandardId":79,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":87,"fieldName":"塑胶球场","fieldChargeStandardId":92,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":88,"fieldName":"塑胶球场","fieldChargeStandardId":80,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":88,"fieldName":"塑胶球场","fieldChargeStandardId":81,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":88,"fieldName":"塑胶球场","fieldChargeStandardId":82,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":88,"fieldName":"塑胶球场","fieldChargeStandardId":93,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":89,"fieldName":"塑胶球场","fieldChargeStandardId":83,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":89,"fieldName":"塑胶球场","fieldChargeStandardId":84,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":89,"fieldName":"塑胶球场","fieldChargeStandardId":85,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":89,"fieldName":"塑胶球场","fieldChargeStandardId":94,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":90,"fieldName":"塑胶球场","fieldChargeStandardId":86,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":90,"fieldName":"塑胶球场","fieldChargeStandardId":87,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":90,"fieldName":"塑胶球场","fieldChargeStandardId":88,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":90,"fieldName":"塑胶球场","fieldChargeStandardId":95,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":91,"fieldName":"塑胶球场","fieldChargeStandardId":89,"startTime":"10:00","endTime":"12:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":91,"fieldName":"塑胶球场","fieldChargeStandardId":90,"startTime":"12:00","endTime":"14:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":91,"fieldName":"塑胶球场","fieldChargeStandardId":91,"startTime":"18:00","endTime":"20:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null},{"fieldReservationId":null,"reservationType":null,"fieldId":91,"fieldName":"塑胶球场","fieldChargeStandardId":96,"startTime":"20:00","endTime":"22:00","price":300,"barginPrice":300,"playerId":null,"playerName":null,"guestPlayerId":null,"bookStatus":null,"useDate":null,"bookDate":null,"paymentStatus":null,"guestPaymentStatus":null,"videoService":null,"weChatPicUrl":null,"teamName":null,"hostCell":null,"guestPlayerName":null,"guestTeamName":null,"guestWeChatPicUrl":null,"guestCell":null,"playerIdList":null,"playerNameList":null,"queryDate":null,"disPlayUseDate":null}],"currentWeeksDates":["2016-08-17","2016-08-18","2016-08-19","2016-08-20","2016-08-21","2016-08-22","2016-08-23"]}
+								 data.arenasFieldsReservation = temp.arenasFieldsReservation  */ 
+					//  ------- test ----------//								 
+
+								var fields=[]
+								$.each(data.arenasFieldsReservation, function(i,v){
+									var field = {}
+									field.name = v.fieldName
+									field.type = v.fieldType
+									field.condition = v.fieldCondition
+									fields.push(field)
+								})
+								vm.$data.fields = _.uniq(fields, 'name');
+					
+							    var startTimeGroup = _.unique(_.pluck(data.arenasFieldsReservation, 'startTime')); 
+								 var timeSlotGroup = []
+										
+								$.each(startTimeGroup, function(name, value) {
+									     var that = this;      //this指向当前属性的值
+									     $.each(data.arenasFieldsReservation, function(name, value) {
+									    	 if(that == this.startTime){
+									    		 timeSlotGroup.push(that +'-'+ this.endTime);
+									    		 return false;
+									    	 }
+										});
+									});
+
+									$.each(startTimeGroup, function(i,v){
+										var that = this;
+										var fr={};
+										fr.timeSlot = timeSlotGroup[i];
+										fr.reserverations =[];
+										$.each(data.arenasFieldsReservation, function(i,v){
+											if(that == this.startTime){
+												var obj = {};
+												obj.fieldReservationId = this.fieldReservationId;
+												obj.price = this.price;
+												obj.barginPrice = this.barginPrice;
+												obj.videoService = this.videoService;
+												obj.bookStatus = this.bookStatus;
+												obj.paymentStatus = this.paymentStatus;	
+												obj.reservationType = this.reservationType;
+												obj.fieldChargeStandardId = this.fieldChargeStandardId;	
+												
+												//收集复合场地数据
+												if(this.fieldReservationId != null && this.fieldReservationId != void 0){
+													if(this.affectFcsId != null && this.affectFcsId != void 0){
+														var ids = this.affectFcsId.split(',')
+														Array.prototype.push.apply(vm.$data.affectFCSIDS, ids);
+													}
+												} 
+												
+												if(this.reservationType == 'fullField'){
+													obj.playerId = this.playerId;
+													obj.playerName = this.playerName;
+													obj.teamName = this.teamName;
+													obj.hostCell = this.hostCell;
+													obj.weChatPicUrl = this.weChatPicUrl
+												}else if(this.reservationType == 'battle'){
+													obj.playerId = this.playerId;
+													obj.playerName = this.playerName;
+													obj.teamName = this.teamName;
+													obj.hostCell = this.hostCell;
+													obj.weChatPicUrl = this.weChatPicUrl
+													obj.guestPlayerId = this.guestPlayerId;
+													obj.guestPlayerName = this.guestPlayerName;
+													obj.guestTeamName = this.guestTeamName;
+													obj.guestCell = this.guestCell;
+													obj.guestPaymentStatus = this.guestPaymentStatus;
+													obj.guestWeChatPicUrl = this.guestWeChatPicUrl
+												}else if(this.reservationType == 'singleFly'){
+													obj.playerIdList = this.playerIdList;
+													obj.playerNameList = this.playerNameList;
+												}else{
+													
+												}
+												fr.reserverations.push(obj);
+											}
+										});
+										
+										fieldReservation.push(fr);
+									});	
+									
+									vm.displayDataPrepare(fieldReservation)
+									//默认为显示全部的晚上 
+									vm._data.reservationDetailList =vm._data.frEveningList
+							   }
+							 	vm.$data.pageFlag = 'day'
+								callback(vm.$data.pageFlag)
+							 }); 
+						},
+						disableaffectField:function(type){
+							if(vm.$data.pageFlag == 'day'){
+								vm.$data.affectFCSIDS = uniquearr(vm.$data.affectFCSIDS)
+								setTimeout(function() {
+									$.each(vm.$data.affectFCSIDS,function(i,v){
+										$('table[name="'+v+'"]').hide()
+										$('table[name="'+v+'"]').parent().css('background','lightgrey')
+										//.css('display','block').css('width','250px').css('height','160px')
+									})
+								}, 200)	
+							}
+							 
+							if(vm.$data.pageFlag == 'week'){
+								var queryDateList = []
+								$.each(vm.$data.affectFCSIDS,function(i,v){
+									queryDateList.push(v.queryDate)
+								})
+								queryDateList = uniquearr(queryDateList)							
+								
+								var objList = []
+								$.each(queryDateList,function(i,v){
+									var obj = {}
+									obj.ids = []
+									obj.queryDate = v
+									
+									$.each(vm.$data.affectFCSIDS,function(i2,v2){
+										if(obj.queryDate == v2.queryDate){
+											Array.prototype.push.apply(obj.ids, v2.ids)
+										}
+									})
+									obj.ids = uniquearr(obj.ids)
+									objList.push(obj)
+								})
+								
+								setTimeout(function() {
+									$.each(objList,function(i,v){
+										$.each(v.ids, function(i2,v2){
+											$('table[name="'+v2+'"][id="'+v.queryDate+'"]').hide()
+											$('table[name="'+v2+'"][id="'+v.queryDate+'"]').parent().css('background','lightgrey')
+											//.css('display','block').css('width','250px').css('height','160px')
+										})
+									})
+								}, 200)
+							}
+						},
+						displayDataPrepare:function(data){
+							//all
+							vm._data.frDayList = data;
+							
+							//all night
+							vm._data.frEveningList = [];
+							$.each(data, function(i,v){
+								if(v.timeSlot.substring(0,2) >=18){
+									vm._data.frEveningList.push(v);
+								}
+							});
+
+							fieldsSize = vm.$data.fields.length
+							
+							//1-4
+							var group1_4fr = {}
+							$.extend(true, group1_4fr, data);
+							vm.$data.field1_4DayList =  group1_4fr
+							$.each(group1_4fr,function(i,v){
+								v.reserverations = v.reserverations.slice(0, 4)
+							})	
+							
+							//5-8
+							if(fieldsSize/4 > 1){  
+								var group5_8fr = {}
+								$.extend(true, group5_8fr, data);
+								vm.$data.field5_8DayList =  group5_8fr
+								$.each(group5_8fr,function(i,v){
+									v.reserverations = v.reserverations.slice(4, 8)
+								})									
+							}
+							
+							//9-12
+							if(fieldsSize/4 > 2){  
+								var group9_12fr = {}
+								$.extend(true, group9_12fr, data);
+								vm.$data.field9_12DayList =  group9_12fr
+								$.each(group9_12fr,function(i,v){
+									v.reserverations = v.reserverations.slice(8, 12)
+								})
+							}
+							
+							//13-16
+							if(fieldsSize/4 > 3){  
+								var group13_16fr = {}
+								$.extend(true, group13_16fr, data);
+								vm.$data.field13_16DayList =  group13_16fr
+								$.each(group13_16fr,function(i,v){
+									v.reserverations = v.reserverations.slice(12, 16)
+								})
+							}
+							
+							//17-20
+							if(fieldsSize/4 > 4){  
+								var group17_20fr = {}
+								$.extend(true, group17_20fr, data);
+								vm.$data.field17_20DayList =  group17_20fr
+								$.each(group17_20fr,function(i,v){
+									v.reserverations = v.reserverations.slice(16, 20)
+								})
+							}
+							
+							//1-4 night
+							$.each(group1_4fr, function(i,v){
+								if(v.timeSlot.substring(0,2) >=18){
+									vm._data.field1_4EveningList.push(v);
+								}
+							});
+							////5-8 night
+							if(group5_8fr){
+								$.each(group5_8fr, function(i,v){
+									if(v.timeSlot.substring(0,2) >=18){
+										vm._data.field5_8EveningList.push(v);
+									}
+								});	
+							}
+							//9-12 night
+							if(group9_12fr){
+								$.each(group9_12fr, function(i,v){
+									if(v.timeSlot.substring(0,2) >=18){
+										vm._data.field9_12EveningList.push(v);
+									}
+								});	
+							}
+							//13-16 night
+							if(group13_16fr){
+								$.each(group13_16fr, function(i,v){
+									if(v.timeSlot.substring(0,2) >=18){
+										vm._data.field13_16EveningList.push(v);
+									}
+								});	
+							}
+						},
+						doMouseEnter : function(e) {
+							//console.log('mouse enter');
+							$(e.target).find('tr:last').fadeIn(); 
+						},
+						doMouseLeave : function(e) {
+							//console.log('mouse leave');
+							$(e.target).find('tr:last').fadeOut(); 
+						},
+						showAllday:function(e){
+							if(vm.$data.group1_4){
+								vm._data.reservationDetailList = vm.$data.field1_4DayList
+							}
+							if(vm.$data.group5_8){
+								vm._data.reservationDetailList = vm.$data.field5_8DayList
+							}
+							if(vm.$data.group9_12){
+								vm._data.reservationDetailList = vm.$data.field9_12DayList
+							}
+							if(vm.$data.group13_16){
+								vm._data.reservationDetailList = vm.$data.field13_16DayList
+							}
+							if(vm.$data.group17_20){
+								vm._data.reservationDetailList = vm.$data.field17_20DayList
+							}
+							if(vm.$data.groupAll){
+								vm._data.reservationDetailList = vm.$data.frDayList	
+							}
+							vm.disableaffectField(vm.$data.pageFlag)
+						},
+						showEvening:function(e){
+							if(vm.$data.group1_4){
+								vm._data.reservationDetailList = vm.$data.field1_4EveningList
+							}
+							if(vm.$data.group5_8){
+								vm._data.reservationDetailList = vm.$data.field5_8EveningList
+							}
+							if(vm.$data.group9_12){
+								vm._data.reservationDetailList = vm.$data.field9_12EveningList
+							}
+							if(vm.$data.group13_16){
+								vm._data.reservationDetailList = vm.$data.field13_16EveningList
+							}
+							if(vm.$data.group17_20){
+								vm._data.reservationDetailList = vm.$data.field17_20EveningList
+							}
+							if(vm.$data.groupAll){
+								vm._data.reservationDetailList = vm._data.frEveningList;
+							}
+							vm.disableaffectField(vm.$data.pageFlag)
+						},
+						show1_4:function(e){
+							vm.$data.group1_4 = true
+							
+							vm.$data.group5_8 = false
+							vm.$data.group9_12 = false
+							vm.$data.group13_16 = false
+							vm.$data.group17_20 = false
+							vm.$data.groupAll = false
+							vm._data.reservationDetailList = vm.$data.field1_4EveningList
+							vm.disableaffectField('day')
+						},
+						show5_8:function(e){
+							vm.$data.group5_8 = true
+							
+							vm.$data.group1_4 = false
+							vm.$data.group9_12 = false
+							vm.$data.group13_16 = false
+							vm.$data.group17_20 = false
+							vm.$data.groupAll = false
+							vm._data.reservationDetailList = vm.$data.field5_8EveningList
+							vm.disableaffectField('day')
+						},
+						show9_12:function(e){
+							vm.$data.group9_12 = true
+							
+							vm.$data.group1_4 = false
+							vm.$data.group5_8 = false
+							vm.$data.group13_16 = false
+							vm.$data.group17_20 = false
+							vm.$data.groupAll = false
+							vm._data.reservationDetailList = vm.$data.field9_12EveningList
+							vm.disableaffectField('day')
+						},
+						show13_16:function(e){
+							vm.$data.group13_16 = true
+							
+							vm.$data.group1_4 = false
+							vm.$data.group5_8 = false
+							vm.$data.group9_12 = false
+							vm.$data.group17_20 = false
+							vm.$data.groupAll = false
+							vm._data.reservationDetailList = vm.$data.field13_16EveningList
+							vm.disableaffectField('day')
+						},
+						show17_20:function(e){
+							vm.$data.group17_20 = true
+
+							vm.$data.group1_4 = false
+							vm.$data.group5_8 = false
+							vm.$data.group9_12 = false
+							vm.$data.group13_16 = false
+							vm.$data.groupAll = false
+							vm._data.reservationDetailList = vm.$data.field17_20EveningList
+							vm.disableaffectField('day')
+						},
+						showAll:function(e){
+							vm.$data.groupAll = true
+							
+							vm.$data.group1_4 = false
+							vm.$data.group5_8 = false
+							vm.$data.group9_12 = false
+							vm.$data.group13_16 = false
+							vm.$data.group17_20 = false
+							
+							vm._data.reservationDetailList = vm._data.frEveningList
+							vm.disableaffectField('day')
+						},
+						dateChange:function(e){
+							if(e.target.value != "" && e.target.value!= null){
+								vm._data.currentDate =e.target.value;
+								vm._data.getReservationDetailUrl =  urlPre + 'reservation-service/getArenaReservationByDate/'+ vm._data.arenaId+ '/'+ vm._data.currentDate + iaa,
+								vm.getReservationDetailList(vm.disableaffectField);	
+								
+								var date = new Date(Date.parse(vm._data.currentDate));
+								$('#Date').html(vm._data.dayNames[date.getDay()]);
+							}
+						},
+						today:function(){
+							vm.cleanData()
+							$('#fieldPageBtn').show();
+							vm._data.pageFlag = 'day';
+							
+							var newDate= new Date();
+							
+							vm._data.currentDate =formatToDateString(newDate);
+							vm._data.getReservationDetailUrl =  urlPre + 'reservation-service/getArenaReservationByDate/'+ vm._data.arenaId+ '/'+ vm._data.currentDate + iaa,
+							vm.getReservationDetailList(vm.disableaffectField);
+							
+							$('#datePicker').val(formatToDateString(new Date()));
+							$('#Date').html(vm._data.dayNames[newDate.getDay()]);
+							$('#dayPick').show();
+						},
+						thisWeek:function(){
+							vm.cleanData()
+							$('#fieldPageBtn').hide();
+							$('#dayPick').hide();
+							vm._data.pageFlag = 'week';
+							vm.$data.groupAll = true
+							
+							var currentWeekUrl =  urlPre + 'reservation-service/getArenaReservationByCurrentWeek/'+ vm._data.arenaId + iaa;
+							
+							loading();
+							$.GetJSON(currentWeekUrl, null,function(data) 
+							{
+								 if(data)
+								 {
+									 hideLoading();
+									 var fieldReservation = []; 
+									 var queryDateGroup = _.unique(_.pluck(data.arenasFieldsReservation, 'queryDate'));
+									 var startTimeGroup = _.unique(_.pluck(data.arenasFieldsReservation, 'startTime')); 
+									 var timeSlotGroup = []
+											
+									$.each(startTimeGroup, function(name, value) {
+										     var that = this;      //this指向当前属性的值
+										     $.each(data.arenasFieldsReservation, function(name, value) {
+										    	 if(that == this.startTime){
+										    		 timeSlotGroup.push(that +'-'+ this.endTime);
+										    		 return false;
+										    	 }
+											});
+									});
+
+									vm._data.frDayList = []; 
+									 
+									$.each(queryDateGroup, function(index,value)
+									{
+										var dayData = _.where(data.arenasFieldsReservation, {queryDate: value});
+										
+										$.each(startTimeGroup, function(i,v)
+										{
+											var that = this;
+											var fr={};
+											fr.timeSlot = timeSlotGroup[i];
+											fr.dateTime = value;
+											var date = new Date(Date.parse(value));
+											fr.weekDay = vm._data.dayNames[date.getDay()];
+											fr.reserverations =[];
+											$.each(dayData, function(i,v)
+											{
+												if(that == this.startTime)
+												{
+													var obj = {};
+													obj.fieldReservationId = this.fieldReservationId;
+													obj.price = this.price;
+													obj.barginPrice = this.barginPrice;
+													obj.videoService = this.videoService;
+													obj.bookStatus = this.bookStatus;
+													obj.paymentStatus = this.paymentStatus;	
+													obj.reservationType = this.reservationType;
+													obj.fieldChargeStandardId = this.fieldChargeStandardId;	
+													//obj.memberId: null
+													
+													//收集复合场地数据
+													if(this.fieldReservationId != null && this.fieldReservationId != void 0){
+														if(this.affectFcsId != null && this.affectFcsId != void 0){
+															var fcs ={}
+															fcs.ids = this.affectFcsId.split(',')
+															fcs.queryDate = this.queryDate
+															vm.$data.affectFCSIDS.push(fcs)
+														}
+													}
+													
+													
+													
+													if(this.reservationType == 'fullField'){
+														obj.playerId = this.playerId;
+														obj.playerName = this.playerName;
+														obj.teamName = this.teamName;
+														obj.hostCell = this.hostCell;
+													}else if(this.reservationType == 'battle'){
+														obj.playerId = this.playerId;
+														obj.playerName = this.playerName;
+														obj.teamName = this.teamName;
+														obj.hostCell = this.hostCell;
+														obj.guestPlayerId = this.guestPlayerId;
+														obj.guestPlayerName = this.guestPlayerName;
+														obj.guestTeamName = this.guestTeamName;
+														obj.guestCell =this.guestCell;
+														obj.guestPaymentStatus = this.guestPaymentStatus;
+													}else if(this.reservationType == 'singleFly'){
+														obj.playerIdList = this.playerIdList;
+														obj.playerNameList = this.playerNameList;
+													}else{
+														
+													}
+													fr.reserverations.push(obj);
+												}
+											});
+											
+											//fieldReservation.push(fr);
+											vm._data.frDayList.push(fr);
+										});	
+											
+								 });
+								 }
+								 vm._data.frEveningList = [];
+									$.each(vm._data.frDayList, function(i,v){
+										if(v.timeSlot.substring(0,2) >=18){
+											vm._data.frEveningList.push(v);
+										}	
+									});
+
+									//默认为只显示晚上
+									vm._data.reservationDetailList = vm._data.frEveningList;
+									//vm._data.reservationDetailList = vm._data.frDayList
+									
+									setTimeout(function() {
+										vm.disableaffectField(vm.$data.pageFlag)
+									}, 1000)
+									
+							}) ;
+										 
+							
+						},
+						fullFieldReservation:function(e){
+							$(e.target).parent().find('[name=operateArea]').show()
+							$(e.target).parent().find('[id=fullField]').show()
+							$(e.target).parent().find('[id=battle]').hide()
+						},
+						battleReservation:function(e){
+							$(e.target).parent().find('[name=operateArea]').show()
+							$(e.target).parent().find('[id=battle]').show()
+							$(e.target).parent().find('[id=fullField]').hide()
+						},
+						cancelBtn:function(e){
+							$(e.target).parent().hide();
+						},
+						fullFieldBtn:function(e){
+							$(e.target).parent().hide();
+							
+							var parameters = {};
+							parameters.arenaId = vm._data.arenaId;
+							parameters.fcsId = $(e.target).parents('table .table-condensed-1').attr('name');
+							parameters.playerId = $(e.target).parent().find('select').val();
+							parameters.type = 'fullField';
+							parameters.operateType = 'admin';
+							
+							if( $(e.target).parents('table .table-condensed-1').attr('id') === void 0){
+								parameters.useDate = vm._data.currentDate;
+							}else{
+								parameters.useDate = $(e.target).parents('table .table-condensed-1').attr('id');	
+							}
+							
+							if(vm._data.videoStatus){
+								parameters.videoStatus = 1;	
+							}else{
+								parameters.videoStatus = 0;
+							}
+							
+							loading();
+							//预定
+							$.postJSON(vm._data.bookFullFieldUrl, parameters,function(data) {
+								
+							 	if (data) {
+							 		vm.refreshCurrentPageData();
+							 	}
+							 });
+						},
+						battleBtn : function(e){
+							$(e.target).parent().hide();
+							
+							var parameters = {};
+							parameters.arenaId = vm._data.arenaId;
+							parameters.fcsId = $(e.target).parents('table .table-condensed-1').attr('name');
+							parameters.playerId = $(e.target).parent().find('select').val();
+							parameters.type = 'battle';
+							parameters.operateType = 'admin';
+							
+							if( $(e.target).parents('table .table-condensed-1').attr('id') === void 0){
+								parameters.useDate = vm._data.currentDate;
+							}else{
+								parameters.useDate = $(e.target).parents('table .table-condensed-1').attr('id');	
+							}
+							
+							if(vm._data.videoStatus){
+								parameters.videoStatus = 1;	
+							}else{
+								parameters.videoStatus = 0;
+							}
+							
+							loading();
+							//约战
+							$.postJSON(vm._data.bookBattleUrl, parameters,function(data) {
+								
+							 	if (data) {
+							 		vm.refreshCurrentPageData();
+							 	}
+							 });
+
+						},
+						acceptBattle : function(e){
+							$(e.target).parent().find('[name=operateArea]').show()
+							
+						},
+						removeBattle : function(e){
+							$(e.target).parent().find('[name=removeArea]').show()
+						},
+						//应战
+						acceptBattleBtn : function(e){
+							$(e.target).parent().hide();
+							
+							var parameters = {};
+							parameters.operateType = 'admin';
+							parameters.arenaId = vm._data.arenaId;
+							parameters.fieldReservationId = $(e.target).parents('table .table-condensed-1').parent().attr('id');
+							parameters.guestPlayerId = $(e.target).parent().find('select').val();
+							
+							loading();
+							$.postJSON(vm._data.acceptBattleUrl, parameters,function(data) {
+								
+							 	if (data) {
+							 		vm.refreshCurrentPageData();
+							 		//alert(data.message);
+							 	}
+							 });
+						},
+						cancelReservationBtn:function(e){
+							var parameters = {};
+							parameters.arenaId = vm._data.arenaId;
+							parameters.fieldReservationId = $(e.target).parents('table .table-condensed-1').parent().attr('id');
+							parameters.playerId = $(e.target).attr('id');
+							parameters.guestPlayerId = $(e.target).attr('name');
+							
+							loading();
+							//取消预定
+ 							$.postJSON(vm._data.cancelReservationUrl, parameters,function(data) {
+							 	if (data) {
+							 		vm.refreshCurrentPageData();
+							 		//alert(data.message);
+							 	}
+							 }); 
+						},
+						removeBattleBtn:function(e){
+							var parameters = {};
+							parameters.arenaId = vm._data.arenaId;
+							parameters.fieldReservationId = $(e.target).parents('table .table-condensed-1').parent().attr('id');
+							parameters.playerId = $(e.target).attr('id');
+							parameters.guestPlayerId = $(e.target).attr('name');
+							parameters.removePlayerId = vm._data.removePlayerId;
+							
+							 loading();
+							//移除约战球队
+ 							$.postJSON(vm._data.removeBattleTeamUrl, parameters,function(data) {
+							 	if (data) {
+							 		vm.refreshCurrentPageData();
+							 	}
+							 }); 
+						},
+						refreshCurrentPageData:function(){
+							if(vm._data.pageFlag == 'day'){
+								vm.getReservationDetailList(vm.disableaffectField);
+							}
+							if(vm._data.pageFlag == 'week'){
+								vm.thisWeek();
+							}
+						}
+					}
+				});
+		
+		loginStatusCheck(pageInit);
+		 
+		function pageInit(){
+			loadingInit();
+			prepareWeekTime();
+			$('#datePicker').val(formatToDateString(new Date()));
+			vm.init();
+			vm.getArenaPlayerList();
+			vm.getReservationDetailList(vm.disableaffectField);
+			hidesomeloadingpart('theme_switcher');
+		}
+		
+	})()
+</script>
+</html>

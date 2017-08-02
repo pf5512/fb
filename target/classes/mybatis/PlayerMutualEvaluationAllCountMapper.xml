@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="player_mutual_evaluation_all_countMapper" >
+
+  <!-- 字段映射  -->
+  <resultMap id="BaseResultMap" type="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+  
+   	<id column="id" property="id" jdbcType="INTEGER" />
+ 
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="property_type" property="playerSkillType" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="create_dt" property="createDt" jdbcType="DATE" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  </resultMap>
+  
+  <!-- 共用sql -->
+  <sql id="Base_Column_List" >
+     id,player_id,property_type,number,create_dt,update_dt
+  </sql>
+
+  <!-- 查询 -->  
+  <select id="findPlayerMutualEvaluationAllCountById" resultMap="BaseResultMap" parameterType="int" >
+   	select 
+    <include refid="Base_Column_List" />
+    from player_mutual_evaluation_all_count
+    where id= #{id}
+  </select>
+  
+  
+  <!-- 查询 列表 -->  
+  <select id="findPlayerMutualEvaluationAllCount" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+     from player_mutual_evaluation_all_count
+    
+  </select>
+  
+  <select id="findPlayerMutualEvaluationAllCountByIdAndProperty" resultMap="BaseResultMap" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+   
+    select 
+    <include refid="Base_Column_List" />
+    <![CDATA[ 
+     from player_mutual_evaluation_all_count
+     where  number > 0
+     	and player_id = #{playerId}
+    	and property_type =  #{playerSkillType}
+   	]]> 
+  </select>
+  
+    <select id="findPlayerMutualEvaluationAllCountByIdDesc" resultMap="BaseResultMap" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+    
+    select 
+    <include refid="Base_Column_List" />
+     <![CDATA[
+     from player_mutual_evaluation_all_count
+     where  number > 0 and  player_id = #{playerId}
+    	order by number desc
+   ]]>  	
+  </select>
+  
+  <select id="findMaxProperty" resultMap="BaseResultMap" parameterType="LONG" >
+  select  
+   <include refid="Base_Column_List" />
+  from  player_mutual_evaluation_all_count where player_id = #{playerId}  order by number desc limit 1;
+  </select>
+  
+    <update id="increasePlayerMutualEvaluationAllCount" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+   <![CDATA[
+    update player_mutual_evaluation_match_count
+    set
+     	 number = number + #{number,jdbcType=INTEGER},
+     	 update_dt = #{updateDt,jdbcType=DATE}
+    where  player_id = #{playerId}
+    	and property_type =  #{playerSkillType}
+    ]]> 
+  </update>
+  
+  <update id="decreasePlayerMutualEvaluationAllCount" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+   <![CDATA[
+    update player_mutual_evaluation_match_count
+    set
+     	 number = number - #{number,jdbcType=INTEGER},
+     	 update_dt = #{updateDt,jdbcType=DATE}
+    where  player_id = #{playerId}
+    	and property_type =  #{playerSkillType}
+    	and number >= #{number}
+    ]]> 
+  </update>
+  
+  <!-- 删除 -->
+  
+  <delete id="deleteById" parameterType="int" >
+    delete from player_mutual_evaluation_all_count
+    where id= #{id}
+  </delete>
+  
+  <!-- 插入操作 -->
+  <insert id="savePlayerMutualEvaluationAllCount"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount">
+	
+    insert into player_mutual_evaluation_all_count (player_id,property_type,number,create_by,create_dt,update_by,update_dt,player_id,property_type,number,create_by,create_dt,update_by,update_dt)
+    values (
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{playerSkillType,jdbcType=VARCHAR},
+	 		#{number,jdbcType=INTEGER},
+	 		#{createDt,jdbcType=DATE},
+	 		#{updateDt,jdbcType=DATE}
+     )
+  </insert>
+  
+ 
+  <!-- 更新 -->
+  <update id="updatePlayerMutualEvaluationAllCountById" parameterType="com.footballer.rest.api.v2.vo.PlayerMutualEvaluationAllCount" >
+   <![CDATA[
+    update player_mutual_evaluation_all_count
+    set
+     	 player_id = #{playerId,jdbcType=INTEGER},
+     	 property_type = #{playerSkillType,jdbcType=VARCHAR},
+     	 number = #{number,jdbcType=INTEGER},
+     	 create_dt = #{createDt,jdbcType=DATE},
+     	 update_dt = #{updateDt,jdbcType=DATE}
+    where id= #{id}
+    ]]> 
+  </update>
+</mapper>

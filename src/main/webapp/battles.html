@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="../css/frozen.css">
+        <!-- CSS -->
+        <style type="text/css">
+body {
+	font-family: "Microsoft Yahei", Helvetica, Arial, sans-serif;
+}
+
+h6 {
+	font-size: 12px;
+}
+
+.ui-header-positive, .ui-footer-positive {
+	background-color: green;
+	color: #fff;
+}
+
+body {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-frozen-cover {
+	overflow: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.item {
+	width: 100%;
+	height: 18%;
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	-webkit-box-align: center
+}
+
+.close, .battle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	color: #fff;
+	border: #fff 1px solid;
+	text-align: center;
+	border-radius: 50px;
+	line-height: 50px;
+	display: none;
+	z-index: 2000
+}
+
+.battle {
+	right: 80%;
+}
+
+.closeBattle {
+	position: fixed;
+	top: 10px;
+	right: 67px;
+	display: block;
+	width: 50px;
+	height: 50px;
+	color: #fff;
+	border: #fff 1px solid;
+	text-align: center;
+	border-radius: 50px;
+	line-height: 50px;
+	display: none;
+	z-index: 2000
+}
+
+.title {
+	width:100%;
+	color: #fff;
+	display: block;
+	text-align: center;
+	font-size: 24px;
+	-webkit-transition: all .5s .3s;
+}
+
+.info {
+	color: #fff;
+	display: block;
+	text-align: center;
+	font-size: 20px;
+	-webkit-transition: all .5s;
+	top: 50%;
+	width: 100%;
+	top: 50%;
+	position: absolute;
+	z-index: 2000;
+	opacity: 0;
+	-webkit-transform: translateY(50px);
+}
+
+.info.show {
+	opacity: 1;
+	-webkit-transform: translateY(0);
+}
+</style>
+    </head>
+    <body ontouchstart="" id="app">
+        <footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled ui-border-t">
+                <li data-href="..<%=path%>/mobile/field/orderField.html"><i style="color:green">预定球场</i></li>
+                <li data-href="..<%=path%>/mobile/order/orders.html"><i style="color:green">我的订单</i></li>
+                <li data-href="..<%=path%>/mobile/order/battlePool.html"><i style="color:green">等你来战</i></li>
+            </ul>
+        </footer>
+        
+        <section class="ui-container">
+        <!-- HTML -->
+        <br>
+        <div class="ui-frozen-cover" id="cover" data-start-pos="source" data-trigger=".item" data-dismiss=".close">
+            <div class="close" >关闭</div>
+            <div class="battle" >约战</div>
+            <div class="item" style="background:#009966;" data-background="#009966">
+                <div class="title">
+	                <ul class="ui-tiled" style="disaply: inline;">
+		                <li><div class="ui-reddot-border">周一</div>
+								<i></i></li>
+						<li><div class="ui-badge-wrap" style="width: 100px;line-height: 50px;">活跃<div class="ui-badge-corner">12</div></div>
+
+								<i></i></li>		
+						<li><div>
+									<div class="ui-avatar-one">
+										<span style="background-image: url(http://wx.qlogo.cn/mmopen/3a3QxMHZ8YwzkfHoTRjVBSGUG06sJduZRdc2XUsIpAc9end0lCrWNTHYuySfxlJeYS2bdQOCtaTYetsUogYic1iag5aria4Cjic3/0)"></span>
+									</div>
+								</div></li>													
+					</ul>                	
+                </div>
+            </div>
+            <div class="item" style="background:#669999;" data-background="#669999">
+                <div class="title">
+                	<ul class="ui-tiled" style="disaply: inline;">
+		               <li><div class="ui-reddot-border">周二</div>
+								<i></i></li>
+						<li><div class="ui-badge-wrap" style="width: 100px;line-height: 50px;">叔叔不约<div class="ui-badge-corner">14</div></div>
+
+								<i></i></li>		
+		
+						<li><div>
+									<div class="ui-avatar-one">
+										<span style="background-image: url(http://wx.qlogo.cn/mmopen/icHPzSiaC4pZiag7yrHfs16YBB9MibhrbxiarWwnXLVVf2dVxCKic7tiag3ZicT0RDoYE4G6U2mh7gAqEjhNFtTJMtTcIpakianOzBISr/0)"></span>
+									</div>
+								</div></li>													
+					</ul>
+                </div>
+            </div>
+            <div class="item" style="background:#66CCCC;" data-background="#66CCCC">
+                <div class="title">
+                	<ul class="ui-tiled" style="disaply: inline;">
+		               <li><div class="ui-reddot-border">周三</div>
+								<i></i></li>
+						<li><div class="ui-badge-wrap" style="width: 100px;line-height: 50px;">老友记<div class="ui-badge-corner">15</div></div>
+
+								<i></i></li>		
+		
+						<li><div>
+									<div class="ui-avatar-one">
+										<span style="background-image: url(http://wx.qlogo.cn/mmopen/icHPzSiaC4pZiag7yrHfs16YBB9MibhrbxiarWwnXLVVf2dVxCKic7tiag3ZicT0RDoYE4G6U2mh7gAqEjhNFtTJMtTcIpakianOzBISr/0)"></span>
+									</div>
+								</div></li>													
+					</ul>
+                </div>
+            </div>
+            <div class="item" style="background:#66CCFF;" data-background="#66CCFF">
+                <div class="title">
+                	<ul class="ui-tiled" style="disaply: inline;">
+		               <li><div class="ui-reddot-border">周四</div>
+								<i></i></li>
+						<li><div class="ui-badge-wrap" style="width: 100px;line-height: 50px;">老司机<div class="ui-badge-corner">14</div></div>
+
+								<i></i></li>		
+		
+						<li><div>
+									<div class="ui-avatar-one">
+										<span style="background-image: url(http://wx.qlogo.cn/mmopen/icHPzSiaC4pZiag7yrHfs16YBB9MibhrbxiarWwnXLVVf2dVxCKic7tiag3ZicT0RDoYE4G6U2mh7gAqEjhNFtTJMtTcIpakianOzBISr/0)"></span>
+									</div>
+								</div></li>													
+					</ul>
+                </div>
+            </div>
+            
+            <div class="item" style="background:#ABCDEF;" data-background="#ABCDEF">
+                <div class="title">
+                	<ul class="ui-tiled" style="disaply: inline;">
+		               <li><div class="ui-reddot-border">周五</div>
+								<i></i></li>
+						<li><div class="ui-badge-wrap" style="width: 100px;line-height: 50px;">不拉热<div class="ui-badge-corner">15</div></div>
+
+								<i></i></li>		
+		
+						<li><div>
+									<div class="ui-avatar-one">
+										<span style="background-image: url(http://wx.qlogo.cn/mmopen/icHPzSiaC4pZiag7yrHfs16YBB9MibhrbxiarWwnXLVVf2dVxCKic7tiag3ZicT0RDoYE4G6U2mh7gAqEjhNFtTJMtTcIpakianOzBISr/0)"></span>
+									</div>
+								</div></li>													
+					</ul>
+                </div>
+            </div>
+            
+        </div>
+        <div class="text">
+            <div class="info">
+            	<!-- 
+                <div style="margin-top:15%;">
+					<p><h3>比赛场次：<div class="ui-badge">345</div></h3></p>
+					<p><h3>比赛胜率：<div class="ui-badge">50/100</div><h3></p>
+					<p><h3>出勤率：<div class="ui-badge">90%</div><h3></p>                	
+                </div>
+                 -->
+                 
+                 <ul class="ui-list ui-list-pure" style="background-color: #009966; margin-top: 15%">
+				    <li class="ui-border-t">
+				        <p><h3>比赛场次：<div class="ui-badge"><div class="ui-badge">100</div></div></h3></p>
+				    </li>
+				    <li class="ui-border-t">
+				        <p><h3>比赛胜率：<div class="ui-badge"><div class="ui-badge">80%</div></div><h3></p>
+				    </li>
+				    <li class="ui-border-t">
+				        <p><h3>出勤率：<div class="ui-badge"><div class="ui-badge">80%</div></div><h3></p>
+				    </li>
+				</ul>
+                
+                <div class="ui-label-list">
+				    <label class="ui-label">传控</label>
+				    <label class="ui-label">技术</label>
+				    <label class="ui-label">娱乐</label>
+				</div>
+				
+            </div>
+            <div class="info">
+                <div style="margin-top:15%;">
+					<p><h3>比赛场次：100</h3></p>
+					<p>比赛胜率：50/100</p>
+					<p>出勤率：90%</p>                	
+                </div>
+                <div>
+                	<button class="ui-btn ui-btn-primary">约战</button>
+                </div>
+            </div>
+            <div class="info">
+                <div style="margin-top:15%;">
+					<p><h3>比赛场次：100</h3></p>
+					<p>比赛胜率：50/100</p>
+					<p>出勤率：90%</p>                	
+                </div>
+                <div>
+                	<button class="ui-btn ui-btn-primary">约战</button>
+                </div>
+            </div>
+            <div class="info">
+                <div style="margin-top:15%;">
+					<p><h3>比赛场次：100</h3></p>
+					<p>比赛胜率：50/100</p>
+					<p>出勤率：90%</p>                	
+                </div>
+                
+            </div>
+
+        </div>
+        </section>
+        <script src="../js/lib/zeptojs/zepto.min.js"></script>
+        <script src="../js/frozen.js"></script>
+        <script src="../js/cover.js"></script>
+
+        <script>
+            $(".ui-frozen-cover").cover({
+    callback:function(type,obj){
+        switch(type){
+            case "show":
+            covershow(obj);
+            break;
+            case "hide":
+            coverhide(obj);
+            break;
+            case "hidden":
+            coverhidden(obj);
+            break;
+            case "shown":
+            covershown(obj);
+            break;
+        }
+
+    }
+});
+function covershow(cover){
+    if(!cover._isShown){
+        var title=cover.currentTrigger.find('.title'),
+            index=$(".item").index(cover.currentTrigger);
+
+        title.css({
+            '-webkit-transform':'translateY('+(cover.position.screenHeight/2-title.offset().top-30)+'px)'
+        });
+        $('.info').eq(index).css({
+            "-webkit-transition-delay":".5s"
+        })
+        $('.info').eq(index).addClass('show');
+    }
+};
+function coverhide(cover){
+    var title=cover.currentTrigger.find('.title'),
+        index=$(".item").index(cover.currentTrigger);
+
+    title.css({
+        '-webkit-transform':'translateY(0px)'
+    })
+    $('.info').eq(index).css({
+            "-webkit-transition-delay":"0s"
+        })
+    $('.info').eq(index).removeClass('show');
+};
+function covershown(cover){
+    $('.close, .battle').show();
+};
+function coverhidden(){
+    $('.close, .battle').hide();
+};
+        </script>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="img/analysis/auf_title.png" type="image/x-icon"/>
+<link rel="stylesheet" type="text/css" href="../css/justin_common.css">
+</head>
+<style  type="text/css">
+#popweixin {
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    position:fixed;
+    z-index:1000;
+    background:rgba(0,0,0,.5);
+    top:0;
+    left:0;
+    display:none;
+}
+#popweixin .tip {
+    width:100%;
+    background:#fff;
+    z-index:1001;
+}
+.top2bottom {
+    -webkit-animation:top2bottom 1.2s ease;
+    -moz-animation:top2bottom 1.2s ease;
+    -o-animation:top2bottom 1.2s ease;
+    animation:top2bottom 1.2s ease;
+    -webkit-animation-fill-mode:backwards;
+    -moz-animation-fill-mode:backwards;
+    -o-animation-fill-mode:backwards;
+    animation-fill-mode:backwards
+}
+.animate-delay-1 {
+    -webkit-animation-delay:1s;
+    -moz-animation-delay:1s;
+    -o-animation-delay:1s;
+    animation-delay:1s
+}
+@-webkit-keyframes top2bottom {
+    0% {
+    -webkit-transform:translateY(-300px);
+    opacity:.6
+}
+100% {
+    -webkit-transform:translateY(0px);
+    opacity:1
+}
+}@keyframes top2bottom {
+    0% {
+    transform:translateY(-300px);
+    opacity:.6
+}
+100% {
+    transform:translateY(0px);
+    opacity:1
+}
+
+</style>
+
+<body onclick="touch()" style="background-image: url(image/startup_qr_1.1.png); background-size: contain; background-repeat: round;" >
+	
+<div id='popweixin'>
+    <div class='tip top2bottom animate-delay-1'>
+        <img src='image/wechat_appstore_popup.png' style="width:100%;height:150px;"/>
+    </div>
+</div>
+<!-- 	<div style="height: 512px;"> 
+	</div>
+	<div class="HBox" style="/* padding: 5px 20px 5px 100px; */margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;  ">
+		<div>
+			<img src="../img/app/QRCode_v2_400.png" alt="" style="width: 125px;">
+			<pre style="margin: 2px 0px 0px 22px; font:16px/1.5 'Microsoft YaHei',arial,tahoma,\5b8b\4f53,sans-serif;color: ivory;">iphone下载</pre>
+		</div>
+		<div style="width: 75px;"></div>
+		<div>
+			<img src="" alt="" style="width: 100px;">
+			<pre style="margin: 0px 0px 0px 10px;">Android下载</pre>
+		</div>
+	</div> -->
+
+</body>
+
+<script>
+(function() {
+ 	setTimeout(function() {
+		window.location.href='https://itunes.apple.com/us/app/zu-qiu-sheng-ya/id1092592440?l=zh&ls=1&mt=8';
+	}, 5000);
+	
+	var ua = navigator.userAgent.toLowerCase();
+	if (/iphone|ipod/.test(ua)) {
+		if(/micromessenger/.test(ua)){ 
+	    	document.getElementById("popweixin").style.display = "block";
+ 	    }
+	} 
+})()
+
+
+function touch(){
+	window.location.href='https://itunes.apple.com/us/app/zu-qiu-sheng-ya/id1092592440?l=zh&ls=1&mt=8';
+}	
+</script>
+</html>

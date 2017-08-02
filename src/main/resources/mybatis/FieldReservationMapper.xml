@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FieldReservation" >
+
+  <!-- 字段映射  -->
+  <resultMap id="FieldReservationResultMap" type="com.footballer.rest.api.v2.vo.FieldReservation" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="field_id" property="fieldId" jdbcType="INTEGER" />
+    <result column="field_charge_standard_id" property="fieldChargeStandardId" jdbcType="INTEGER" />
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="book_status" property="bookStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    <result column="use_date" property="useDate" jdbcType="DATE" />
+    <result column="book_date" property="bookDate" jdbcType="TIMESTAMP" />
+    <result column="cancel_date" property="cancelDate" jdbcType="TIMESTAMP" />
+    <result column="payment_status" property="paymentStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    <result column="guest_payment_status" property="guestPaymentStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    <result column="guest_player_id" property="guestPlayerId" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  </resultMap>
+  
+<!--   <resultMap id="AutomationJobFieldReservationMap" type="com.footballer.rest.api.v2.vo.AutomationJobFieldReservation" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+   	<result column="arena_id" property="arenaId" jdbcType="INTEGER" />
+   	<result column="type" property="type" jdbcType="VARCHAR" />
+   	<result column="field_id" property="fieldId" jdbcType="INTEGER" />
+   	<result column="field_charge_standard_id" property="fieldChargeStandardId" jdbcType="INTEGER" />
+   	<result column="player_id" property="playerId" jdbcType="INTEGER" />
+	<result column="book_status" property="bookStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+	<result column="day_of_week" property="dayOfWeek" jdbcType="INTEGER" />
+	<result column="payment_status" property="paymentStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+	<result column="video_status" property="videoStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+	<result column="status" property="jobStauts" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+	<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  </resultMap> -->
+
+  <resultMap id="AutomationJobFieldReservationResultMap" type="com.footballer.rest.api.v2.result.AutomationJobFieldReservationResult" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+   	<result column="player_id" property="playerId" jdbcType="INTEGER" />
+   	<result column="player_name" property="playerName" jdbcType="VARCHAR" />
+   	<result column="teams" property="teamName" jdbcType="VARCHAR" />
+   	<result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+	<result column="type" property="type" jdbcType="VARCHAR" />
+	<result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+	<result column="field_id" property="fieldId" jdbcType="INTEGER" />
+	<result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+	<result column="field_charge_standard_id" property="fieldChargeStandardId" jdbcType="INTEGER" />
+	<result column="start_time" property="startTime" jdbcType="TIME" />
+    <result column="end_time" property="endTime" jdbcType="TIME" />
+	<result column="day_of_week" property="dayOfWeek" jdbcType="INTEGER" />
+	<result column="video_status" property="videoStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+	<result column="status" property="jobStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    <result column="create_dt" property="createDt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 字段映射  -->
+  <resultMap id="FieldChargeStandard" type="com.footballer.rest.api.v2.vo.FieldChargeStandard" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+   	<result column="arena_id" property="arenaId" jdbcType="INTEGER" />
+    <result column="field_id" property="fieldId" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIME" />
+    <result column="end_time" property="endTime" jdbcType="TIME" />
+	<result column="price" property="price" jdbcType="DOUBLE" />
+	<result column="weekendPrice" property="weekendPrice" jdbcType="DOUBLE" />
+	<result column="bargin_price" property="barginPrice" jdbcType="DOUBLE" />
+	<result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ArenasFieldsReservationResultMap" type="com.footballer.rest.api.v2.result.ArenasFieldsReservationResult" >
+    <result column="fieldReservationId" property="fieldReservationId" jdbcType="INTEGER" />
+    <result column="reservationType" property="reservationType" jdbcType="VARCHAR" />
+    <result column="fieldId" property="fieldId" jdbcType="INTEGER" />
+    <result column="fieldName" property="fieldName" jdbcType="VARCHAR" />
+    <result column="fieldType" property="fieldType" jdbcType="VARCHAR" />
+    <result column="fieldCondition" property="fieldCondition" jdbcType="VARCHAR" />
+    <result column="fieldChargeStandardId" property="fieldChargeStandardId" jdbcType="INTEGER" />
+    <result column="affectFcsId" property="affectFcsId" jdbcType="VARCHAR" />
+    <result column="startTime" property="startTime" jdbcType="TIME" />
+    <result column="endTime" property="endTime" jdbcType="TIME" />
+	<result column="price" property="price" jdbcType="DOUBLE" />
+	<result column="weekendPrice" property="weekendPrice" jdbcType="DOUBLE" /> 
+	<result column="barginPrice" property="barginPrice" jdbcType="DOUBLE" />
+	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+	<result column="playerName" property="playerName" jdbcType="VARCHAR" />
+	<result column="guestPlayerId" property="guestPlayerId" jdbcType="INTEGER" />
+    <result column="bookStatus" property="bookStatus" jdbcType="VARCHAR" />
+    <result column="useDate" property="useDate" jdbcType="DATE" />
+    <result column="bookDate" property="bookDate" jdbcType="DATE" />
+    <result column="paymentStatus" property="paymentStatus" jdbcType="VARCHAR" />
+    <result column="guestPaymentStatus" property="guestPaymentStatus" jdbcType="VARCHAR" />
+    <result column="videoService" property="videoService" jdbcType="VARCHAR" />
+    <result column="queryDate" property="queryDate" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap id="PlayerFieldReservationResult"  type="com.footballer.rest.api.v2.result.PlayerFieldReservationResult" >
+  	<result column="fieldReservationId" property="fieldReservationId" jdbcType="INTEGER" />
+  	<result column="arenaId" property="arernaId" jdbcType="INTEGER" />
+    <result column="arenaName" property="arenaName" jdbcType="VARCHAR" />
+  	<result column="fieldId" property="fieldId" jdbcType="INTEGER" />
+    <result column="fieldName" property="fieldName" jdbcType="VARCHAR" />
+    <result column="startTime" property="startTime" jdbcType="TIME" />
+    <result column="endTime" property="endTime" jdbcType="TIME" />
+	<result column="bookDate" property="bookDate" jdbcType="DATE" />
+	<result column="bookStatus" property="bookStatus" jdbcType="VARCHAR" />
+	<result column="cancelDate" property="cancelDate" jdbcType="DATE" />
+	<result column="useDate" property="useDate" jdbcType="DATE" />
+	<result column="price" property="price" jdbcType="DOUBLE" />
+	<result column="weekendPrice" property="weekendPrice" jdbcType="DOUBLE" />  
+	<result column="barginPrice" property="barginPrice" jdbcType="DOUBLE" />
+	<result column="paymentStatus" property="paymentStatus" jdbcType="VARCHAR" />
+	
+  </resultMap>
+  
+  <resultMap id="FieldsReservationDetailResult"  type="com.footballer.rest.api.v2.domain.FieldReservationDetail" >
+  	<result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+  	<result column="type" property="type" jdbcType="VARCHAR" />
+  	<result column="fieldId" property="fieldId" jdbcType="INTEGER" />
+    <result column="fieldName" property="fieldName" jdbcType="VARCHAR" />
+    <result column="fieldReservationId" property="fieldReservationId" jdbcType="INTEGER" />
+    <result column="fieldChargeStandardId" property="fieldChargeStandardId" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="startTime" property="startTime" jdbcType="TIME" />
+    <result column="endTime" property="endTime" jdbcType="TIME" />
+	<result column="price" property="price" jdbcType="DOUBLE" /> 
+	<result column="barginPrice" property="barginPrice" jdbcType="DOUBLE" />
+	<result column="useDate" property="useDate" jdbcType="DATE" />
+	<result column="bookDate" property="bookDate" jdbcType="DATE" />
+	<result column="cancelDate" property="cancelDate" jdbcType="DATE" />
+	<result column="bookStatus" property="bookStatus" jdbcType="VARCHAR" />
+	<result column="paymentStatus" property="paymentStatus" jdbcType="VARCHAR" />
+	<result column="guestPaymentStatus" property="guestPaymentStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  
+ <resultMap id="ArenaUserInfoResultMap" type="com.footballer.rest.api.v2.domain.ArenaMemberInfo">
+ 	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="memberId" property="memberId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="teams" property="teams" jdbcType="VARCHAR" />
+	<result column="level" property="level" jdbcType="INTEGER" />
+	<result column="disCount" property="disCount" jdbcType="DOUBLE" />
+	<result column="balance" property="balance" jdbcType="DOUBLE" />
+	<result column="wechatNo" property="wechatNo" jdbcType="VARCHAR" />
+	<result column="cellphone" property="cellphone" jdbcType="BIGINT" />
+	<result column="createDt" property="createDt" jdbcType="TIMESTAMP"/>
+	<result column="fullFieldBookNumber" property="fullFieldBookNumber" jdbcType="INTEGER" />
+    <result column="battleBookNumber" property="battleBookNumber" jdbcType="INTEGER" />
+    <result column="bookTotalNumber" property="bookTotalNumber" jdbcType="INTEGER" />
+ </resultMap>
+ 
+ <resultMap id="AllArenaUserReservationStatisticsResult" type="com.footballer.rest.api.v2.domain.AllArenaUserReservationStatistics">
+ 	<result column="member" property="member" jdbcType="INTEGER" />
+    <result column="user" property="user" jdbcType="INTEGER" />
+    <result column="wechatUser" property="wechatUser" jdbcType="INTEGER" />
+    <result column="allWechatUser" property="allWechatUser" jdbcType="INTEGER" />
+    <result column="appUser" property="appUser" jdbcType="INTEGER" />
+    <result column="allReservations" property="allReservations" jdbcType="INTEGER" />
+    <result column="backendFullField" property="backendFullField" jdbcType="INTEGER" />
+    <result column="backendYuezhan" property="backendYuezhan" jdbcType="INTEGER" />
+    <result column="backendYingzhan" property="backendYingzhan" jdbcType="INTEGER" />
+    <result column="wechatFullField" property="wechatFullField" jdbcType="INTEGER" />
+    <result column="wechatYuezhan" property="wechatYuezhan" jdbcType="INTEGER" />
+    <result column="wechatYingzhan" property="wechatYingzhan" jdbcType="INTEGER" />
+    <result column="appFullField" property="appFullField" jdbcType="INTEGER" />
+    <result column="appYuezhan" property="appYuezhan" jdbcType="INTEGER" />
+    <result column="appYingzhan" property="appYingzhan" jdbcType="INTEGER" />
+ </resultMap>
+  
+  
+  <insert id="saveArenaFieldStandard"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.FieldChargeStandard">
+	<![CDATA[
+   		 insert into field_charge_standard (arena_id,field_id,start_time,end_time,price,bargin_price)
+    	 values (
+    		#{arenaId,jdbcType=INTEGER},
+    		#{fieldId,jdbcType=INTEGER},
+    		#{startTime,jdbcType=TIME},
+	 		#{endTime,jdbcType=TIME},
+			#{price,jdbcType=DOUBLE},
+			#{barginPrice,jdbcType=DOUBLE}
+     	)
+     ]]>
+  </insert>
+  
+  <insert id="saveFieldReservation"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+	<![CDATA[
+   		 insert into field_reservation (field_id,type,field_charge_standard_id,player_id,book_status,use_date,book_date,cancel_date,payment_status,video_service,create_by,create_dt,update_by,update_dt)
+    	 values (
+    		#{fieldId,jdbcType=INTEGER},
+    		#{type,jdbcType=VARCHAR},
+    		#{fieldChargeStandardId,jdbcType=INTEGER},
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{bookStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+	 		#{useDate},
+	 		#{bookDate},
+	 		#{cancelDate},
+	 		#{paymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+	 		#{videoStatus, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+			#{createBy,jdbcType=VARCHAR},
+	 		#{createDt},
+	 		#{updateBy,jdbcType=VARCHAR},
+			#{updateDt}
+     	)
+     ]]>
+        <selectKey resultType="long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+   		</selectKey>
+  </insert>
+  
+  <insert id="insertBatchAutomationFieldReservations"  parameterType="ArrayList">
+   	insert into field_reservation (field_id,type,field_charge_standard_id,player_id,book_status,use_date,book_date,cancel_date,payment_status,video_service,create_by,create_dt,update_by,update_dt)
+   	values 
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.fieldId,jdbcType=INTEGER},
+    		#{item.type,jdbcType=VARCHAR},
+    		#{item.fieldChargeStandardId,jdbcType=INTEGER},
+	 		#{item.playerId,jdbcType=INTEGER},
+	 		#{item.bookStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+	 		#{item.useDate},
+	 		#{item.bookDate},
+	 		#{item.cancelDate},
+	 		#{item.paymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+	 		#{item.videoStatus, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+			#{item.createBy,jdbcType=VARCHAR},
+	 		#{item.createDt},
+	 		#{item.updateBy,jdbcType=VARCHAR},
+			#{item.updateDt}
+     		)  
+    	</foreach>  
+  </insert>
+  
+  <insert id="createAutoReservationJob"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.AutomationJobFieldReservation">
+	<![CDATA[
+   		 insert into automation_job_field_reservation (player_id,type,arena_id,field_id,field_charge_standard_id,day_of_week,video_status,status,create_by,create_dt,update_by,update_dt)
+    	 values (
+    		#{playerId,jdbcType=INTEGER},
+    		#{type,jdbcType=VARCHAR},
+    		#{arenaId,jdbcType=INTEGER},
+    		#{fieldId,jdbcType=INTEGER},
+    		#{fieldChargeStandardId,jdbcType=INTEGER},
+    		#{dayOfWeek,jdbcType=INTEGER},
+	 		#{videoStatus, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+	 		#{jobStatus, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+			#{createBy,jdbcType=VARCHAR},
+	 		#{createDt},
+	 		#{updateBy,jdbcType=VARCHAR},
+			#{updateDt}
+     	)
+     ]]>
+  </insert>
+  
+  
+    
+  <!-- 共用查询字段 -->
+  <sql id="share_query_List" >
+     fcs.field_id as fieldId, f.`name` as fieldName, fcs.`id` as fieldChargeStandardId,fcs.start_time as startTime, fcs.`end_time` as endTime, fcs.price, fcs.bargin_price as barginPrice, fr.player_id as playerId, fr.book_status as bookStatus, fr.use_date as useDate, fr.book_date as bookDate, fr.payment_status as paymentStatus
+  </sql>
+  
+  <select id="getArenaFieldChargeStandardsByArenaId" resultMap="FieldChargeStandard" parameterType="long">
+  	select fcs.id, fcs.arena_id, fcs.field_id, fcs.start_time, fcs.end_time, fcs.price, fcs.weekend_price weekendPrice, fcs.bargin_price, f.name  from `field_charge_standard` fcs
+	join field f on f.id = fcs.field_id
+	where fcs.arena_id = #{arenaId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询 指定场馆 的所有场次在某一天的预定情况-->  
+  <!-- 上半部分是未被预订的情况 -->
+  <!-- 下半部分是已被预订的情况 -->
+  <select id="getArenasFieldsReservationsByArenaIdAndUseDate" resultMap="ArenasFieldsReservationResultMap" parameterType="com.footballer.rest.api.v2.vo.FieldReservation" >
+	select fr.id fieldReservationId, fr.type reservationType, fcs.field_id as fieldId, f.`name` as fieldName, f.type fieldType, f.conditions fieldCondition, fcs.`id` as fieldChargeStandardId, fcs.`affect_fcs_id` affectFcsId, fcs.start_time as startTime, fcs.`end_time` as endTime, fcs.price, fcs.weekend_price weekendPrice, fcs.bargin_price as barginPrice, fr.player_id as playerId, null as playerName, fr.`guest_player_id` guestPlayerId, fr.book_status as bookStatus, fr.use_date as useDate, fr.book_date as bookDate, fr.payment_status as paymentStatus, fr.guest_payment_status as guestPaymentStatus, fr.`video_service` videoService
+	from field_charge_standard fcs
+	join field f on f.`id` = fcs.`field_id`
+	left join field_reservation fr on 1=0
+	where fcs.`arena_id` = #{arenaId,jdbcType=INTEGER} and fcs.id not in (
+	select fcs.`id` from `field_charge_standard` fcs
+	join `field_reservation` fr on fr.`field_charge_standard_id` = fcs.`id`
+	where fcs.`arena_id` = #{arenaId,jdbcType=INTEGER} and fr.`use_date`= #{useDate,jdbcType=DATE}  and fr.`book_status`=1 )
+	
+	union all
+	 
+	select fr.id fieldReservationId, fr.type reservationType, fcs.field_id as fieldId, f.`name` as fieldName, f.type fieldType, f.conditions fieldCondition, fcs.`id` as fieldChargeStandardId,fcs.`affect_fcs_id` affectFcsId, fcs.start_time as startTime, fcs.`end_time` as endTime, fcs.price, fcs.weekend_price weekendPrice, fcs.bargin_price as barginPrice, fr.player_id as playerId, fp.`nick_name` as playerName, fr.`guest_player_id` guestPlayerId, fr.book_status as bookStatus, fr.use_date as useDate, fr.book_date as bookDate, fr.payment_status as paymentStatus, fr.guest_payment_status as guestPaymentStatus, fr.`video_service` videoService    
+	from `field_charge_standard` fcs
+	join `field_reservation` fr on fr.`field_charge_standard_id` = fcs.`id`
+	join field f on f.`id` = fcs.`field_id`
+	join football_player fp on fp.id = fr.`player_id`
+	where fcs.`arena_id` = #{arenaId,jdbcType=INTEGER} and fr.`use_date`= #{useDate,jdbcType=DATE}  and fr.`book_status`=1
+	
+	order by fieldId, startTime
+  </select>
+  
+  <select id="getFieldReservationById" resultMap="FieldReservationResultMap" parameterType="long" >
+  	select * from `field_reservation`
+	where id = #{id}
+  </select>
+  
+  
+  
+  <select id="checkFieldRevsersionExist" resultMap="FieldReservationResultMap" parameterType="com.footballer.rest.api.v2.vo.FieldReservation" >
+  	select * from `field_reservation`
+	where field_charge_standard_id = #{fieldChargeStandardId} and use_date = #{useDate,jdbcType=DATE} and book_status= 1 and payment_status > 0
+  </select>
+  
+  <select id="checkFieldRevsersionExistByIdAndPlayerId" resultMap="FieldReservationResultMap" parameterType="com.footballer.rest.api.v2.vo.FieldReservation" >
+  	select * from `field_reservation`
+	where book_status = 1 and id = #{id} and player_id = #{playerId} 
+  </select>
+  
+  
+  <select id="getPlayerReservationList" resultMap="PlayerFieldReservationResult" parameterType="long">
+  	select fr.`id` as fieldReservationId, fr.type type, a.name as arenaName, f.name as fieldName, fcs.`start_time` as startTime, fcs.end_time as endTime, fr.`book_date` as bookDate, fr.`book_status` as bookStatus, fr.`cancel_date` as cancelDate, fr.`use_date` as useDate, fcs.`price`as price, fcs.`weekend_price`as weekendPrice, fcs.`bargin_price` as barginPrice, fr.`payment_status` as paymentStatus from field_reservation fr
+	join field_charge_standard fcs on fcs.id = fr.`field_charge_standard_id`
+	join field f on f.`id` = fr.`field_id`
+	join arena a on a.id = f.arena_id
+	where player_id = #{playerId} and fr.book_status = 1 or guest_player_id = #{playerId} and fr.book_status = 1 
+	order by useDate desc, bookDate
+  </select>
+  
+  <select id="getArenasFieldsReservationDetail" resultMap="FieldsReservationDetailResult" parameterType="long">
+  	select fr.id as fieldReservationId,
+  	       a.id as arenaId,
+  	       f.id as fieldId,
+  	       f.name as fieldName,
+  	       fr.field_charge_standard_id as fieldChargeStandardId,
+  	       fr.player_id as playerId,
+  	       fcs.start_time as startTime,
+  	       fcs.end_time as endTime, 
+  		   fcs.price as price,
+  		   fcs.bargin_price as barginPrice,
+  		   fr.use_date as useDate,
+  		   fr.book_status as bookDate,
+  		   fr.cancel_date as cancelDate,
+  		   fr.book_status as bookStatus,
+  		   fr.payment_status as paymentStatus,
+  		   fr.guest_payment_status as guestPaymentStatus
+  	from field_reservation fr
+  	join field f on f.id = fr.field_id
+  	join arena a on a.id = f.`arena_id`
+  	join field_charge_standard fcs on fcs.id = fr.field_charge_standard_id
+  	where fr.id = #{fieldReservationId}
+  </select>
+  
+  <!-- 查询 获取场地场次收费标准 -->
+  <select id="getFieldChargeStandardById" resultMap="FieldChargeStandard"  parameterType="long">
+  	select fcs.id, f.name, fcs.arena_id arenaId, field_id fieldId, start_time startTime, end_time endTime, fcs.price, fcs.weekend_price weekendPrice, bargin_price barginPrice
+  	from field_charge_standard fcs
+	INNER JOIN field f on f.id = fcs.field_id
+  	where fcs.id = #{fieldChargeStandardId}
+  </select>
+  
+  <!-- 查询 获取场地场次开始时间标准列表 -->
+  <select id="getArenaFieldStartTimeListByArenaId" resultType="String"  parameterType="long">
+  	select distinct start_time from field_charge_standard
+	where arena_id = #{arenaId}
+  </select>
+  
+  
+  <select id="checkFieldChargeStandardExist" resultMap="FieldChargeStandard" parameterType="long">
+  	select * from field_charge_standard
+  	where id = #{id}
+  </select>
+  
+  <select id="getAutomationReservationJobList" resultMap="AutomationJobFieldReservationResultMap" parameterType="long">
+  	select ajfr.id, ajfr.`player_id`, fp.nick_name player_name, group_concat(t.name) teams, a.cellphone,ajfr.`type`, ajfr.field_id, f.name field_name, fcs.id field_charge_standard_id, fcs.start_time , fcs.end_time, ajfr.`day_of_week`, ajfr.`video_status`, ajfr.`status`, ajfr.`create_dt`   from automation_job_field_reservation ajfr
+	join football_player fp on fp.id = ajfr.player_id
+	join account a on a.id = ajfr.player_id
+	join team_player tp on ajfr.player_id = tp.player_id 
+	left join team t on t.id = tp.team_id
+	join field f on f.id =ajfr.field_id
+	join field_charge_standard fcs on fcs.id = ajfr.`field_charge_standard_id`
+	where ajfr.arena_id = #{arena_id}
+	group by ajfr.id
+	order by day_of_week Asc
+  </select>
+  
+  
+  <select id="getAllAutomationReservationActiveJobList" resultMap="AutomationJobFieldReservationResultMap">
+  	select ajfr.id, ajfr.`player_id`, fp.nick_name player_name, group_concat(t.name) teams, a.cellphone,ajfr.`type`, ajfr.arena_id arenaId, ajfr.field_id, f.name field_name, fcs.id field_charge_standard_id, fcs.start_time , fcs.end_time, ajfr.`day_of_week`, ajfr.`video_status`, ajfr.`status`, ajfr.`create_dt`   from automation_job_field_reservation ajfr
+	join football_player fp on fp.id = ajfr.player_id
+	join account a on a.id = ajfr.player_id
+	join team_player tp on ajfr.player_id = tp.player_id 
+	left join team t on t.id = tp.team_id
+	join field f on f.id =ajfr.field_id
+	join field_charge_standard fcs on fcs.id = ajfr.`field_charge_standard_id`
+	where ajfr.status =1
+	group by ajfr.id
+	order by day_of_week Asc
+  </select>
+  
+  
+  <update id="updateFieldReservationStatus" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+  	update field_reservation
+    set
+     	 book_status = #{bookStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 payment_status = #{paymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 guest_payment_status = #{guestPaymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+   		 update_dt = #{updateDt}
+    where id = #{id}
+  </update>
+  
+  
+  
+  
+  <update id="cancelReservation" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+  	update field_reservation
+    set
+     	 book_status = 0,
+     	 cancel_date= #{cancelDate},
+     	 update_by = #{updateBy},
+   		 update_dt = #{updateDt}
+    where id = #{id}
+  
+  </update>
+  
+  <update id="updateSameTimeShiftArenaFieldStandard" parameterType="com.footballer.rest.api.v2.vo.FieldChargeStandard">
+  	update field_charge_standard  set start_time = #{startTime}, end_time = #{endTime}
+	where id in (
+		  select id from (
+		  	select id from field_charge_standard 
+		  	where arena_id = #{arenaId} and start_time = (select start_time from field_charge_standard where id = #{id}) and end_time = (select end_time from field_charge_standard where id = #{id})
+		  ) fcs 
+	) 
+  </update>
+  
+  <update id="updateArenaFieldStandardPriceByFCSId" parameterType="com.footballer.rest.api.v2.vo.FieldChargeStandard">
+  	update field_charge_standard
+    set
+     	 price = #{price},
+     	 weekend_price = #{weekendPrice}
+    where id = #{id}
+  </update>
+  
+  
+  <update id="acceptBattleInfo" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+  	update field_reservation
+    set
+     	 guest_player_id = #{guestPlayerId},
+     	 guest_payment_status = #{guestPaymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 update_by = #{updateBy},
+   		 update_dt = #{updateDt}
+    where id = #{id}
+  </update>
+  
+  
+  <update id="removeGuestTeamOfBattle" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+  	update field_reservation
+    set
+     	 guest_player_id = #{guestPlayerId},
+     	 guest_payment_status = #{guestPaymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 update_by = #{updateBy},
+   		 update_dt = #{updateDt}
+    where id = #{id}
+  </update>
+  
+  <update id="removeHostTeamOfBattle" parameterType="com.footballer.rest.api.v2.vo.FieldReservation">
+  	update field_reservation
+    set
+     	 player_id = #{playerId},
+     	 payment_status = #{paymentStatus ,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 guest_player_id = #{guestPlayerId},
+     	 guest_payment_status = #{guestPaymentStatus,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+     	 update_by = #{updateBy},
+   		 update_dt = #{updateDt}
+    where id = #{id}
+  </update>
+  
+  <update id="updateAutoReservationJobStatusById" parameterType="com.footballer.rest.api.v2.vo.AutomationJobFieldReservation">
+  	update automation_job_field_reservation
+    set
+     	 status = #{jobStatus, typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
+    where id = #{id}
+  </update>
+  
+  <delete id="deleteArenaFieldStandard" parameterType="long" >
+    delete from field_charge_standard
+    where id= #{fieldChargeStandardId}
+  </delete>  
+  
+  <delete id="deleteAutoReservationJobById" parameterType="long" >
+    delete from automation_job_field_reservation
+    where id= #{autoJobId}
+  </delete>  
+  
+  <!-- ============== 存储过程调用 ================  -->
+  
+  <select id="getArenaReservationStatisticsByDate" statementType="CALLABLE" parameterType="hashmap" resultType="String">  
+  	<![CDATA[ 
+		{ call arena_fields_reservation_statistics(#{arenaId, mode=IN, jdbcType=VARCHAR},#{startDate, mode=IN, jdbcType=VARCHAR},#{endDate, mode=IN, jdbcType=VARCHAR},#{times, mode=OUT, jdbcType=VARCHAR}) } 
+  	]]>  
+  </select>
+  
+  <select id="getArenaUsersFieldReservationStatisticsByDate" statementType="CALLABLE" parameterType="hashmap" resultMap="ArenaUserInfoResultMap">  
+  	<![CDATA[ 
+		{ call player_reservation_statistics(#{arenaId, mode=IN, jdbcType=VARCHAR},#{startDate, mode=IN, jdbcType=VARCHAR},#{endDate, mode=IN, jdbcType=VARCHAR}) } 
+  	]]>  
+  </select>
+  
+  <select id="getArenaReservationByCurrentWeek" statementType="CALLABLE" parameterType="long" resultMap="ArenasFieldsReservationResultMap">  
+  	<![CDATA[ 
+		{ call getArenaCurrentWeekReservation(#{arenaId, mode=IN, jdbcType=VARCHAR}) } 
+  	]]>  
+  </select>
+  
+  <select id="getArenaAllUsersReservationStatisticsByDate" statementType="CALLABLE" parameterType="hashmap" resultMap="AllArenaUserReservationStatisticsResult">  
+  	<![CDATA[ 
+		{ call all_user_reservation_statistics(#{arenaId, mode=IN, jdbcType=VARCHAR},#{startDate, mode=IN, jdbcType=VARCHAR},#{endDate, mode=IN, jdbcType=VARCHAR}) } 
+  	]]>  
+  </select>	
+
+  
+</mapper>

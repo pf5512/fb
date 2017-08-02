@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MomentMapper" >
+
+  <resultMap id="Moment" type="com.footballer.rest.api.v2.vo.Moment" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+   	<result column="tournament_id" property="tournamentId" jdbcType="INTEGER" />
+   	<result column="tournament_match_id" property="tournamentMatchId" jdbcType="VARCHAR" />
+   	<result column="content" property="content" jdbcType="VARCHAR" />
+   	<result column="type" property="type" jdbcType="VARCHAR" />
+   	<result column="url" property="url" jdbcType="VARCHAR" />
+   	<result column="date" property="date" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="saveMoment"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Moment">
+    insert into moment (player_id,content, type, url, tournament_id, tournament_match_id, date)
+    values (
+    		#{playerId,jdbcType=INTEGER},
+    		#{content,jdbcType=VARCHAR},
+    		#{type,jdbcType=VARCHAR},
+    		#{url,jdbcType=VARCHAR},
+            #{tournamentId,jdbcType=INTEGER},
+    		#{tournamentMatchId,jdbcType=INTEGER},
+			#{date}
+     )
+  </insert>  
+  
+  <select id="findMomentsByTournamentId" resultMap="Moment" parameterType="long" >
+	select * from moment
+	where tournament_id = #{tournamentId}
+  </select>
+ 
+</mapper>

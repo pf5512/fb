@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-workspace name="fb" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:project name="mobile-v1-service">/Users/ianjiang/Dropbox/dev/fb/footballer/mobile-v1-service-soapui-project.xml</con:project>
+  <con:project name="Sample REST Project">/Users/ianjiang/dev/SoapUI-Tutorials/Sample-REST-Project-soapui-project.xml</con:project>
+</con:soapui-workspace>

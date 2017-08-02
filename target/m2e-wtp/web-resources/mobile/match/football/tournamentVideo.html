@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="../../css/frozen.css">
+        <link rel="stylesheet" href="../../../css/justin_mobile_common.css">
+        <link rel="stylesheet" href="../../css/match.css">
+    </head>
+
+<body>
+	<div class="ui-loading-block show">
+	    <div class="ui-loading-cnt">
+	        <i class="ui-loading-bright"></i>
+	        <p>正在加载中...</p>
+	    </div>
+	</div>
+	<div id="app" v-cloak>
+	   <header class="ui-header ui-header-positive ui-border-b">
+           <i class="ui-icon-return" onclick="historyBackcommon({{parameterTournamentId}})"></i>
+           <h1>赛事视频</h1>
+       </header>
+       <footer class="ui-footer ui-footer-btn">
+            <div style="text-align: center;margin: 10px 0px 30px 0px" onclick="aufFooterRedirect()">
+				<img src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="160px" height="20px" >
+			</div>
+        </footer>
+       <section class="ui-container">
+       		<div class="demo-block">
+				<div class="ui-tab">
+				    <ul class="ui-tab-nav ui-border-b">
+				        <li class="current">{{labelHighlights}}</li>
+				        <li>{{labelTop}}</li>
+				        <li>{{labelFun}}</li>
+				        <li>{{labelFootballWorld}}</li>
+				    </ul>
+				    <ul class="ui-tab-content" style="width:300%">
+				    	<li>				    		
+				    		<ul v-for="video in highlightsVideoList" class="ui-list ui-list-link ui-border-t" v-on:click="clickMatchVideo(video, $event)">
+							    <li class="ui-border-b">
+							        <div class="ui-list-img">
+							            <span style="background-image:url({{video.thumbnail}})"></span>
+							        </div>
+							        <div style="-webkit-box-pack: inherit" class="ui-list-info">
+							            <h4 class="ui-nowrap">{{video.name}}</h4>
+							            <p class="ui-nowrap">{{video.displayDate}}</p>
+										<p>
+											<span class="pr5 c_blue"><i class="ui-icon-play" style="display: inline; font-size:20px;"></i> {{video.watchCount}}</span>
+											<span><i class="ui-icon-comment" style="display: inline; font-size:20px;"></i> {{video.commentCount}}</span>
+											<span class="pl5"><i class="ui-icon-like" style="display: inline; font-size:20px;"></i> {{video.supportCount}}</span>
+											<span class="pl5 c_green" ><i class="ui-icon-share" style="display: inline; font-size:20px;"></i> {{video.shareCount}}</span>
+										</p>
+							        </div>
+							    </li>
+							</ul>
+				    	</li>
+				        <li>
+				    		<ul v-for="topVideo in topVideoList" class="ui-list ui-list-link ui-border-t" v-on:click="clickVideo(topVideo, $event)">
+							    <li class="ui-border-b">
+							        <div class="ui-list-img">
+							            <span style="background-image:url({{topVideo.thumbnail}})"></span>
+							        </div>
+							        <div class="ui-list-info">
+							            <h4 class="ui-nowrap">{{topVideo.name}}</h4>
+							            <p class="ui-nowrap">{{topVideo.displayDate}}</p>
+										<p>
+											<span class="pr5 c_blue"><i class="ui-icon-play" style="display: inline; font-size:20px;"></i> {{topVideo.watchCount}}</span>
+											<span><i class="ui-icon-comment" style="display: inline; font-size:20px;"></i> {{topVideo.commentCount}}</span>
+											<span class="pl5"><i class="ui-icon-like" style="display: inline; font-size:20px;"></i> {{topVideo.supportCount}}</span>
+											<span class="pl5 c_green"><i class="ui-icon-share" style="display: inline; font-size:20px;"></i> {{topVideo.shareCount}}</span>
+										</p>
+							        </div>
+							    </li>
+							</ul>
+				    	</li>
+				        <li>
+				    		<ul v-for="funVideo in funVideoList" class="ui-list ui-list-link ui-border-t" v-on:click="clickVideo(funVideo, $event)">
+							    <li class="ui-border-b">
+							        <div class="ui-list-img">
+							            <span style="background-image:url({{funVideo.thumbnail}})"></span>
+							        </div>
+							        <div class="ui-list-info">
+							            <h4 class="ui-nowrap">{{funVideo.name}}</h4>
+							            <p class="ui-nowrap">{{funVideo.displayDate}}</p>
+										<p>
+											<span class="pr5 c_blue"><i class="ui-icon-play" style="display: inline; font-size:20px;"></i> {{funVideo.watchCount}}</span>
+											<span><i class="ui-icon-comment" style="display: inline; font-size:20px;"></i> {{funVideo.commentCount}}</span>
+											<span class="pl5"><i class="ui-icon-like" style="display: inline; font-size:20px;"></i> {{funVideo.supportCount}}</span>
+											<span class="pl5 c_green"><i class="ui-icon-share" style="display: inline; font-size:20px;"></i> {{funVideo.shareCount}}</span>
+										</p>
+							        </div>
+							    </li>
+							</ul>
+				    	</li>
+				        <li>
+				    		<ul v-for="wholeVideo in wholeVideoList" class="ui-list ui-list-link ui-border-t" v-on:click="clickVideo(wholeVideo, $event)">
+							    <li class="ui-border-b">
+							        <div class="ui-list-img">
+							            <span style="background-image:url({{wholeVideo.thumbnail}})"></span>
+							        </div>
+							        <div class="ui-list-info">
+							            <h4 class="ui-nowrap">{{wholeVideo.name}}</h4>
+							            <p class="ui-nowrap">{{wholeVideo.displayDate}}</p>
+										<p>
+											<span class="pr5 c_blue"><i class="ui-icon-play" style="display: inline; font-size:20px;"></i> {{wholeVideo.watchCount}}</span>
+											<span><i class="ui-icon-comment" style="display: inline; font-size:20px;"></i> {{wholeVideo.commentCount}}</span>
+											<span class="pl5"><i class="ui-icon-like" style="display: inline; font-size:20px;"></i> {{wholeVideo.supportCount}}</span>
+											<span class="pl5 c_green"><i class="ui-icon-share" style="display: inline; font-size:20px;"></i> {{wholeVideo.shareCount}}</span>
+										</p>
+							        </div>
+							    </li>
+							</ul>
+				    	</li>
+				    </ul>
+				</div>
+			</div>
+       
+		</section>
+		
+		<!--  
+		<div style="text-align: center;margin: 10px 0px 30px 0px" onclick="aufFooterRedirect()">
+			<img src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="160px" height="20px" >
+		</div>
+		-->
+		
+	</div>
+
+<script src="../../../i18n/env.js"></script>
+<script src="../../../js/jquery-1.11.2.min.js" type="text/javascript"></script>     
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>    
+<script src="../../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../../js/frozen.js"></script>
+<script src="../../js/server/service.js"></script>
+<script src="../../../js/justin_common.js"></script>
+<script src="../../js/lib/vue.min.js"></script>
+<script src="../../js/lib/underscore-min.js"></script>
+<script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript" ></script>
+
+
+<script>
+//目前足球篮球公用这个页面 ，篮球只有一个赛事，暂时按照tournamentId 来区分是什么类的赛事完成往首页跳转
+function historyBackcommon(tournamentId){
+	if(document.referrer == null || document.referrer == '' || document.referrer == void 0){
+		if(tournamentId == 7){
+			location.href = GLOBAL_VAR_DOMAIN +'/footballer/mobile/match/basketball/bbTournamentDashboard.html?lang=en&type=web&tournamentId=7';
+		}else{
+			location.href = GLOBAL_VAR_DOMAIN +'/footballer/mobile/match/football/matchListDashboard.html?lang=en&type=web';	
+		}
+	}else{
+		history.back();
+	}
+}
+
+accessStats()
+
+$(document).ready(function() {
+    		var vm,
+		    	//json = $.parseJSON(decodeURIComponent(getParameter(window.location.href ,"json"))),
+		    	//tournamentId = json.tournamentId;
+		    	lang = f$.cache('lang'),
+    			tournamentId = getParameter(window.location.href ,"tournamentId")
+    		
+	    	vm = new Vue({
+	    		el   : '#app',
+	    		data : {
+	    			domain:'',
+	    			suffix:'',
+	    			labelHighlights:'',
+	    			labelTop:'',
+	    			labelFun:'',
+		        	labelWhole:'',
+		        	like:'',
+		        	comment:'',
+		        	share:'',
+		        	labelFootballWorld:'',
+		        	highlightsVideoList : [],
+		        	topVideoList:[],
+		        	funVideoList:[],
+		        	wholeVideoList:[],
+		        	parameterTournamentId:tournamentId
+	    		},
+	    		methods: {
+	    			init:function(){
+	    				
+	    				vm.$data.domain =  GLOBAL_VAR_DOMAIN;
+	    		        vm.$data.suffix = GLOBAL_VAR_SUFFIX;
+ 	    				$.i18n.properties({// 加载中文properties文件  
+	    	    		    name:'lan', // properties文件名称  
+	    	    		    path:'../../../i18n/', // properties文件路径  
+	    	    		    mode:'map', // 用 Map 的方式使用资源文件中的值
+	    	    		    language:lang,
+	    	    		    checkAvailableLanguages: true,
+	    	    		    callback: function() {// 加载成功后设置显示内容  
+	    	    		    	vm.$data.labelHighlights =  $.i18n.prop('highlights');
+	    	    		        vm.$data.labelTop =  $.i18n.prop('top');
+	    	    		        vm.$data.labelFun =  $.i18n.prop('funMonment');
+	    	    		        vm.$data.labelWhole =  $.i18n.prop('wholeMatch');
+	    	    		        vm.$data.labelFootballWorld =  $.i18n.prop('world');
+	    	    		        vm.$data.like = $.i18n.prop('like');
+	    	    		        vm.$data.comment = $.i18n.prop('comment');
+	    	    		        vm.$data.share = $.i18n.prop('share');
+
+	    	    		        document.title = vm.$data.labelHighlights;
+	    	    		    }
+	    	    		});
+	    				tabInit();
+	    				vm.loadData();
+	    			},
+	    			clickMatchVideo : function(video, e) {
+	    				location.href = vm.$data.domain+'footballer/mobile/match/football/tournamentMatchVideo.html?method=matchVideo&matchId='+ video.tournamentMatchId +'&tournamentId='+tournamentId;
+	    			},
+	    			clickVideo : function(video, e) {
+	    				location.href = vm.$data.domain+'footballer/mobile/match/football/tournamentMatchVideo.html?method=video&videoId='+ video.id+'&tournamentId='+tournamentId;;
+	    			},
+	    			loadData:function(){
+	    				f$.getTournamentVideoList(vm.$data.domain, vm.$data.suffix, {tournamentId:Number(tournamentId)}).done(function(data) {
+							//vm.$data.videoList = data.videos;
+	    					var videoList = data.videos;
+	    					vm.$data.highlightsVideoList = _(videoList).filter(function(video) {
+	    						return video.type == 'HIGHLIGHTS';
+	    					});
+	    					vm.$data.topVideoList = _(videoList).filter(function(video) {
+	    						return video.type == 'TOP';
+	    					});
+	    					vm.$data.funVideoList = _(videoList).filter(function(video) {
+	    						return video.type == 'FUN';
+	    					});
+	    					vm.$data.wholeVideoList = _(videoList).filter(function(video) {
+	    						return video.type == 'FULL';
+	    					});
+	    					vm.$log();
+						})
+	    			},
+	    		}
+	    	});
+	    	
+			function tabInit()
+    		{
+    			var tab = new fz.Scroll('.ui-tab', {
+			        role: 'tab',
+			        autoplay: false,
+				});
+			} 
+			
+			vm.init();
+			$('.ui-loading-block').removeClass("show");
+});
+          
+</script>
+    </body>
+</html>

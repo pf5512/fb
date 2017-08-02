@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PlayerDepositAccount" >
+
+  <!-- 字段映射  -->
+  <resultMap id="BaseResultMap" type="com.footballer.rest.api.v2.vo.PlayerDepositAccount" >
+
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="team_id" property="teamId" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="NUMERIC" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_dt" property="createDt" jdbcType="DATE" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_dt" property="updateDt" jdbcType="DATE" />
+  </resultMap>
+  
+  
+  <resultMap id="PlayerFeeResultMap" type="com.footballer.rest.api.v2.result.PlayerFeeOfEventResult" >
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="fee" property="fee" jdbcType="NUMERIC" />
+  </resultMap>
+    
+  
+  <select id="findAllPlayerChargeFeeOfEventByEventId" resultMap="PlayerFeeResultMap" parameterType="Long" >
+    select fp.id as playerId, pbl.fee as fee
+	from player_balance_lines pbl
+	inner join player_deposit_account pda on pbl.player_deposit_account_id = pda.id
+	inner join football_player fp on pda.player_id = fp.id
+	where pbl.fee_type = 'CREDIT' and pbl.eventId = #{eventId} 
+  </select>
+  
+  
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                            http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+                            
+    <context:component-scan base-package="com.footballer.rest.api.v1.*" />
+ 	<context:component-scan base-package ="com.footballer.oauth.*" />
+ 	<context:component-scan base-package="com.footballer.rest.api.v2.*" use-default-filters="true" />
+ 	
+ 	
+	<!-- <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>  -->
+
+    <bean id="userDao" class="com.footballer.rest.api.v1.dao.UserDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="playerDao" class="com.footballer.rest.api.v1.dao.PlayerDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="teamDao" class="com.footballer.rest.api.v1.dao.TeamDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="arenaDao" class="com.footballer.rest.api.v1.dao.ArenaDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="addressDao" class="com.footballer.rest.api.v1.dao.AddressDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="fieldDao" class="com.footballer.rest.api.v1.dao.FieldDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="notificationManager" class="com.footballer.notification.NotificationManager">
+    </bean>
+    
+    <bean id="eventDao" class="com.footballer.rest.api.v1.dao.EventDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+  
+    <bean id="invitationDao" class="com.footballer.rest.api.v1.dao.InvitationDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="securityDao" class="com.footballer.rest.api.v1.dao.SecurityDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	
+	<bean id="evaluationDao" class="com.footballer.rest.api.v1.dao.EvaluationDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="evaluationAllCountDao" class="com.footballer.rest.api.v1.dao.EvaluationAllCountDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="evaluationMatchCountDao" class="com.footballer.rest.api.v1.dao.EvaluationMatchCountDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	
+	<bean id="UserService" class="com.footballer.rest.api.v1.restfulService.UserService"/>
+	<bean id="PlayerService" class="com.footballer.rest.api.v1.restfulService.PlayerService"/>
+	<bean id="EventService" class="com.footballer.rest.api.v1.restfulService.EventService" />
+	<bean id="TeamService" class="com.footballer.rest.api.v1.restfulService.TeamService" />
+	<bean id="ArenaService" class="com.footballer.rest.api.v1.restfulService.ArenaService" />
+	<bean id="FieldService" class="com.footballer.rest.api.v1.restfulService.FieldService" />
+	<bean id="InvitaionService" class="com.footballer.rest.api.v1.restfulService.InvitaionService" />
+	<bean id="EvaluationService" class="com.footballer.rest.api.v1.restfulService.EvaluationService"/>
+	
+	<bean id="PlayerRecordService" class="com.footballer.rest.api.v2.restfulService.PlayerRecordService"/>
+	<bean id="EvaluationCountService" class="com.footballer.rest.api.v2.restfulService.EvaluationCountService"/>
+
+	<bean id="UserCommentsService" class="com.footballer.rest.api.v2.restfulService.UserCommentsService"/>
+
+	<bean id="EventService2" class="com.footballer.rest.api.v2.restfulService.EventService" />
+
+	<bean id="ReservationService" class="com.footballer.rest.api.v2.restfulService.ReservationService" />
+	
+	<bean id="MemberShipService" class="com.footballer.rest.api.v2.restfulService.MemberShipService" />
+	
+	<bean id="ArenaFieldService" class="com.footballer.rest.api.v2.restfulService.ArenaFieldService" />
+	
+	<bean id="PlayerServiceV2" class="com.footballer.rest.api.v2.restfulService.PlayerService" />
+	
+	<bean id="BattleService" class="com.footballer.rest.api.v2.restfulService.BattleService" />
+	
+	<bean id="TournamentService" class="com.footballer.rest.api.v2.restfulService.TournamentService" />
+	
+	<bean id="SoloService" class="com.footballer.rest.api.v2.restfulService.SoloService" />
+	
+	<bean id="WeChatService" class="com.footballer.rest.api.v2.restfulService.WeChatService" />
+	
+	<bean id="SponsorService" class="com.footballer.rest.api.v2.restfulService.SponsorService" />
+
+    <bean id="mobileAppSecurityFilter" class="com.footballer.filter.MobileAppSecurityFilter" />
+<!-- 	<bean id= "webSecurityFilter" class ="com.footballer.filter.WebSecurityFilter" />   -->
+	
+    <bean id="securityService" class="com.footballer.rest.api.v1.SecurityService" />
+    
+    <!-- spring task -->
+    <bean id="matchTimeRemindBean" class="com.footballer.rest.api.v1.task.MatchTimeRemindTask"/>
+    <bean id="tournamentMatchTimeRemindBean" class="com.footballer.rest.api.v2.task.TournamentMatchTimeRemindTask"/>
+<!--     <bean id="heartBeatsBean" class="com.footballer.rest.api.v1.task.HeartBeatsCheckTask"/> -->    
+	<bean id="fixedReservationAutoJobBean" class="com.footballer.rest.api.v1.task.FixedReservationAutoJobTask"/>	
+	<bean id="fetchVideoThumbnailTask" class="com.footballer.rest.api.v1.task.FetchVideoThumbnailTask"/>
+
+</beans>

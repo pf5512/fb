@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SponsordMapper" >
+
+  
+  <resultMap id="Sponsor" type="com.footballer.rest.api.v2.domain.Sponsor">
+ 	<result column="sponsorId" property="sponsorId" jdbcType="INTEGER" />
+ 	<result column="sponsorName" property="sponsorName" jdbcType="VARCHAR" />
+ 	<result column="sponsorLogo" property="sponsorLogo" jdbcType="VARCHAR" />
+ 	<result column="sponsorUrl" property="sponsorUrl" jdbcType="VARCHAR" />
+ 	<result column="sponsorDesc" property="sponsorDesc" jdbcType="VARCHAR" />
+ 	<result column="sponsorTel" property="sponsorTel" jdbcType="INTEGER" />
+ 	
+    <result column="teamId" property="teamId" jdbcType="INTEGER" />
+    <result column="teamName" property="teamName" jdbcType="VARCHAR" />
+    <result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+    
+    <result column="teamSponsorLevel" property="teamSponsorLevel" jdbcType="INTEGER" />
+    <result column="tournamentSponsorLevel" property="tournamentSponsorLevel" jdbcType="INTEGER" />
+  </resultMap>
+    
+  <select id="getSponsorsOfTournamnetByTournamentId" resultMap="Sponsor" parameterType="long">
+	select sr.id sponsorId, sr.name sponsorName, sr.logo sponsorLogo, website sponsorUrl, sr.desc sponsorDesc, sr.tel sponsorTel, st.level tournamentSponsorLevel  from sponsor sr
+	join sponsor_tournament st on st.`sponsor_id` = sr.id
+	where st.tournament_id = #{tournamentId}
+  </select>
+  
+  <select id="getSponsorsOfTournamentTeamsByTournamentId" resultMap="Sponsor" parameterType="long" >
+	select distinct t.id teamId, t.name teamName, t.logo teamLogo, sr.id sponsorId, sr.name sponsorName, sr.logo sponsorLogo, website sponsorUrl, sr.desc sponsorDesc, sr.tel sponsorTel, st.level teamSponsorLevel from sponsor sr
+	join sponsor_team st on st.`sponsor_id` = sr.id
+	join tournament_team tt on tt.team_id = st.team_id
+	join team t on t.id = st.team_id
+	where tt.tournament_id = #{tournamentId}
+  </select>
+ 
+</mapper>

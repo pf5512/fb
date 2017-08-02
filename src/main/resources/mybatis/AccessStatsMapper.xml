@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccessStatsMapper" >
+
+  <resultMap id="AccessStats" type="com.footballer.rest.api.v2.vo.AccessStats" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="page" property="page" jdbcType="VARCHAR" />
+    <result column="times" property="times" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <insert id="saveAccessRecord"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.AccessStats">
+    insert into system_access_stats (url, page, times, date)
+    values (
+	 		#{url,jdbcType=VARCHAR},
+            #{page,jdbcType=VARCHAR},
+			1,
+			#{date}
+     )
+  </insert>  
+  
+  <update id="autoIncrementAccessRecord"  parameterType="com.footballer.rest.api.v2.vo.AccessStats" >
+  	update system_access_stats 
+	set times = times +1
+    where id = #{id} 
+  </update> 
+  
+  <select id="findAccessStatsByUrlAndDate" resultMap="AccessStats" parameterType="com.footballer.rest.api.v2.vo.AccessStats" >
+	select distinct * from system_access_stats
+	where url = #{url} and date = #{sdate}
+  </select>
+ 
+</mapper>

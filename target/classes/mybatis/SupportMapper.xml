@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SupportsMapper" >
+
+  <!-- 字段映射  -->
+  <resultMap id="SupportResultMap" type="com.footballer.rest.api.v2.vo.Support" >
+   	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="video_id" property="videoId" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+  </resultMap>
+																	    
+  <resultMap id="PlayerSupport" type="com.footballer.rest.api.v2.domain.PlayerSupport">
+ 	<id column="supportId" property="supportId" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerLogo" property="playerLogo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+  </resultMap>
+  
+  <insert id="saveUserSupports"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Support">
+    insert into support (player_id,date,status,type)
+    values (
+	 		#{playerId,jdbcType=INTEGER},
+			#{date,jdbcType=TIMESTAMP},
+			#{status,jdbcType=INTEGER},
+			#{type,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
+     )
+  </insert>
+  
+  <insert id="saveUserVideoSupports"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Support">
+    insert into support_video (support_id,video_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+			#{videoId,jdbcType=INTEGER}
+     )
+  </insert>
+  
+  <insert id="saveUserMomentSupports"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Support">
+    insert into support_moment (support_id,moment_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+			#{momentId,jdbcType=INTEGER}
+     )
+  </insert>
+     
+  <select id="getVideoUserSupportList" resultMap="PlayerSupport" parameterType="long" >
+	select s.id supportId, s.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.status status, s.type type from support s
+	join support_video sv on sv.support_id = s.id
+	join football_player fp on fp.id= s.player_id    
+	where video_id = #{videoId} and s.status = 1
+  </select>
+  
+  
+  <select id="getMomentSupportList" resultMap="PlayerSupport" parameterType="long" >
+	select s.id supportId, s.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.status status, s.type type from support s
+	join support_moment sm on sm.support_id = s.id
+	join football_player fp on fp.id= s.player_id    
+	where moment_id = #{momentId} and s.status = 1
+  </select>
+  
+  
+  <select id="findVideoSupportByVideoIdAndPlayerId" resultMap="PlayerSupport" parameterType="com.footballer.rest.api.v2.vo.Support" >
+	select distinct s.id supportId, player_id playerId, status, type from support s
+	join support_video sv on sv.support_id = s.id
+	where video_id = #{videoId} and player_id =#{playerId}
+  </select>
+  
+  
+  <select id="findMomentSupportByMomentIdAndPlayerId" resultMap="PlayerSupport" parameterType="com.footballer.rest.api.v2.vo.Support" >
+	select distinct s.id supportId, player_id playerId, status, type from support s
+	join support_moment sm on sm.support_id = s.id
+	where moment_id = #{momentId} and player_id =#{playerId}
+  </select>
+
+  <update id="toggleUserSupportStatus" parameterType="long" >
+   <![CDATA[
+    update support
+    set
+     	status = (CASE status
+				  WHEN 1 THEN 0
+				  WHEN 0 THEN 1
+				  ELSE 0 END)
+    where id= #{id}
+    ]]> 
+  </update>
+  
+  
+  <update id="removeUserSupportFromVideoItem" parameterType="com.footballer.rest.api.v2.request.SupprotRequest" >
+    update support s
+	join support_video sv on sv.support_id = s.id 
+	set status = 0
+    where video_id = #{videoId} and player_id= #{playerId}
+  </update>
+  
+  
+  <update id="removeUserSupportFromMomentItem" parameterType="com.footballer.rest.api.v2.request.SupprotRequest" >
+    update support s
+	join support_moment sm on sm.support_id = s.id 
+	set status = 0
+    where moment_id = #{momentId} and player_id= #{playerId}
+  </update>
+  
+</mapper>

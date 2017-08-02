@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserCommentsMapper" >
+
+  <!-- 字段映射  -->
+  <resultMap id="UserCommentsBaseResultMap" type="com.footballer.rest.api.v2.vo.UserComments" >
+  
+   	<id column="id" property="id" jdbcType="INTEGER" />
+ 
+    <result column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="comments_Time" property="commentsTime" jdbcType="TIMESTAMP" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="video_id" property="videoId" jdbcType="INTEGER" />
+  
+  </resultMap>
+  
+  <resultMap id="UserCommentsInfo" type="com.footballer.rest.api.v2.domain.UserCommentsInfo">
+ 	<id column="commentId" property="commentId" jdbcType="INTEGER" />
+    <result column="playerId" property="playerId" jdbcType="INTEGER" />
+    <result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerLogo" property="playerLogo" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="comments_Time" property="commentsTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  
+     
+  <!-- 共用sql -->
+  <sql id="Base_Column_List" >
+     id,player_id,comments,comments_Time,mobile,mail,qq,wechat
+  </sql>
+
+  <!-- 查询 -->  
+  <select id="findUserCommentsById" resultMap="UserCommentsBaseResultMap" parameterType="int" >
+   	select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id= #{id}
+  </select>
+  
+  
+  <!-- 查询 列表 -->  
+  <select id="findUserComments" resultMap="UserCommentsBaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+     from comment
+    
+  </select>
+  
+  <select id="getVideoUseCommentsList" resultMap="UserCommentsInfo" parameterType="long" >
+	select uc.id commentId, uc.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, uc.comments comments, uc.comments_Time commentsTime from comment uc
+	join football_player fp on fp.id= uc.player_id 
+	join comment_video cv on cv.comment_id = uc. id
+	where cv.video_id = #{videoId}
+  </select>
+  
+  <!-- 获取动态分享的评论列表 -->
+  <select id="getMomentCommentsList" resultMap="UserCommentsInfo" parameterType="long" >
+	select c.id commentId, c.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, c.comments comments, c.comments_Time commentsTime from comment c
+	join football_player fp on fp.id= c.player_id 
+	join comment_moment cm on cm.comment_id = c. id
+	where cm.moment_id = #{momentId}
+  </select>
+  
+  <!-- 删除 -->
+  
+  <delete id="deleteById" parameterType="int" >
+    delete from comment
+    where id= #{id}
+  </delete>
+  
+  <insert id="saveUserComments"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserComments">
+    insert into comment (player_id,comments,comments_Time)
+    values (
+	 		#{playerId,jdbcType=INTEGER},
+	 		#{comments,jdbcType=VARCHAR},
+			#{commentsTime,jdbcType=TIMESTAMP}
+     )
+  </insert>
+  
+  <insert id="saveUserCommentsToVideoItem"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserComments">
+    insert into comment_video (comment_id,video_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+			#{videoId,jdbcType=INTEGER}
+     )
+  </insert>
+  
+  <insert id="saveUserCommentsToMomentItem"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.UserComments">
+    insert into comment_moment (comment_id,moment_id)
+    values (
+	 		#{id,jdbcType=INTEGER},
+			#{momentId,jdbcType=INTEGER}
+     )
+  </insert>
+  
+ 
+  <!-- 更新 -->
+  <update id="updateUserCommentsById" parameterType="com.footballer.rest.api.v2.vo.UserComments" >
+   <![CDATA[
+    update comment
+    set
+     	 player_id = #{playerId,jdbcType=INTEGER},
+     	 comments = #{comments,jdbcType=VARCHAR},
+   		comments_Time = #{commentsTime,jdbcType=TIMESTAMP}
+   		mobile = #{mobile,jdbcType=VARCHAR},
+   		mail = #{mail,jdbcType=VARCHAR},
+   		qq = #{qq,jdbcType=VARCHAR},
+   		wechat = #{wechat,jdbcType=VARCHAR}
+    where id= #{id}
+    ]]> 
+  </update>
+</mapper>

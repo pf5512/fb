@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="../css/frozen.css">
+        <style type="text/css">
+            body {
+                font-family: "Microsoft Yahei",Helvetica,Arial,sans-serif;
+            }
+            .small-font {
+                font-size: 14px;
+            }
+            .ui-btn {
+            	padding: 0px;
+			    height: 30px;
+			    line-height: 30px;
+			    min-width: 35px;
+			    display: inline-block;
+			    font-size: 15px;
+			}
+			.ui-avatar {
+				width: 40px;
+			    height: 40px;
+			    -webkit-border-radius: 200px;
+			    overflow: hidden;
+			}
+        	.ui-header-positive, .ui-footer-positive {
+			    background-color: green;
+			    color: #fff;
+			}
+			.icon-text-overflow {
+				display: inline-block;
+			    max-width: 45px;
+			    overflow: hidden;
+			    max-height: 77px;
+			    text-overflow: ellipsis;
+			    word-break: keep-all;
+			    white-space: nowrap;
+			}
+			.avatar-label-overflow{
+				margin: -8px 0 0px 0px;
+				color: #00a5e0;
+				max-width: 60px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+        </style>
+    </head>
+    <body ontouchstart="">
+        <div id="app" style="display: none">
+        <header class="ui-header ui-header-positive ui-border-b">
+			
+			<!-- <img onerror="this.style.display='none'" src="http://static.footballer.cc/2016-10/680b4781-2c9c-47d3-b8d5-5769ab2c8244.png" style="float: left;margin: 7px 0px 0px 0px;width: 30px;height: 30px;border-radius: 3px;"> -->
+			<img onerror="this.style.display='none'" src="{{arenaLogoUrl}}" style="float: left;margin: 7px 0px 0px 0px;width: 30px;height: 30px;border-radius: 3px;">
+            <h1>{{arenaHeaderTitle}} 球场预定</h1>
+        </header>
+        <footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled ui-border-t">
+                <li><i style="color:green">预定球场</i></li>
+                <!-- <li data-href="../order/battlePool2.html"><i style="color:green">约战</i></li>
+                <li data-href="../order/soloPool.html"><i style="color:green">单飞</i></li> -->
+                <li data-href="../order/orders.html"><i style="color:green">订单</i></li>
+                <li data-href="../match/football/matchListDashboard.html?lang=ch"><i style="color:#00a5e0">傲赴赛事</i></li>
+            </ul>
+        </footer>
+        
+        <section class="ui-container">
+			<ul class="ui-row-flex">
+				<li class="ui-col ui-flex ui-flex-pack-start">
+				    
+				</li>
+				<li class="ui-col ui-flex ui-flex-pack-center" style="width:100%">
+					<div class="ui-btn-wrap">
+				    	<button v-bind:class="['ui-btn-s', isNight ? 'active' : 'disabled']" v-on:click="evening">晚上</button>
+				    	<button v-bind:class="['ui-btn-s', !isNight ? 'active' : 'disabled']" v-on:click="allDay">全天</button>
+					</div>
+				</li>
+				<li class="ui-col ui-flex ui-flex-ver  ui-flex-align-end">
+					<div class="ui-avatar" style="margin: 5px 7px 2px 0px;">
+		            	<span style="background-image:url({{headimgurl}})"></span>
+		        	</div>
+		        	<div v-if="isArenaOwner == 'true'" style="margin: -24px 4px 2px 0px;"><p class="ui-tag-wrap"><i class="ui-tag-svip"></i></p> </div>
+				</li>
+			</ul>
+            
+            <ul class="ui-row-flex ui-whitespace"></ul>
+
+            <ul class="ui-list ui-list-text ui-border-tb">
+                <li class="ui-border-t">
+                    <ul class="ui-tiled">
+                        <li>
+                            <div class="ui-select">
+                                <select class="small-font" v-model="date" v-on:change="getFieldsByDate">
+                                	<!-- <option selected>{{date}}</option> -->
+                                	<option selected>日期</option>
+                                	<option v-for="option in dates" v-bind:value="option">
+                                		{{option}}
+                                	</option>                                	
+                                </select>
+                            </div></li>
+
+                        <li>
+                            <div class="ui-select">
+                                <select class="small-font" v-model="type" v-on:change="filter">
+                                	<option selected>球场</option>
+                                	<option v-for="option in types" v-bind:value="option">
+                                		{{option}}
+                                	</option>                                    
+                                </select>
+                            </div></li>
+
+                        <li>
+                            <div class="ui-select">
+                                <select class="small-font" v-model="time" v-on:change="filter">
+                                	<option selected>时段</option>
+                                	<option v-for="option in times" v-bind:value="option">
+                                		{{option}}
+                                	</option>                                    
+                                </select>
+                            </div>
+                        </li>                        
+                    </ul>
+                </li>
+           </ul>
+
+            <!-- list -->
+<ul class="ui-list ui-list-text ui-border-tb f-datagrid">
+    <li class="ui-border-t" v-for="item in reservationDetailList">
+        <ul class="ui-tiled" style="font-weight: 100;font-size: 14px;">
+            <li style="width:20%"><div>{{item.time}}</div></li>
+            <li v-bind:style="{width: '25%', color: item.color}">
+	            <div>
+	              <span style="font-size:14px;">{{item.name}}</span>	
+	              <span style="font-size:10px;padding-left:1px;">{{item.fieldCondition}}|{{item.type}}</span>
+	            </div>
+            </li>
+            <li style="width:30%">
+            	<button v-show="item.status.showNotBook" v-on:click="commitOrder" data-href="orderSummary.html?id={{item.id}}&" 
+            		data-id="{{item.id}}" data-type="fullField" class="ui-btn ui-btn-primary">整场</button>
+            	<button v-show="item.status.showNotBook" v-on:click="commitOrder" data-href="orderSummary.html?id={{item.id}}&" 
+            		data-id="{{item.id}}" data-type="battle" class="ui-btn ui-btn-primary">约战</button>	
+            		
+            	<div v-show="item.status.showFullFiledOrdered">
+            		<div style="display:inline-flex;">
+            			<div class="ui-avatar" style="margin: 0px;">
+            			<span style="background-image:url({{item.weChatPicUrl}})"></span>
+            			<!-- <i>{{item.teamName}}</i> --> 
+	            		</div>
+	            		<p class="ui-txt-default" style="margin: 23px 0 0px -10px;color: #00a5e0;">{{item.teamName}}</p>  
+						
+						<div v-if="isArenaOwner == 'true'" class="ui-badge-corner" style="margin-right: 8px;" 
+						      data-frid="{{item.fieldReservationId}}" data-playerid="{{item.playerId}}" data-guestplayerid = "{{item.guestPlayerId}}" 
+						      v-on:click="cancelReservation">取消</div> 
+            		</div>
+            	</div>
+            	
+            	<div v-show="item.status.showReceiveBattle">
+            		<div class="icon-text-overflow">
+	            		<div class="ui-avatar">
+	            			<span style="background-image:url({{item.weChatPicUrl}})"></span>
+	            		</div>
+	            		<p class="ui-txt-default avatar-label-overflow">{{item.teamName}}</p>	            		
+            		</div>
+            		<div class="icon-text-overflow">
+	            		<div class="ui-avatar">
+	            		<img v-on:click="commitOrder" data-href="orderSummary.html?id={{item.id}}&"
+	            		        src="../../img/backend/yingzhan.png" 
+	            		        style="width: 43px;height: 40px;"
+	            				data-id="{{item.id}}" 
+	            				data-type="battle" 
+	            				data-field-reservation-id="{{item.fieldReservationId}}" 
+	            				data-is-receive-battle="true" class="ui-btn ui-btn-danger">应战</button>
+	            		</div><p class="ui-txt-default avatar-label-overflow">&nbsp;</p>
+	            		<div v-if="isArenaOwner == 'true'" class="ui-badge-corner" style="margin-right: 8px;" 
+	            			  data-frid="{{item.fieldReservationId}}" data-playerid="{{item.playerId}}" data-guestplayerid = "{{item.guestPlayerId}}"
+						      data-id="{{item.id}}" v-on:click="cancelReservation">取消</div> 		
+            		</div>
+            		
+            	</div>
+            	
+            	<div v-show="item.status.showBattleOrdered">
+            		<div class="icon-text-overflow">
+	            		<div class="ui-avatar">
+	            			<span style="background-image:url({{item.weChatPicUrl}})"></span>
+	            		</div>
+	            		<p class="ui-txt-default avatar-label-overflow">{{item.teamName}}</p>
+            		</div>
+            		<div style="display: inline-block;width: 14px;overflow: hidden">
+            			<span style="color:red;">vs</span>
+            			<br><br>
+            		</div>
+            		<div class="icon-text-overflow">
+	            		<div class="ui-avatar">
+	            			<span style="background-image:url({{item.guestWeChatPicUrl}})"></span>
+	            		</div>
+	            		<p class="ui-txt-default avatar-label-overflow">{{item.guestTeamName}}</p>
+            		</div>
+            		<div v-if="isArenaOwner == 'true'" class="ui-badge-corner" style="margin-right: 8px;" 
+            			  data-frid="{{item.fieldReservationId}}" data-playerid="{{item.playerId}}" data-guestplayerid = "{{item.guestPlayerId}}"
+						  data-id="{{item.id}}" v-on:click="cancelReservation">取消</div>
+            	</div>
+				            		            		
+            </li>
+        </ul>
+    </li>
+    </ul>        
+	<div style="text-align: center;margin: 10px 0px 30px 0px">
+		<img src="../image/auf_logo_wechat_footer_1000_v1_alpha.png" width="160px" height="20px" >
+	</div> 
+  </section>
+  <div class="ui-dialog">
+    <div class="ui-dialog-cnt">
+      <header class="ui-dialog-hd ui-border-b">
+                  <h3>管理员预定操作</h3>
+                  <i class="ui-dialog-close" data-role="button" v-on:click="closePop"></i>
+              </header>
+        <div class="ui-dialog-bd">
+        	<div style="diplay:inline-flex;">
+        		<label class="ui-txt-default">类型:</label>&nbsp;&nbsp;
+        		<label class="ui-txt-default">{{bookType}}</label>
+        	</div>
+        	<div style="diplay:inline-flex;">
+        		<label class="ui-txt-default">场地:</label>&nbsp;&nbsp;
+        		<label class="ui-txt-default">{{selectField}}</label>
+        	</div>
+        	<div style="diplay:inline-flex;">
+        		<label class="ui-txt-default">时段:</label>&nbsp;&nbsp;
+        		<label class="ui-txt-default">{{date}}-{{selectTime}}</label>
+        	</div>
+            <div style="display:flex">
+           	   <label class="ui-txt-default">用户:</label>&nbsp;&nbsp;
+	           <div class="ui-select" >
+	                <select id="reserver" style="width:160px;">
+													  <option v-for="ap in arenaPlayerList" v-bind:value="ap.playerId">
+													        {{ap.name}}  
+													        {{ap.teams}} 
+													        {{ap.cellphone}} &nbsp;&nbsp;&nbsp; 
+													        {{ap.totalCount}}次
+													  </option>
+					</select>
+	           </div>
+            </div>
+           
+        </div>
+        <div class="ui-dialog-ft">
+            <button type="button" data-role="button" v-on:click="closePop">取消</button>
+            <button type="button" data-role="button" v-on:click="book">预定</button>
+        </div>
+    </div>        
+</div>
+</div>
+        
+<script src="../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../js/frozen.js"></script>
+<script src="../js/sha1.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../../js/justin_common.js"></script>
+<script src="../js/server/service.js"></script>
+<script src="../js/lib/vue.min.js"></script>
+<script src="../js/lib/underscore-min.js"></script>
+        
+<script>
+$(document).ready(function() {
+				
+				checkArenaChangeAndUpdateCaches()
+				
+            	var openid = f$.cache('openid'),
+	            	playerid = f$.cache('playerid'),
+	            	date = f$.cache('date'),
+	            	arenaLogoUrl = f$.cache('arenaLogoUrl'),
+	            	arenaHeaderTitle = f$.cache('arenaHeaderTitle'),
+	            	fields,
+	            	ALL_FIELD_TYPES = '球场',
+	            	ALL_TIME_TYPES = '时段',
+	            	ALL_DATE_TYPES = '日期'
+	            	
+                var dates = [],
+	                types = [],
+	                times = [],
+	                list = []
+	                
+				
+                 if (openid == null || playerid == null || openid == 'null' ||playerid == 'null'){
+            		weChatLogin()
+            		return false
+            	}else{
+            		//加载顺序有问题 ，先检查参数，不存在的话 不加载 微信分享
+            		url = window.location.href
+            		//alert('url: '+url)		
+            		//desc= formatToDateString(new Date()) + ' 场地定起走哈，再不来就没地方踢球了'
+            		//wxJSSDKInit(url, ' 预定场地', desc)
+            	} 
+            	
+            	
+            	$('#todayDate').text(formatToAllDateString(new Date()));
+            	
+            	
+            	
+                var vm = new Vue({
+	                  el: '#app',
+	                  data: {
+	                    dates : dates,
+	                    types : types,
+	                    times : times,
+	                    reservationDetailList  : list,
+	                    eveningList: [],
+	                    allDayList: [],
+	                    date    : date,
+	                    arenaHeaderTitle : arenaHeaderTitle,
+	                    arenaLogoUrl: arenaLogoUrl,
+	                    headimgurl: f$.cache('headimgurl'),
+                        isNight : true,
+                        isDay   : false,
+                        isArenaOwner:false,
+                        //isArenaOwner: isArenaOwner,
+                        arenaPlayerList:[],
+                        selectType:null,
+                        bookType:'整场',
+                        selectFRId:null,
+                        selectField:null,
+                        selectFcsId:null,
+                        selectTime:null,
+                        isReceiveBattleTag:false
+	                  },
+	                  attached : function() {
+	                     $('#app').css('display', 'block');
+	                     events()
+	                  },
+	                  methods: {
+	                    filter : function() {
+	                    	var that = this
+	                    	this.reservationDetailList = _.filter(list, function(item) {
+	                    		return (item.time == that.time || that.time == ALL_TIME_TYPES) && 
+	                    		       (item.type == that.type || that.type == ALL_FIELD_TYPES)
+	                    	})
+	                        events()
+	                    },
+	                    
+	                    getFieldsByDate : function() {
+	                    	getFields(this.date);
+	                    },
+	                    evening:function(){
+                            vm.$data.isNight = true
+                            vm.$data.isDay = false
+	                    	vm.$data.type = ALL_FIELD_TYPES
+	                    	vm.$data.time = ALL_TIME_TYPES
+	                    	vm.$data.reservationDetailList = vm.$data.eveningList
+	                    },
+	                    allDay:function(){
+                            vm.$data.isNight = false
+                            vm.$data.isDay = true
+	                    	vm.$data.type = ALL_FIELD_TYPES
+	                    	vm.$data.time = ALL_TIME_TYPES
+	                    	vm.$data.reservationDetailList = vm.$data.allDayList
+	                    },
+	                    commitOrder : function(e) {
+                    		var $target = $(e.target)
+                    		var id = $target.data('id')
+                    		var type = $target.data('type') || 'fullField'
+                    		var fieldReservationId = $target.data('field-reservation-id')
+                    		var isReceiveBattle = $target.data('is-receive-battle')
+                    		var method = isReceiveBattle ? 'receiveBattle' : 'reservField'
+                    		var field = _.find(fields, function(item) {
+                            	return id == item.fieldChargeStandardId
+                            })
+                            var params,
+                            selectedDate = this.date;
+                    		if (selectedDate == ALL_DATE_TYPES) {
+	                    		selectedDate = date
+	                    		vm.$data.date = date
+	                        }
+                    		vm.$data.selectFcsId = id
+                    		vm.$data.selectFRId = fieldReservationId
+                    		vm.$data.selectType = type
+                    		vm.$data.isReceiveBattleTag = isReceiveBattle
+                    		
+	                    	if(vm.$data.isArenaOwner.toString() == 'true'){
+	                    		if(type == 'fullField'){
+	                    			vm.$data.bookType = '整场'
+	                    		}else if(type == 'battle'){
+	                    			vm.$data.bookType = '约战'
+	                    		}
+	                    		if($target.is('img')){
+	                    			vm.$data.selectField = $target.parents('ul.ui-tiled').find('li').first().text().trim()
+		                    		vm.$data.selectTime = $target.parents('ul.ui-tiled').find('li').first().next().text().trim()
+	                    		}else{
+	                    			vm.$data.selectField = $target.parent().prev().text().trim()
+		                    		vm.$data.selectTime = $target.parent().prev().prev().text().trim()
+	                    		}
+	                    		
+	                    		
+	                    		
+	                    		f$.getPlayers({
+	                            	arenaId : f$.cache('arenaId'),
+	                            	//arenaId : 52,
+	                            }).done(function(data) {
+	                            	if (data) {
+										 vm.$data.arenaPlayerList = data.arenaUsers;
+										 
+										 $.each(vm._data.arenaPlayerList,function(i,v){
+											 if(getBytesLength(v.name) <15){
+												 var space = ''
+												 for(var i=0;i<15-getBytesLength(v.name); i++){
+													 space +=  '\xa0';
+												 }
+												 v.name = v.name + space;
+											 }else{
+												 v.name = v.name.toString().substring(0,15)
+											 }
+											 if(getBytesLength(v.teams) <15){
+												 var space = ''
+													 for(var i=0;i<15-getBytesLength(v.teams); i++){
+														 space +=  '\xa0';
+													 }
+													 v.teams = v.teams +space;
+											 }else{
+												 v.teams = v.teams.toString().substring(0,15)
+											 }
+										 })
+										 $(".ui-dialog").dialog("show");
+									 } 	                            	
+	                            	
+	                            })	
+	                    			
+	                    		
+	                    	}else{
+	                    		
+		                    	var el = $.loading({content:'传球中...'})
+		                    	
+		                    	prepayServletUrl = f$.domain + "footballer/topayServlet?" +
+														"orderno=" + id + 
+														"&openid=" + openid +
+														"&playerid=" + playerid +
+														"&useddate=" + selectedDate +
+														"&isReceiveBattle=" + isReceiveBattle +
+														"&arenaId=" + f$.cache('arenaId') +
+														"&type=" + type
+		                    		
+		                    		
+		                        function wechatPay(fieldReservationId) {
+		  	                		  var el = $.loading({content:'加载中...'});
+		  	                		  prepayServletUrl = prepayServletUrl + '&fieldReservationId=' + fieldReservationId;
+		  	                		  console.log('prepayServletUrl:', prepayServletUrl);
+		  		                      location.href= prepayServletUrl;
+		  		                      
+		  		                      setTimeout(function() {
+		  		                      	el.loading('hide')
+		  		                      }, 200);
+		  	                	  }	
+		                    	
+		                    	params = {
+		                    			operateType : 'weChat',
+		                    			arenaId  : f$.cache('arenaId'),
+		                    			fcsId    : id,
+		                    			playerId : playerid,
+		                    			useDate  : selectedDate || date,
+		                    			type     : type
+		                    	}
+		                    	
+		                    	if (isReceiveBattle) {
+		                    		params.fieldReservationId = fieldReservationId
+		                    		params.guestPlayerId = playerid
+		                    		
+		                    		delete params.fcsId
+		                    		delete params.playerId
+		                    		delete params.useDate
+		                    		
+		                    		f$.cache("receiveBattleParams", params)
+				                    		
+		                    		wechatPay()
+		                    	} else {
+			                    	f$[method](params).done(function(data) {
+			                    		el.loading('hide')
+			                    		if (data.status == 'error') {
+			                    			alert(data.message)
+			                    		} else {	                    		
+			                    			var _fieldReservationId = fieldReservationId || data.fieldReservationId
+			                    			wechatPay(_fieldReservationId)
+			                    		}
+			                    	}).fail(function() {
+			                    		el.loading('hide')
+			                    		alert("服务出错")
+			                    	})	                    	                    	
+		                    		
+		                    	}
+	                    	}
+	                    },
+                    	closePop:function(){
+                    		$(".ui-dialog").dialog("hide");	
+                    	},
+                    	book:function(e){
+                    		if(vm.$data.isReceiveBattleTag){
+                    			vm.acceptBattle(e)
+                    		}else{
+                    			vm.filedReservation(e)	
+                    		}	
+                    	},
+                    	filedReservation:function(e){
+                    		selectPlayerId = $(e.target).parent().prev().find('select').val()                    		
+                    		f$.reservField({
+                            	arenaId : f$.cache('arenaId'),
+                    			fcsId:    vm.$data.selectFcsId,
+                    			operateType: "admin",
+            	        		playerId: selectPlayerId,
+        	            		type: vm.$data.selectType,
+    	                		useDate: vm.$data.date,
+	                    		videoStatus:0
+                            }).done(function(data) {
+                            	$(".ui-dialog").dialog("hide");	
+                            	getFields(vm.$data.date);
+                            })
+                    	},
+                    	acceptBattle:function(e){
+                    		selectGuestPlayerId = $(e.target).parent().prev().find('select').val()                    		
+                    		f$.acceptBattle({
+                            	arenaId : f$.cache('arenaId'),
+                            	fieldReservationId:vm.$data.selectFRId,
+                    			operateType: "admin",
+                    			guestPlayerId: selectGuestPlayerId
+                            }).done(function(data) {
+                            	$(".ui-dialog").dialog("hide");	
+                            	getFields(vm.$data.date);
+                            })
+                    	},
+                    	cancelReservation:function(e){
+                    		var $target = $(e.target)
+                    		var frId = $target.data('frid')
+                    		var playerId = $target.data('playerid')
+                    		var guestPlayerId = $target.data('guestplayerid')
+                    		
+                    		 f$.cancelReservation({
+                    			arenaId:f$.cache('arenaId'),
+                    			fieldReservationId:frId,
+                    			playerId:playerId,
+                    			guestPlayerId:guestPlayerId
+                    		}).done(function(data){
+                    			getFields(vm.$data.date);
+                    		}) 
+                    	}
+	                  }
+	                })
+                
+                getFields(date);
+                //getFields('2016-11-09');
+            	
+            	function buildFieldStatus(fields) {
+            		_.each(fields, function(field) {
+            			var fieldStatus,
+            			reservationType = field.reservationType,
+            			bookstatus = field.bookStatus,
+            			guestPlayerId = field.guestPlayerId
+            			
+            			if (reservationType == null && bookstatus == null) {
+            				fieldStatus = 'NOT_BOOK';
+            			} else if (reservationType == 'fullField' && bookstatus == '1') {
+            				fieldStatus = 'ORDERED_FULL_FIELD'
+            			} else if (reservationType == 'battle' && bookstatus == '1' && guestPlayerId == null) {
+            				fieldStatus = 'POST_BATTLE'
+            			} else if (reservationType == 'battle' && bookstatus == '1' && guestPlayerId != null) {
+            				fieldStatus = 'ORDERED_RECEIVE_BATTLE'
+            			} else {
+            				fieldStatus = 'NOT_BOOK';
+            			}
+            			
+            			field.fieldStatus = fieldStatus;
+            		})
+            		
+            		return fields;
+            	}
+            	
+            	function getFields(selectedDate) {
+            		
+            		vm.$data.isArenaOwner = f$.cache('isArenaOwner')
+            		//alert('getFields tag= '+ vm.$data.isArenaOwner)
+
+            		var weekDays,
+                    	el = $.loading({content:'传球中...'})
+                    	
+                    if (selectedDate == ALL_DATE_TYPES) {
+                        selectedDate = date;
+                    }	
+                    	
+                    f$.fields({
+                    	arenaId : f$.cache('arenaId'),
+                    	//arenaId : 52,
+                    	date : selectedDate
+                    }).done(function(data) {
+                    	el.loading('hide') 
+                        
+                    	fields = data.arenasFieldsReservation
+                    	weekDays = data.currentWeeksDates
+                    	
+                    	//filter already affect field ids
+                    	var affectFcsIds = _.chain(fields).map(function(element) {
+											var result;
+											if (element.fieldReservationId == null) return;
+											if (element.affectFcsId) {
+												result =  String(element.affectFcsId).split(',')
+											} else {
+												result = element.affectFcsId
+											}
+											  return result;
+											}).filter(function(element) {
+											  return element != null
+											}).flatten().value();
+                    	
+                    	fields = _.filter(fields, function(element) {
+                    		return !_.contains(affectFcsIds, String(element.fieldChargeStandardId));
+                    	});
+
+    	                dates = weekDays
+                        types = _.chain(fields).map(function(field) {
+                        	return field.fieldName.toString().substr(0,2)
+                        }).uniq().value()
+                        
+                        times = _.chain(fields).map(function(field) {
+                        	return field.startTime + '-' + field.endTime
+                        }).uniq().value()
+                        
+                        buildFieldStatus(fields)
+                        
+                        list = _.map(fields, function(field) {
+                        	var color = 'black';
+                        	
+                        	switch(field.fieldName.substr(0,1)) {
+                        		case '1' : 
+                        			color = '#009966'
+                        			break;
+                        		case '2' : 
+                        			color = '#669999'
+                        			break;
+                        		case '3' : 
+                        			color = '#663300'
+                        			break;
+                        		case '4' : 
+                        			color = '#333366'
+                        			break;	
+                        		default :
+                        			color = 'black'
+                        	}
+                        	
+                        	return {
+                        		color : color,
+                                id  : field.fieldChargeStandardId,
+                                playerId: field.playerId,
+                                guestPlayerId: field.guestPlayerId,
+                                weChatPicUrl : field.weChatPicUrl,
+                                guestWeChatPicUrl : field.guestWeChatPicUrl,
+                                name: field.fieldName.toString().substr(0, field.fieldName.toString().indexOf('号')+1),
+                                time: field.startTime + '-' + field.endTime,
+                                type: field.fieldType + '人',
+                                fieldCondition: field.fieldCondition,
+                                price: field.price,
+                                fieldReservationId : field.fieldReservationId,
+                                teamName: (field.teamName==null||field.teamName.trim()==''? field.playerName:field.teamName),
+                                guestTeamName: (field.guestTeamName==null||field.guestTeamName.trim()==''?field.guestPlayerName:field.guestTeamName),
+                               	status: {
+                               		showNotBook : field.fieldStatus == 'NOT_BOOK',
+                                   	showFullFiledOrdered : field.fieldStatus == 'ORDERED_FULL_FIELD',
+                                   	showReceiveBattle : field.fieldStatus == 'POST_BATTLE',
+                                   	showBattleOrdered : field.fieldStatus == 'ORDERED_RECEIVE_BATTLE'	
+                               	}                               	
+                        	}
+                        })
+                        
+                        vm.$data.dates = dates
+                    	vm.$data.types = types
+                    	vm.$data.times = times
+                    	
+                    	vm.$data.allDayList = list
+                    	                    	
+                    	vm.$data.reservationDetailList = vm.$data.eveningList = _.filter(list, function(row) {
+                    		return row.time.substring(0,2) >=18;
+                    	});
+                    });    	
+            	}
+
+                function events() {
+                    $('.ui-list li,.ui-tiled li').click(function(){
+                        if($(this).data('href')){
+                        	if($(this).data('href').indexOf('match')>0){
+                        		location.href= $(this).data('href')                        		
+                        	}else{
+                        		location.href= $(this).data('href')+'?arenaId='+f$.cache('arenaId')	
+                        	}
+                        }
+                    })
+                }
+            })
+        </script>
+    </body>
+</html>

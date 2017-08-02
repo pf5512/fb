@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title></title>
+<link rel="stylesheet" href="../../css/frozen.css">
+<link rel="stylesheet" href="../../css/match.css">
+<link rel="stylesheet" href="../../../css/justin_mobile_common.css">
+</head>
+
+<body class="drawer drawer--left">
+	<div class="ui-loading-block show">
+		<div class="ui-loading-cnt">
+			<i class="ui-loading-bright"></i>
+		</div>
+	</div>
+	<div id="app" v-cloak>
+
+		<header class="ui-header ui-header-positive ui-border-b" style="display: inline-flex;text-align: center;">
+			<i class="ui-icon-return" onclick="nav()"></i>
+			<label style="margin: auto;">{{labelPlayerInfo}}</label>
+			<img v-show="showeditBtn" src="../../../img/common/edit.png" style="width: 30px;height: 30px;margin: 7px -6px 0px 0px;" v-on:click="gotoPersonalCenter"></img>
+		</header>
+
+		<section class="ui-container">
+			<section id="tab">
+				<div class="ui-row-flex ui-whitespace">
+					<div class="ui-col-2 ui-flex-pack-center" style="padding: 10px 0px 10px 0px;">
+						<div v-if="tournamentPlayerInfo.playerLogo" class="ui-avatar-lg" style="margin: auto;width:100px;height:100px;">
+							<span v-if="tournamentPlayerInfo.showWXLogo" style="background-image: url({{tournamentPlayerInfo.playerLogo}})"></span>
+							<span v-else style="background-image: url(http://static.footballer.cc/{{tournamentPlayerInfo.playerLogo}})"></span>
+						</div>
+						<div v-else class="ui-avatar-lg" style="width: 60px;height: 60px;">
+							<img src="../../../img/app/football_career_edited_2.png" style="width: 60px;height: 60px;background-color: #f8f8f8;"></img>
+						</div>
+						
+						
+					</div>
+
+					<div class="ui-col-3" style="padding-left:5px;">
+						<div class="ui-flex-ver ui-flex-align-end ui-flex-pack-end" style="margin: 20px 0 10px 0">
+							<div style="text-align: left;padding-left:5px;">
+								<span class="span14" style="color:#00a5e0">{{tournamentPlayerInfo.playerName}}</span>
+							</div>
+							<div style="padding-left:5px;">
+								<span class="fs8">No: </span><span class="fs18 pl5" >{{tournamentPlayerInfo.playerNumber}}</span>
+								<span class="fs8 pl20">Pos: </span><span class="fs18 pl5">{{tournamentPlayerInfo.position}}</span>
+							</div>
+							<div class="ui-flex">
+									<div v-if="tournamentPlayerInfo.teamLogo" class="ui-list-thumb-s" style="margin: 0px 10px 0px 0px;">
+										<span style="background-image: url(http://static.footballer.cc/{{tournamentPlayerInfo.teamLogo}})"></span>
+									</div>
+									<div v-else class="ui-avatar-s" style="width: 40px;height: 40px;">
+									     <img src="../../../img/app/football_career_edited_2.png" style="width: 40px;height: 40px;background-color: #f8f8f8;"></img>
+									</div>
+									<!-- <img src="../../image/captain.png" width="20px" height="15px" style="margin:4px 0px 0px 5px"> -->
+									<div class="font_long_ellipsis" style="margin: 5px 0px 0px 0px;">
+										<span class="span14">{{tournamentPlayerInfo.teamName}}</span>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+		</section>
+
+		<section class="ui-container2" style="margin-bottom: 50px;">
+			<div class="demo-block">
+				<div class="ui-tab">
+					<ul class="ui-tab-nav ui-border-b">
+						<li class="current">{{tabOverView}}</li>
+						<li>{{tabStats}}</li>
+					</ul>
+					<ul class="ui-tab-content" style="width: 300%">
+						<li>
+							<ul class="ui-row-flex ui-border-tb" style="">
+								<li style="display: inline-flex;">
+									<i class="ui-icon-emo" style="width:30px;height:30px;margin:-5px 0 13px 0px;"></i>
+									<span class="span14" style="margin: 10px 0px 0px 5px;">Personal Information</span>
+								</li>
+							</ul>
+							<div class="ui-list ui-list-one ui-border-b" >
+								<ul class="ui-row">
+									<li class="ui-col ui-col-50">
+								    	<span class="fs12 pl5" style="font-weight: bold;color: cadetblue;">{{labelAge}}</span> 
+								    </li>	
+									<li class="ui-col ui-col-50">
+									    <span class="fs14">{{tournamentPlayerInfo.age}}  {{tournamentPlayerInfo.birth}}</span>
+									</li>
+									<li class="ui-col ui-col-50" >
+								    	<span class="fs12 pl5" style="font-weight: bold;color: cadetblue;">{{labelHeight}}</span> 
+								    </li>	
+									<li class="ui-col ui-col-50">
+									    <span v-if="tournamentPlayerInfo.height" class="fs14">{{tournamentPlayerInfo.height}} CM</span>
+									    <span v-else class="fs14">?</span>
+									</li>
+									<li class="ui-col ui-col-50" >
+								    	<span class="fs12 pl5" style="font-weight: bold;color: cadetblue;">{{labelWeight}}</span> 
+								    </li>	
+									<li class="ui-col ui-col-50">
+									    <span v-if="tournamentPlayerInfo.weight" class="fs14">{{tournamentPlayerInfo.weight}} KG</span>
+									    <span v-else class="fs14">?</span>
+									</li>
+								</ul>
+							</div>
+							
+							<ul class="ui-row-flex ui-border-tb" style="">
+								<li style="display: inline-flex;">
+									<i class="ui-icon-like" style="width:30px;height:30px;margin:-5px 0 13px 0px;"></i>
+									<span class="span14" style="margin-top:10px;">{{labelCapabilityApproval}}</span>
+								</li>
+							</ul>
+							<ul class="ui-row-flex ui-border-tb" style="background-color: white;height:200px;">
+								<li>Building ~</li>
+							</ul>
+							
+						</li>
+						<li>
+							<ul class="ui-row-flex ui-border-tb" style="">
+								<li style="display: inline-flex;">
+									<img src="../../../img/analysis/dataAnalysis.png" style="width:30px;height:30px;margin: 5px;">
+									<span class="span14" style="margin: 10px 0px 0px 5px;">{{labelTournamentRank}}</span>
+								</li>
+							</ul>
+							<ul class="ui-row-flex ui-border-tb" style="background-color: white;">
+								    <li class="ui-col ui-flex-var ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px">
+									    <lable class="fs13 c_orange">MVP</lable>
+									    <div class="font_long_ellipsis"><span class="fs16 c_orange">{{currentPlayerStats.totalMVP}}</span></div>
+										<div style="display: inline-flex;">
+									    	<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    	<span class="span12cfblue">{{currentPlayerStats.totalMVPRank}}</span>
+									    </div>
+								    </li>
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px">
+								    	<lable class="fs13 c_blue">GP</lable>
+									    <div class="font_long_ellipsis"><span class="fs16">{{currentPlayerStats.totalGP}}</span></div>
+										<div style="display: inline-flex;">
+									    	<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    	<span class="span12cfblue">{{currentPlayerStats.totalGPRank}}</span>
+									    </div>
+								    </li>
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px">
+									    <table style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_green" >PTS/G</label></td> 
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs16">{{currentPlayerStats.totalPTSG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<label class="fs8 c_blue" >{{currentPlayerStats.totalPTSGRank}}</label>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px">
+									    <table style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_blue">AST/G</label></td> 
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs16">{{currentPlayerStats.totalASTG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<label class="fs8 c_blue" >{{currentPlayerStats.totalASTGRank}}</label>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+							</ul>
+							
+							<ul class="ui-row-flex ui-border-tb" style="background-color: white;">
+									
+							
+									<li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 5px 5px 0px;margin: 0 5px 0 5px;">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_green">2PT%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.total2PT.toFixed(2)}}%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs12 c_blue">{{currentPlayerStats.total2PTRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin: 0 5px 0 5px;">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_green">3PT%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.total3PT.toFixed(2)}}%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs8 c_blue">{{currentPlayerStats.total3PTRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+								    
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin: 0 5px 0 5px;">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_green">FT%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.totalFT.toFixed(2)}}%</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs8 c_blue">{{currentPlayerStats.totalFTRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+								    
+								    <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin: 0 5px 0 5px;">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_red">TO/G</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.totalTOVG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs8 c_blue">{{currentPlayerStats.totalTOVGRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								    </li>
+							</ul>
+							
+							<ul class="ui-row-flex ui-border-tb" style="background-color: white;">
+								<li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin:0 5px 0 5px">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_blue" >STL/G</label></td>
+									    	</tr>
+									    	<tr>
+									    		<!-- <td><label class="fs13">{{currentPlayerStats.totalSTL}}</label></td> -->
+									    		<td><label class="fs12">{{currentPlayerStats.totalSTLG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs12 c_blue">{{currentPlayerStats.totalSTLGRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								 </li>
+								 
+								 <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin:0 5px 0 5px">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_blue" >REB/G</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.totalREBG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs12 c_blue">{{currentPlayerStats.totalREBGRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								 </li>
+								 
+								 <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin:0 5px 0 5px">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_blue" >BLK/G</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.totalBLKG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs12 c_blue">{{currentPlayerStats.totalBLKGRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								 </li>
+								 
+								 
+								 <li class="ui-col ui-flex-ver ui-flex-pack-end" style="width:20%;text-align: center;padding:5px 0px 5px 0px;margin:0 5px 0 5px">
+									    <table  style="width: 100%;">
+									    	<tr>
+									    		<td><label class="fs13 c_red" >PF/G</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td><label class="fs12">{{currentPlayerStats.totalPFG.toFixed(1)}}</label></td>
+									    	</tr>
+									    	<tr>
+									    		<td>
+									    			<div style="display: inline-flex;">
+									    				<img src="../../../img/analysis/rank.png" style="width:15px;height:15px;padding: 1px 5px 0 0;">
+									    				<span class="fs12 c_blue">{{currentPlayerStats.totalPFGRank}}</span>
+									    			</div>
+									    		</td>	
+									    	</tr>
+									    </table>
+								 </li>
+							</ul>
+					
+							
+							
+							<ul class="ui-row-flex ui-border-tb" style="">
+								<li style="display: inline-flex;">
+									<!-- <img src="../../../img/backend/battle_100_120.png" style="width:30px;height:30px;margin: 5px;"> -->
+									<div class="ui-list-thumb-s" style="margin: 5px;background-color: #25b359;">
+										<span style="background-image:url(../../../img/app/football_career_edited_1.png)"></span>
+									</div>
+									<span class="span14" style="margin-top:10px;">{{labelTournamentAllMatchStats}}</span>
+								</li>
+							</ul>
+							
+							<div class="ui-row-flex" style="font-size: 12px;margin-bottom:50px;">
+								<div class="ui-col">
+									<ul v-for="t in playerTournamentStatsList" class="ui-list ui-border-b">
+									    <li v-if="$index==0" class="ui-flex ui-flex-pack-end" style="margin-left: 0px;padding: 1px 0 0 0;background-color: aliceblue;text-align: center;">
+									        <div style="display:inline-flex;width:55px;">
+									        	<i class="ui-icon-pc" style="line-height: 25px;"></i>
+									        	<!-- <img src="../../../img/backend/battle_100_120.png" style="width:30px;height:21px;"> -->
+									        </div>
+											
+									        <div class="ui-col c_green" style="background-color: azure;">
+												PTS												
+									        </div>
+									        <div class="ui-col c_green" style="width:20px;">
+									             2M/A
+									        </div>
+									        <div class="ui-col c_green" style="background-color: aliceblue;width:20px;">
+									             3M/A
+									        </div>
+									        <div class="ui-col c_green" style="width:20px;">
+									             FM/A
+									        </div>
+									        <div class="ui-list-text ui-col c_blue">
+									             AT
+									        </div>
+									        <div class="ui-list-text ui-col c_blue">
+									             ST
+									        </div>
+									        <div class="ui-list-text ui-col c_blue">
+									             RB
+									        </div>
+									        <div class="ui-list-text ui-col c_blue">
+									             BL
+									        </div>
+									        <div class="ui-list-text ui-col c_red">
+									             PF
+									        </div>
+									        <div class="ui-list-text ui-col c_red">
+									             TO
+									        </div>
+									    </li>
+									    <li v-if="$index==0" class="ui-flex ui-flex-pack-end" style="margin-left: 0px;padding: 1px 0 0 0;background-color: aquamarine;text-align: center;">
+									        <div style="width:55px;">
+									        	Total
+									        </div>
+									        <div class="ui-list-text ui-col c_orange">
+												{{currentPlayerStats.totalPTS}}									
+									        </div>
+									        <div class="ui-list-text ui-col" style="width:20px;">
+									            {{currentPlayerStats.total2PM}}/{{currentPlayerStats.total2PA}}
+									        </div>
+									        <div class="ui-list-text ui-col" style="width:20px;">
+									            {{currentPlayerStats.total3PM}}/{{currentPlayerStats.total3PA}}
+									        </div>
+									        <div class="ui-list-text ui-col" style="width:20px;">
+									             {{currentPlayerStats.totalFTM}}/{{currentPlayerStats.totalFTA}}
+									        </div>
+									        <div class="ui-list-text ui-col" >
+									             {{currentPlayerStats.totalAST}}
+									        </div>
+									        <div class="ui-list-text ui-col" >
+									             {{currentPlayerStats.totalSTL}}
+									        </div>
+									        <div class="ui-list-text ui-col">
+									             {{currentPlayerStats.totalREB}}
+									        </div>
+									        <div class="ui-list-text ui-col">
+									             {{currentPlayerStats.totalBLK}}
+									        </div>
+									        <div class="ui-list-text ui-col">
+									             {{currentPlayerStats.totalPF}}
+									        </div>
+									        <div class="ui-list-text ui-col">
+									             {{currentPlayerStats.totalTOV}}
+									        </div>
+									    </li>
+							    		<li class="ui-flex ui-flex-pack-end ui-border-b" style="margin-left:5px;text-align: center;">
+									        <div style="width:50px;display:inline-flex">
+									            <!-- <div class="ui-txt-info" style="padding: 13px 0px 0px 0px;text-align: left;color: #25b359;">{{t.matchName}}</div> --> 
+									            <label class="c_blue" style="padding-top:10px;">{{t.matchName}}</label>
+									            
+									            <div v-if="t.teamLogo" class="ui-list-thumb-s" style="margin: 5px 0px 5px 0px;">
+										            <span style="background-image:url(http://static.footballer.cc/{{t.teamLogo}});width:30px;"></span> 
+										        </div>
+												<div v-else class="ui-list-thumb-s" style="margin: 10px 5px 0px 0px;">
+													<span style="background-image:url(../../../img/app/football_career_edited_2.png)"></span>
+												</div>
+									        </div>
+									        
+									        <!-- <div class="ui-col ui-border-r" style="width:10px;">
+									            <span class="font_long_ellipsis" style="font-size:12px;margin-top: 17px;display: block;">{{t.teamAbbr}}</span>
+									        </div> -->
+									        <div class="ui-list-text ui-col ui-border-b pt10 c_cadetblue">
+									            {{t.pts}} 
+									        </div>
+									        <div class="ui-list-text ui-col  pt10"  style="width:20px;">
+									            {{t.p2M}}/{{t.p2A}} 
+									        </div>
+									        <div class="ui-list-text ui-col ui-border-b  pt10" style="width:20px;">
+									            {{t.p3M}}/{{t.p3A}} 
+									        </div>
+									        <div class="ui-list-text ui-col ui-border-b pt10" style="width:20px;">
+									            {{t.ftm}}/{{t.fta}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.ast}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.stl}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.reb}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.blk}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.pf}} 
+									        </div>
+									        <div class="ui-list-text ui-col pt10">
+									            {{t.tov}} 
+									        </div>
+									    </li>
+									</ul>
+								</div>
+							</div>
+
+						</li>
+					</ul>
+				</div>
+			</div>
+
+
+
+
+			<section class="ui-selector"></section>
+
+		</section>
+
+		<footer class="ui-footer ui-footer-btn" onclick="aufFooterRedirect()">
+			<div class="ui-flex ui-flex-pack-center">
+				<img src="../../image/auf_logo_wechat_footer_1000_v1_alpha.png"
+					width="160px" height="20px">
+			</div>
+		</footer>
+
+	</div>
+
+<script src="../../../i18n/env.js"></script>
+<script src="../../../js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../../js/lib/zeptojs/zepto.min.js"></script>
+<script src="../../js/frozen.js"></script>
+<script src="../../js/server/service.js"></script>
+<script src="../../../js/justin_common.js"></script>
+<script src="../../js/lib/vue.min.js"></script>
+<script src="../../js/lib/underscore-min.js"></script>
+<script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript"></script>
+
+	
+<script>
+function nav(){
+	if(document.referrer.indexOf('bbPersonalCenter') >0){
+		history.go(-3)	
+	}else{
+		history.back();
+	}
+}
+
+
+accessStats()
+
+$(document).ready(function() {
+	
+	lang = f$.cache('lang')
+	var vm;
+	
+	json = $.parseJSON(decodeURIComponent(getParameter(window.location.href ,"json")))
+    playerId = Number(json.playerId)	
+    tournamentId = Number(json.tournamentId)
+    url_lang = json.lang
+		
+	vm = new Vue({
+		el   : '#app',
+		data : {
+			domain:'',
+			suffix:'',
+			labelPlayerInfo:'',
+			labelTeamMVP:'',
+			labelFounderd:'',
+	        labelTeamMembers:'',
+	        labelTournamentRank:'',
+	        labelTeam:'',
+	        labelAge:'',
+	        labelHeavyFoot:'',
+	        labelHeight:'',
+	        labelWeight:'',
+	        labelCapabilityApproval:'',
+	        
+	        
+	        labelStillYoung:'',
+	        labelTournamentAllMatchStats:'',
+	        tabOverView:'',
+	        tabStats:'',
+			tournamentPlayerInfo:{},
+			tournamentTeamPlayerInfoList:[],
+			playerTournamentStatsList:[],
+			currentPlayerStats:{},
+			showeditBtn:false
+		},
+		methods: {
+			init:function() {	    				
+				vm.$data.domain =  GLOBAL_VAR_DOMAIN;
+		        vm.$data.suffix = GLOBAL_VAR_SUFFIX;
+		        vm.$data.loggedUserAvatar = f$.cache('uesr_current_peopleImgUrl');
+ 				$.i18n.properties({// 加载中文properties文件  
+	    		    name:'lan', // properties文件名称  
+	    		    path:'../../../i18n/', // properties文件路径  
+	    		    mode:'map', // 用 Map 的方式使用资源文件中的值
+	    		    language:lang,
+	    		    checkAvailableLanguages: true,
+	    		    callback: function() {// 加载成功后设置显示内容  
+	    		    	
+	    		    	vm.$data.labelPlayerInfo =  $.i18n.prop('playerInfo');
+	    		        vm.$data.tabOverView =  $.i18n.prop('overview');
+	    		        vm.$data.tabStats =  $.i18n.prop('tournament_dashboard_tab_stats');
+	    		        vm.$data.labelTournamentRank =  $.i18n.prop('tournamentRank');
+	    		        vm.$data.labelTournamentAllMatchStats =  $.i18n.prop('tournamentAllMatchStats');
+	    		        
+	    		        
+	    		        vm.$data.labelTeam =  $.i18n.prop('team');
+	    		        vm.$data.labelAge =  $.i18n.prop('age');
+	    		        vm.$data.labelHeavyFoot =  $.i18n.prop('heavyFoot');
+	    		        vm.$data.labelHeight =  $.i18n.prop('height');
+	    		        vm.$data.labelWeight =  $.i18n.prop('weight');
+	    		        vm.$data.labelStillYoung =  $.i18n.prop('stillYoung');
+	    		        vm.$data.labelCapabilityApproval = $.i18n.prop('capabilityApproval');
+	    		        
+	    		        
+	    		        
+	    		    }
+	    		});
+ 				
+ 				currentPlayer = f$.cacheObj('currentPlayer')
+ 				if(currentPlayer.id == playerId){
+ 					vm.$data.showeditBtn = true
+ 				}
+ 				
+ 				$('title').text(vm.$data.labelPlayerInfo)
+ 				tabinit();
+				vm.loadData();
+			},
+			loadData:function(){
+				f$.loadPlayerTournamentBaseInfo(vm.$data.domain, vm.$data.suffix, tournamentId,playerId).done(function(data) {
+	    			vm.$data.tournamentPlayerInfo = data.tournamentPlayerBaseInfo
+	    			if(data.tournamentPlayerBaseInfo){
+	    				if(data.tournamentPlayerBaseInfo.birth){
+		    				formatBirth =  formatToDateString(new Date(data.tournamentPlayerBaseInfo.birth))
+		    				vm.$data.tournamentPlayerInfo.birth = '  ['+formatBirth+']'
+		    				vm.$data.tournamentPlayerInfo.age = getAgeByBirth(formatBirth)
+		    			}else{
+		    				vm.$data.tournamentPlayerInfo.age = vm.$data.labelStillYoung
+		    			}
+	    				
+	    				if(vm.$data.tournamentPlayerInfo.playerLogo && vm.$data.tournamentPlayerInfo.playerLogo.indexOf('mmopen')>0){
+	    					vm.$data.tournamentPlayerInfo.showWXLogo = true;
+	    				}else{
+	    					vm.$data.tournamentPlayerInfo.showWXLogo = false;
+	    				}
+	    			} 
+	    		})
+	    		
+	    		f$.loadBasketBallPlayerTournamentStats(vm.$data.domain, vm.$data.suffix, tournamentId,playerId).done(function(data) {
+	    			vm.$data.playerTournamentStatsList = data.basketBallPlayerAllTournamentMatchResultList 
+	    			
+	    			var currentPlayerStats = {}
+	    			var allPlayerStatsTotalList = data.basketBallPlayerMatchResultList
+	    			
+	    			if(allPlayerStatsTotalList.length>0){
+	    				currentPlayerStats.totalMVP =   _.find(allPlayerStatsTotalList, {playerId: playerId}).mvp || 0 
+		    			currentPlayerStats.totalMVPRank = _.chain(allPlayerStatsTotalList).filter(function(e){ return e.mvp >0 }).sortBy('mvp').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			//currentPlayerStats.totalTeamMvp = _.find(allPlayerStatsTotalList, {playerId: playerId}).teamMVP || 0
+	    				//currentPlayerStats.totalTeamMvpRank = _.chain(allPlayerStatsTotalList).filter(function(e){ return e.teamMVP >0 }).sortBy('teamMVP').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+	    				currentPlayerStats.totalPTS = _.find(allPlayerStatsTotalList, {playerId: playerId}).pts
+		    			currentPlayerStats.totalPTSRank = _.chain(allPlayerStatsTotalList).sortBy('pts').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalPTSG = _.find(allPlayerStatsTotalList, {playerId: playerId}).ptsg
+		    			currentPlayerStats.totalPTSGRank = _.chain(allPlayerStatsTotalList).sortBy('ptsg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalGP = _.find(allPlayerStatsTotalList, {playerId: playerId}).gp
+		    			currentPlayerStats.totalGPRank = _.chain(allPlayerStatsTotalList).sortBy('gp').reverse().findIndex({ playerId: playerId}).value()+1
+	    				
+	    				currentPlayerStats.total2PA = _.find(allPlayerStatsTotalList, {playerId: playerId}).p2A
+		    			currentPlayerStats.total2PARank = _.chain(allPlayerStatsTotalList).sortBy('p2A').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.total2PM = _.find(allPlayerStatsTotalList, {playerId: playerId}).p2M
+		    			currentPlayerStats.total2PMRank = _.chain(allPlayerStatsTotalList).sortBy('p2M').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.total3PA = _.find(allPlayerStatsTotalList, {playerId: playerId}).p3A
+		    			currentPlayerStats.total3PARank = _.chain(allPlayerStatsTotalList).sortBy('p3A').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.total3PM = _.find(allPlayerStatsTotalList, {playerId: playerId}).p3M
+		    			currentPlayerStats.total3PMRank = _.chain(allPlayerStatsTotalList).sortBy('p3M').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalFTA = _.find(allPlayerStatsTotalList, {playerId: playerId}).fta
+		    			currentPlayerStats.totalFTARank = _.chain(allPlayerStatsTotalList).sortBy('fta').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalFTM = _.find(allPlayerStatsTotalList, {playerId: playerId}).ftm
+		    			currentPlayerStats.totalFTMRank = _.chain(allPlayerStatsTotalList).sortBy('ftm').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalAST = _.find(allPlayerStatsTotalList, {playerId: playerId}).ast
+		    			currentPlayerStats.totalASTRank = _.chain(allPlayerStatsTotalList).sortBy('ast').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalSTL = _.find(allPlayerStatsTotalList, {playerId: playerId}).stl
+		    			currentPlayerStats.totalSTLRank = _.chain(allPlayerStatsTotalList).sortBy('stl').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalREB = _.find(allPlayerStatsTotalList, {playerId: playerId}).reb
+		    			currentPlayerStats.totalREBRank = _.chain(allPlayerStatsTotalList).sortBy('reb').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalBLK = _.find(allPlayerStatsTotalList, {playerId: playerId}).blk
+		    			currentPlayerStats.totalBLKRank = _.chain(allPlayerStatsTotalList).sortBy('blk').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalPF = _.find(allPlayerStatsTotalList, {playerId: playerId}).pf
+		    			currentPlayerStats.totalPFRank = _.chain(allPlayerStatsTotalList).sortBy('pf').reverse().findIndex({ playerId: playerId}).value()+1
+	    				
+		    			currentPlayerStats.total2PT = _.find(allPlayerStatsTotalList, {playerId: playerId}).p2T
+		    			currentPlayerStats.total2PTRank = _.chain(allPlayerStatsTotalList).sortBy('p2T').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.total3PT = _.find(allPlayerStatsTotalList, {playerId: playerId}).p3T
+		    			currentPlayerStats.total3PTRank = _.chain(allPlayerStatsTotalList).sortBy('p3T').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalFT = _.find(allPlayerStatsTotalList, {playerId: playerId}).ft
+		    			currentPlayerStats.totalFTRank = _.chain(allPlayerStatsTotalList).sortBy('ft').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalASTG = _.find(allPlayerStatsTotalList, {playerId: playerId}).astg
+		    			currentPlayerStats.totalASTGRank = _.chain(allPlayerStatsTotalList).sortBy('astg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalSTLG = _.find(allPlayerStatsTotalList, {playerId: playerId}).stlg
+		    			currentPlayerStats.totalSTLGRank = _.chain(allPlayerStatsTotalList).sortBy('stlg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalREBG = _.find(allPlayerStatsTotalList, {playerId: playerId}).rebg
+		    			currentPlayerStats.totalREBGRank = _.chain(allPlayerStatsTotalList).sortBy('rebg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalBLKG = _.find(allPlayerStatsTotalList, {playerId: playerId}).blkg
+		    			currentPlayerStats.totalBLKGRank = _.chain(allPlayerStatsTotalList).sortBy('blkg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalPFG = _.find(allPlayerStatsTotalList, {playerId: playerId}).pfg
+		    			currentPlayerStats.totalPFGRank = _.chain(allPlayerStatsTotalList).sortBy('pfg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalTOV = _.find(allPlayerStatsTotalList, {playerId: playerId}).tov
+		    			currentPlayerStats.totalTOVRank = _.chain(allPlayerStatsTotalList).sortBy('tov').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			currentPlayerStats.totalTOVG = _.find(allPlayerStatsTotalList, {playerId: playerId}).tovg
+		    			currentPlayerStats.totalTOVGRank = _.chain(allPlayerStatsTotalList).sortBy('tovg').reverse().findIndex({ playerId: playerId}).value()+1
+		    			
+		    			vm.$data.currentPlayerStats = currentPlayerStats
+	    			} 
+	    		})  
+	    		//$('.ui-loading-block').removeClass("show");
+			},
+			gotoPersonalCenter:function(e){
+				//alert(currentPlayer.id)
+				location.href = vm.$data.domain+'footballer/mobile/match/basketball/bbPersonalCenter.html?lang='+lang+'&tournamentId='+tournamentId;
+			},
+		}
+	});
+	
+	vm.init();
+	$('.ui-loading-block').removeClass("show");
+	
+	function tabinit()
+	{
+		var tab = new fz.Scroll('.ui-tab', {
+	        role: 'tab',
+	        autoplay: false,
+		});
+	} 
+	
+	
+});
+          
+</script>
+</body>
+
+</html>

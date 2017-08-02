@@ -1,0 +1,1799 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TournamentMapper" >
+
+   
+  <resultMap id="TournamentResultMap" type="com.footballer.rest.api.v2.vo.Tournament" >
+   	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="name" property="name" jdbcType="VARCHAR" />
+   	<result column="arenaId" property="arenaId" jdbcType="INTEGER" />
+   	<result column="arenaName" property="arenaName" jdbcType="VARCHAR" />
+   	<result column="type" property="type" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+    <result column="startDt" property="startDt" jdbcType="TIMESTAMP" />
+    <result column="endDt" property="endDt" jdbcType="TIMESTAMP" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="videoUrl" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="mainOrganiserName" property="mainOrganiserName" jdbcType="VARCHAR" />
+    <result column="mainOrganiserLogo" property="mainOrganiserLogo" jdbcType="VARCHAR" />
+    
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="register_start_dt" property="registerStartDateTime" jdbcType="TIMESTAMP" />
+    <result column="register_end_dt" property="registerEndDateTime" jdbcType="TIMESTAMP" />
+    <result column="match_type" property="matchType" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="addressId" property="addressId" jdbcType="VARCHAR" />
+    
+  </resultMap>	
+  
+  <resultMap id="TournamentRemindInfo" type="com.footballer.rest.api.v2.vo.TournamentRemindInfo" >
+   	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+	<result column="tournamentName" property="tournamentName" jdbcType="VARCHAR" />
+   	<result column="arenaName" property="arenaName" jdbcType="VARCHAR" />
+    <result column="kickOffTime" property="kickOffTime" jdbcType="VARCHAR" />
+    <result column="teams" property="teams" jdbcType="VARCHAR" />
+  </resultMap>	
+  
+  
+	
+  <resultMap id="TournamentMatchResultMap" type="com.footballer.rest.api.v2.vo.TournamentMatch" >
+   	<result column="id" property="id" jdbcType="INTEGER" />
+   	<result column="time" property="time" jdbcType="TIMESTAMP" />
+	<result column="fieldName" property="fieldName" jdbcType="VARCHAR" />   	
+   	<result column="typeName" property="typeName" jdbcType="VARCHAR" />
+   	<result column="hostTeamLabel" property="hostTeamLabel" jdbcType="VARCHAR" />
+    <result column="hostTeamId" property="hostTeamId" jdbcType="INTEGER" />
+    <result column="hostTeamName" property="hostTeamName" jdbcType="VARCHAR" />
+    <result column="hostTeamLogo" property="hostTeamLogo" jdbcType="VARCHAR" />
+    <result column="guestTeamLabel" property="guestTeamLabel" jdbcType="VARCHAR" />
+    <result column="guestTeamId" property="guestTeamId" jdbcType="INTEGER" />
+    <result column="guestTeamName" property="guestTeamName" jdbcType="VARCHAR" />
+    <result column="guestTeamLogo" property="guestTeamLogo" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="videoUrl" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="match_schedule_id" property="matchScheduleId" jdbcType="INTEGER" />
+    <result column="round" property="round" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="TournamentTeamBaseInfoResultMap" type="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+	<result column="groupName" property="groupName" jdbcType="VARCHAR" />   	
+   	<result column="groupNumber" property="groupNumber" jdbcType="INTEGER" />
+   	<result column="teamTech" property="teamTech" jdbcType="VARCHAR" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+   	<result column="teamNation" property="teamNation" jdbcType="VARCHAR" />
+    <result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+    <result column="playerCount" property="playerCount" jdbcType="INTEGER" />
+    <result column="captainPlayerId" property="captainPlayerId" jdbcType="INTEGER" />
+    <result column="captainName" property="captainName" jdbcType="VARCHAR" />
+    <result column="captainLogo" property="captainLogo" jdbcType="VARCHAR" />
+    <result column="createDt" property="createDt" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="TournamentPlayerBaseInfo" type="com.footballer.rest.api.v2.vo.TournamentPlayerBaseInfo" >
+	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+   	<result column="playerName" property="playerName" jdbcType="VARCHAR" />
+    <result column="playerLogo" property="playerLogo" jdbcType="VARCHAR" />
+    <result column="wechatNo" property="wechatNo" jdbcType="VARCHAR" />
+    <result column="wechatLogo" property="wechatLogo" jdbcType="VARCHAR" />
+	<result column="birth" property="birth" jdbcType="TIMESTAMP" />
+	<result column="height" property="height" jdbcType="INTEGER" />
+	<result column="weight" property="weight" jdbcType="INTEGER" />
+	<result column="heavyFoot" property="heavyFoot" jdbcType="VARCHAR" />
+	<result column="playerNumber" property="playerNumber" jdbcType="INTEGER" />
+	<result column="position" property="position" jdbcType="VARCHAR" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+    <result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+    <result column="teamAbbr" property="teamAbbr" jdbcType="VARCHAR" />
+    <result column="tournamentId" property="tournamentId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="TournamentGourpTeamStandingResultMap" type="com.footballer.rest.api.v2.vo.TournamentGourpTeamStanding" >
+   	<result column="groupName" property="groupName" jdbcType="VARCHAR" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+	<result column="teamName" property="teamName" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+   	<result column="totalMatches" property="totalMatches" jdbcType="INTEGER" />
+    <result column="totalWin" property="totalWin" jdbcType="INTEGER" />
+    <result column="totalDraw" property="totalDraw" jdbcType="INTEGER" />
+    <result column="totalLose" property="totalLose" jdbcType="INTEGER" />
+    <result column="totalGoals" property="totalGoals" jdbcType="INTEGER" />
+    <result column="totalConceded" property="totalConceded" jdbcType="INTEGER" />
+    <result column="totalGoalDifference" property="totalGoalDifference" jdbcType="INTEGER" />
+    <result column="totalPoints" property="totalPoints" jdbcType="INTEGER" />
+    <result column="totalPTSFor" property="totalPTSFor" jdbcType="INTEGER" />
+    <result column="totalPTSAgainst" property="totalPTSAgainst" jdbcType="INTEGER" />
+    <result column="totalPTSDiff" property="totalPTSDiff" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <resultMap id="PlayerMatchResultMap" type="com.footballer.rest.api.v2.vo.PlayerMatchResult" >
+   	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+   	<result column="playerNumber" property="playerNumber" jdbcType="VARCHAR" />
+	<result column="playerName" property="playerName" jdbcType="VARCHAR" />   	
+   	<result column="playerImg" property="playerImg" jdbcType="VARCHAR" />
+   	
+   	<result column="teamNumber" property="teamNumber" jdbcType="INTEGER" />
+   	<result column="teamPosition" property="teamPosition" jdbcType="VARCHAR" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+   	<result column="nameAbbr" property="nameAbbr" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+   	
+    <result column="matches" property="matches" jdbcType="INTEGER" />
+    <result column="loosePossession" property="loosePossession" jdbcType="INTEGER" />
+    <result column="distanceCoverd" property="distanceCoverd" jdbcType="INTEGER" />
+    <result column="longShot" property="longShot" jdbcType="INTEGER" />
+    <result column="shots" property="shots" jdbcType="INTEGER" />
+    <result column="shotOnTarget" property="shotOnTarget" jdbcType="INTEGER" />
+    <result column="goals" property="goals" jdbcType="INTEGER" />
+    <result column="passFinalBall" property="passFinalBall" jdbcType="INTEGER" />
+    <result column="assists" property="assists" jdbcType="INTEGER" />
+    <result column="fouls" property="fouls" jdbcType="INTEGER" />
+    <result column="tackles" property="tackles" jdbcType="INTEGER" />
+    <result column="block" property="block" jdbcType="INTEGER" />
+    <result column="keyDefense" property="keyDefense" jdbcType="INTEGER" />
+    <result column="pass" property="pass" jdbcType="INTEGER" />
+    <result column="longPass" property="longPass" jdbcType="INTEGER" />
+    <result column="passCompleted" property="passCompleted" jdbcType="INTEGER" />
+    <result column="yellowCard" property="yellowCard" jdbcType="INTEGER" />
+    <result column="redCard" property="redCard" jdbcType="INTEGER" />
+    <result column="offside" property="offside" jdbcType="INTEGER" />
+    <result column="save" property="save" jdbcType="INTEGER" />
+    <result column="teamMVP" property="teamMVP" jdbcType="INTEGER" />
+    <result column="mvp" property="mvp" jdbcType="INTEGER" />
+    <result column="ownGoals" property="ownGoals" jdbcType="INTEGER" />
+    
+    <result column="matchName" property="matchName" jdbcType="VARCHAR" />
+    <result column="matchDate" property="matchDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  <resultMap id="BasketBallPlayerMatchResultMap" type="com.footballer.rest.api.v2.vo.BasketBallPlayerMatchResult" >
+   	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+   	<result column="playerNumber" property="playerNumber" jdbcType="VARCHAR" />
+	<result column="playerName" property="playerName" jdbcType="VARCHAR" />   	
+   	<result column="playerImg" property="playerImg" jdbcType="VARCHAR" />
+   	
+   	<result column="teamNumber" property="teamNumber" jdbcType="INTEGER" />
+   	<result column="teamPosition" property="teamPosition" jdbcType="VARCHAR" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+   	<result column="nameAbbr" property="nameAbbr" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+   	
+    <result column="GP" property="GP" jdbcType="INTEGER" />
+    <result column="PTS" property="PTS" jdbcType="INTEGER" />
+    <result column="2PA" property="P2A" jdbcType="INTEGER" />
+    <result column="2PM" property="P2M" jdbcType="INTEGER" />
+    <result column="3PA" property="P3A" jdbcType="INTEGER" />
+    <result column="3PM" property="P3M" jdbcType="INTEGER" />
+    <result column="FTA" property="FTA" jdbcType="INTEGER" />
+    <result column="FTM" property="FTM" jdbcType="INTEGER" />
+    <result column="PF" property="PF" jdbcType="INTEGER" />
+    <result column="REB" property="REB" jdbcType="INTEGER" />
+    <result column="STL" property="STL" jdbcType="INTEGER" />
+    <result column="BLK" property="BLK" jdbcType="INTEGER" />
+    <result column="AST" property="AST" jdbcType="INTEGER" />
+    <result column="TOV" property="TOV" jdbcType="INTEGER" />
+    <result column="teamMVP" property="teamMVP" jdbcType="INTEGER" />
+    <result column="mvp" property="mvp" jdbcType="INTEGER" />
+    
+	<result column="PTSG" property="PTSG" jdbcType="DOUBLE" />
+    <result column="2PT" property="P2T" jdbcType="DOUBLE" />
+    <result column="3PT" property="P3T" jdbcType="DOUBLE" />
+    <result column="FT" property="FT" jdbcType="DOUBLE" />
+    <result column="ASTG" property="ASTG" jdbcType="DOUBLE" />
+    <result column="STLG" property="STLG" jdbcType="DOUBLE" />
+    <result column="REBG" property="REBG" jdbcType="DOUBLE" />
+    <result column="BLKG" property="BLKG" jdbcType="DOUBLE" />
+    <result column="TOVG" property="TOVG" jdbcType="DOUBLE" />
+    <result column="PFG" property="PFG" jdbcType="DOUBLE" />
+
+    <result column="matchName" property="matchName" jdbcType="VARCHAR" />
+    <result column="matchDate" property="matchDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  
+  <resultMap id="MomentResultMap" type="com.footballer.rest.api.v2.vo.Moment" >
+  	<result column="id" property="id" jdbcType="INTEGER" />
+  	<result column="player_id" property="playerId" jdbcType="INTEGER" />
+   	<result column="tournament_id" property="tournamentId" jdbcType="INTEGER" />
+   	<result column="tournament_match_id" property="tournamentMatchId" jdbcType="VARCHAR" />
+   	<result column="content" property="content" jdbcType="VARCHAR" />
+   	<result column="type" property="type" jdbcType="VARCHAR" />
+   	<result column="url" property="url" jdbcType="VARCHAR" />
+   	<result column="date" property="date" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="TournamentMatchVideoResultMap" type="com.footballer.rest.api.v2.vo.Video" >
+  	<result column="id" property="id" jdbcType="INTEGER" />
+   	<result column="tournament_id" property="tournamentId" jdbcType="INTEGER" />
+   	<result column="tournament_match_id" property="tournamentMatchId" jdbcType="VARCHAR" />
+   	<result column="name" property="name" jdbcType="VARCHAR" />
+   	<result column="url" property="url" jdbcType="VARCHAR" />
+   	<result column="date" property="date" jdbcType="VARCHAR" />
+   	<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+   	<result column="type" property="type" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />   	
+  </resultMap> 	
+  
+  <resultMap id="TeamMatchResultMap" type="com.footballer.rest.api.v2.vo.TeamMatchResult" >
+   	<result column="tournamentMatchId" property="tournamentMatchId" jdbcType="INTEGER" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+   	<result column="teamAbbr" property="teamAbbr" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+   	
+    <result column="matches" property="matches" jdbcType="INTEGER" />
+    <result column="loosePossession" property="loosePossession" jdbcType="INTEGER" />
+    <result column="distanceCoverd" property="distanceCoverd" jdbcType="INTEGER" />
+    <result column="longShot" property="longShot" jdbcType="INTEGER" />
+    <result column="shots" property="shots" jdbcType="INTEGER" />
+    <result column="shotOnTarget" property="shotOnTarget" jdbcType="INTEGER" />
+    <result column="goals" property="goals" jdbcType="INTEGER" />
+    <result column="passFinalBall" property="passFinalBall" jdbcType="INTEGER" />
+    <result column="assists" property="assists" jdbcType="INTEGER" />
+    <result column="fouls" property="fouls" jdbcType="INTEGER" />
+    <result column="tackles" property="tackles" jdbcType="INTEGER" />
+    <result column="block" property="block" jdbcType="INTEGER" />
+    <result column="keyDefense" property="keyDefense" jdbcType="INTEGER" />
+    <result column="pass" property="pass" jdbcType="INTEGER" />
+    <result column="longPass" property="longPass" jdbcType="INTEGER" />
+    <result column="passCompleted" property="passCompleted" jdbcType="INTEGER" />
+    <result column="yellowCard" property="yellowCard" jdbcType="INTEGER" />
+    <result column="redCard" property="redCard" jdbcType="INTEGER" />
+    <result column="offside" property="offside" jdbcType="INTEGER" />
+    <result column="save" property="save" jdbcType="INTEGER" />
+    <result column="MVP" property="MVP" jdbcType="INTEGER" />
+    <result column="ownGoals" property="ownGoals" jdbcType="INTEGER" />
+
+    <result column="matchName" property="matchName" jdbcType="VARCHAR" />
+    <result column="matchDate" property="matchDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  <resultMap id="StatsContent" type="com.footballer.rest.api.v2.domain.StatsContent" >
+   	<result column="id" property="id" jdbcType="INTEGER" />
+    
+    <result column="mvp" property="mvp" jdbcType="INTEGER" />
+    <result column="goals" property="goals" jdbcType="INTEGER" />
+    <result column="assists" property="assists" jdbcType="INTEGER" />
+    <result column="yellowCard" property="yellowCard" jdbcType="INTEGER" />
+    <result column="redCard" property="redCard" jdbcType="INTEGER" />
+    <result column="penalty" property="penalty" jdbcType="INTEGER" />
+    
+    <result column="shots" property="shots" jdbcType="INTEGER" />
+    <result column="longShot" property="longShot" jdbcType="INTEGER" />
+    <result column="shotOnTarget" property="shotOnTarget" jdbcType="INTEGER" />
+    
+    <result column="loosePossession" property="loosePossession" jdbcType="INTEGER" />
+    <result column="distanceCoverd" property="distanceCoverd" jdbcType="INTEGER" />
+    
+    <result column="pass" property="pass" jdbcType="INTEGER" />
+    <result column="longPass" property="longPass" jdbcType="INTEGER" />
+    <result column="passCompleted" property="passCompleted" jdbcType="INTEGER" />
+    <result column="passFinalBall" property="passFinalBall" jdbcType="INTEGER" />
+    
+    <result column="tackles" property="tackles" jdbcType="INTEGER" />
+    <result column="block" property="block" jdbcType="INTEGER" />
+    <result column="keyDefense" property="keyDefense" jdbcType="INTEGER" />
+    
+    <result column="fouls" property="fouls" jdbcType="INTEGER" />    
+    <result column="offside" property="offside" jdbcType="INTEGER" />
+    <result column="save" property="save" jdbcType="INTEGER" />
+    <result column="ownGoals" property="ownGoals" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="BasketBallTeamMatchResultMap" type="com.footballer.rest.api.v2.vo.BasketBallTeamMatchResult" >
+   	<result column="tournamentMatchId" property="tournamentMatchId" jdbcType="INTEGER" />
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+   	<result column="teamName" property="teamName" jdbcType="VARCHAR" />
+   	<result column="teamAbbr" property="teamAbbr" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+   	
+    <result column="matches" property="matches" jdbcType="INTEGER" />
+    <result column="PTSF" property="PTSF" jdbcType="INTEGER" />
+    <result column="PTSA" property="PTSA" jdbcType="INTEGER" />
+    <result column="PTSD" property="PTSD" jdbcType="INTEGER" />
+    <result column="2PA" property="P2A" jdbcType="INTEGER" />
+    <result column="2PM" property="P2M" jdbcType="INTEGER" />
+    <result column="3PA" property="P3A" jdbcType="INTEGER" />
+    <result column="3PM" property="P3M" jdbcType="INTEGER" />
+    <result column="FTA" property="FTA" jdbcType="INTEGER" />
+    <result column="FTM" property="FTM" jdbcType="INTEGER" />
+    <result column="PF" property="PF" jdbcType="INTEGER" />
+    <result column="REB" property="REB" jdbcType="INTEGER" />
+    <result column="STL" property="STL" jdbcType="INTEGER" />
+    <result column="BLK" property="BLK" jdbcType="INTEGER" />
+    <result column="AST" property="AST" jdbcType="INTEGER" />
+    <result column="TOV" property="TOV" jdbcType="INTEGER" />
+   
+    <result column="matchName" property="matchName" jdbcType="VARCHAR" />
+    <result column="matchDate" property="matchDate" jdbcType="TIMESTAMP" />
+	<result column="wins" property="wins" jdbcType="INTEGER" />
+    <result column="losses" property="losses" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <resultMap id="TeamTournamentPlayerResultMap" type="com.footballer.rest.api.v2.vo.TournamentTeamPlayerInfo" >
+   	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+	<result column="playerName" property="playerName" jdbcType="VARCHAR" />   	
+   	<result column="playerImg" property="playerImg" jdbcType="VARCHAR" />
+   	<result column="number" property="number" jdbcType="INTEGER" />
+   	<result column="position" property="position" jdbcType="VARCHAR" />   	
+   	<result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="teamMVP" property="teamMVP" jdbcType="INTEGER" />
+    <result column="MVP" property="MVP" jdbcType="INTEGER" />
+    <result column="birth" property="birth" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="teamIds" type="java.lang.Long">
+  	<result property="teamId" column="teamId"/>
+  </resultMap>
+  
+  
+  <resultMap id="TimeLineResultMap" type="com.footballer.rest.api.v2.domain.TimeLine" >
+   	<result column="playerId" property="playerId" jdbcType="INTEGER" />
+	<result column="playerName" property="playerName" jdbcType="VARCHAR" />   	
+   	<result column="playerLogo" property="playerLogo" jdbcType="VARCHAR" />
+   	<result column="eventDate" property="eventDate" jdbcType="VARCHAR" />
+   	<result column="eventAction" property="eventAction" jdbcType="VARCHAR" />   	
+   	<result column="eventType" property="eventType" jdbcType="VARCHAR" />
+    <result column="eventDetailType" property="eventDetailType" jdbcType="VARCHAR" />
+    <result column="eventId" property="eventId" jdbcType="INTEGER" />
+    <result column="eventUrl" property="eventUrl" jdbcType="VARCHAR" />
+    <result column="eventContent" property="eventContent" jdbcType="VARCHAR" />
+    <result column="eventVideoUrl" property="eventVideoUrl" jdbcType="VARCHAR" />
+    <result column="eventPicUrl" property="eventPicUrl" jdbcType="VARCHAR" />
+    <result column="eventComment" property="eventComment" jdbcType="VARCHAR" />
+    <result column="primaryPlayerId" property="primaryPlayerId" jdbcType="INTEGER" />
+	<result column="primaryPlayerName" property="primaryPlayerName" jdbcType="VARCHAR" />   	
+   	<result column="primaryPlayerLogo" property="primaryPlayerLogo" jdbcType="VARCHAR" />
+   	
+   	<result column="teamId" property="teamId" jdbcType="INTEGER" />
+	<result column="teamName" property="teamName" jdbcType="VARCHAR" />   	
+   	<result column="teamLogo" property="teamLogo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <select id="getAllTournamentList" resultMap="TournamentResultMap" parameterType="long" >
+	select id , name, status, create_by, arena_id arenaId, type, start_dt startDt, end_dt endDt, logo, main_organiser_name mainOrganiserName, main_organiser_logo mainOrganiserLogo, video_url videoUrl  from tournament 
+	where type in (0,1)
+	and status != '0' or status is null
+	
+	union
+	
+	select id , name, status, create_by, arena_id arenaId, type, start_dt startDt, end_dt endDt, logo, main_organiser_name mainOrganiserName, main_organiser_logo mainOrganiserLogo, video_url videoUrl  from tournament 
+		where type in (0,1)
+		and status = '0'              
+		and create_by = #{playerId}
+		order by startDt
+  </select>
+
+  <select id="getAllSportsTournament" resultMap="TournamentResultMap" parameterType="long" >
+	select id , name, arena_id arenaId, type, start_dt startDt, end_dt endDt, logo, main_organiser_name mainOrganiserName, main_organiser_logo mainOrganiserLogo, video_url videoUrl  from tournament 
+	order by startDt
+  </select>
+  
+  <select id="getTournamentRemindInfoListB4Match" resultMap="TournamentRemindInfo" parameterType="long" >
+	select tp.player_id playerId, t.name tournamentName, concat(tm.host_team_label, ' vs ', tm.guest_team_label) teams, time kickOffTime, a.name arenaName from tournament_match tm
+	join team_player tp on tp.team_id = tm.host_team_id or tp.team_id = tm.guest_team_id
+	join tournament t on t.id = tm.tournament_id
+	join arena a on a.id = tm.arena_id
+	where now() between  date_sub(time, interval '02:30:00' hour_second) and date_sub(time, interval '02:00:00' hour_second)
+  </select>
+  
+  
+  <select id="getTournamentRemindInfoListAfterMatch" resultMap="TournamentRemindInfo" parameterType="long" >
+	select tp.player_id playerId, t.name tournamentName, concat(tm.host_team_label, ' vs ', tm.guest_team_label) teams, time kickOffTime, a.name arenaName from tournament_match tm
+	join team_player tp on tp.team_id = tm.host_team_id or tp.team_id = tm.guest_team_id
+	join tournament t on t.id = tm.tournament_id
+	join arena a on a.id = tm.arena_id
+	where now() between  date_add(time, interval '48:00:00' hour_second) and date_add(time, interval '48:30:00' hour_second)
+  </select>
+  
+  <select id="getTournamentList" resultMap="TournamentResultMap" parameterType="long" >
+	select t.id id, t.name name, t.arena_id arenaId, a.name arenaName, t.type type, t.start_dt startDt, t.end_dt endDt, t.logo, t.video_url videoUrl  from team_player tp
+	join tournament_team tt on tt.team_id = tp.team_id
+	join tournament t on t.id = tt.tournament_id
+	join arena a on a.id = t.arena_id
+	where player_id = #{playerId}
+	group by t.id 
+  </select>
+  
+  
+   <select id="getTournamentBaseInfoById" resultMap="TournamentResultMap" parameterType="long" >
+	select distinct id , name, address, addressId, status, register_start_dt, register_end_dt, match_type, arena_id arenaId, type, address, match_type, start_dt startDt, end_dt endDt, logo, main_organiser_name mainOrganiserName, main_organiser_logo mainOrganiserLogo, video_url videoUrl  from tournament 
+	where id = #{tournamentId}
+  </select>
+  
+  
+  <select id="getTournamentFullCalendarInfoById" resultMap="TournamentMatchResultMap" parameterType="long" >
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id =hostTeamId) hostTeamName, (select logo from team where id =hostTeamId) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id =guestTeamId) guestTeamName, (select logo from team where id =guestTeamId) guestTeamLogo ,
+	(select concat(goals+(select own_goals from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.guest_team_id),':',conceded+(select own_goals from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.host_team_id)) from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.host_team_id) result
+	from tournament_match tm
+	left join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId}
+  </select>
+  
+  <select id="getBasketBallTournamentFullCalendarInfoById" resultMap="TournamentMatchResultMap" parameterType="long" >
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id =hostTeamId) hostTeamName, (select logo from team where id =hostTeamId) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id =guestTeamId) guestTeamName, (select logo from team where id =guestTeamId) guestTeamLogo ,
+	(select concat(`pts_for`,':',`pts_against`) from basketball_match_team_result bmtc where tm.id=bmtc.tournament_match_id and bmtc.team_id= tm.host_team_id) result
+	from tournament_match tm
+	join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId}
+  </select>
+  
+  
+  <select id="getTournamentTeamsInfoById" resultMap="TournamentTeamBaseInfoResultMap" parameterType="long" >
+   	select t.id teamId, tt.group_name groupName, tt.group_number groupNumber, t.name teamName, t.logo teamLogo, t.nation teamNation, (select count(*) from team_player where team_id = t.id and status = 'ACTIVE') playerCount
+	from tournament_team tt
+	join team t on t.id = tt.team_id
+	where tt.tournament_id = #{tournamentId}
+	group by t.id
+  </select>
+  
+  <select id="getTournamentPlayersInfoByTournamentId" resultMap="TournamentPlayerBaseInfo" parameterType="long" >
+   	select player_id playerId, tp.team_id teamId, player_number playerNumber from team_player tp 
+	join team t on t.id = tp.team_id 
+	join tournament_team tt on tt.team_id = t.id
+	where tt.tournament_id = #{tournamentId} and tp.status = 'ACTIVE' and tp.player_number is not null
+  </select>
+  
+  
+  <select id="getTournamentMatchTwoTeamID" resultMap="teamIds" parameterType="long" >
+   	select host_team_id teamId from tournament_match where id =#{matchId}
+   	union
+	select guest_team_id teamId from tournament_match where id =#{matchId}
+  </select>
+  
+  
+  <select id="getTournamentGourpStandings" resultMap="TournamentGourpTeamStandingResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select tt.group_name groupName, t.id teamId, t.name teamName, t.logo teamLogo,
+	(select count(*) from match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalMatches,
+	(select count(*) from match_team_result where points =3 and team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalWin,
+	(select count(*) from match_team_result where points =1 and team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalDraw,
+	(select count(*) from match_team_result where points =0 and team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalLose,
+	(select sum(goals) from match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalGoals,
+	(select sum(conceded) from match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalConceded,
+	(select sum(goals)-sum(conceded) from match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalGoalDifference ,
+	(select sum(points) from match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalPoints
+	from tournament_team tt
+	join team t on t.id = tt.team_id
+	where tournament_id= #{tournamentId} 
+  </select>
+  
+  
+  <select id="getBasketBallTournamentGourpStandings" resultMap="TournamentGourpTeamStandingResultMap" parameterType="long" >
+	select tt.group_name groupName, t.id teamId, t.name teamName, t.logo teamLogo,
+	(select count(*) from basketball_match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalMatches,
+	(select count(*) from basketball_match_team_result where wins =1 and team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalWin,
+	(select count(*) from basketball_match_team_result where losses =1 and team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalLose,
+	(select sum(pts_for) from basketball_match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalPTSFor,
+	(select sum(pts_against) from basketball_match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalPTSAgainst,
+	(select sum(pts_diff) from basketball_match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id))  totalPTSDiff,
+	(select sum(league_points) from basketball_match_team_result where team_id = t.id and tournament_match_id in (select id from tournament_match where tournament_id = tt.tournament_id)) totalPoints
+	from tournament_team tt
+	join team t on t.id = tt.team_id
+	where tournament_id= #{tournamentId} 
+  </select>
+  
+  
+   <select id="getTournamentPlayerStatisticRankingById" resultMap="PlayerMatchResultMap" parameterType="long" >
+	select mpr.player_id playerId, fp.nick_name playerName, fp.imageUrl playerImg,
+	(select team_id from team_player where player_id = mpr.player_id limit 1) teamId,
+	(select player_number from team_player where player_id = mpr.player_id limit 1) teamNumber,
+    (select position from team_player where player_id = mpr.player_id limit 1) teamPosition,
+    (select name from team where id = teamId) teamName, (select abbreviation from team where id = teamId) nameAbbr,
+   	(select logo from team where id = teamId) teamLogo,
+	COUNT(DISTINCT tournament_match_id) matches,  sum(loose_possession) loosePossession, sum(distance_coverd) distanceCoverd, sum(long_shot) longShot, sum(shots) shots, sum(shots_on_target) shotOnTarget, sum(goals) goals, sum(pass_finalball) passFinalBall, sum(assists) assists, sum(fouls) fouls, sum(tackles) tackles, sum(block) block, sum(key_defense) keyDefense, sum(pass) pass, sum(long_pass) longPass, sum(pass_completed) passCompleted, sum(yellow_card) yellowCard, sum(red_card) redCard, sum(offside) offside, sum(save) save,sum(mvp) MVP, sum(team_mvp) teamMVP, sum(own_goals) ownGoals
+	from match_player_result mpr
+    join football_player fp on fp.id = mpr.player_id
+    where mpr.`tournament_match_id` in (select id from tournament_match where tournament_id= #{tournamentId})
+	group by mpr.player_id 
+  </select>
+  
+  <select id="getBasketBallTournamentPlayerStatisticRankingById" resultMap="BasketBallPlayerMatchResultMap" parameterType="long" >
+	select bmpr.player_id playerId, fp.nick_name playerName, fp.imageUrl playerImg,
+	(select team_id from team_player where player_id = bmpr.player_id limit 1) teamId,
+	(select player_number from team_player where player_id = bmpr.player_id limit 1) teamNumber,
+    (select position from team_player where player_id = bmpr.player_id limit 1) teamPosition,
+    (select name from team where id = teamId) teamName, (select abbreviation from team where id = teamId) nameAbbr,
+   	(select logo from team where id = teamId) teamLogo,
+	COUNT(DISTINCT tournament_match_id) matches,  sum(points) PTS, sum(2_point_attempts) 2PA , sum(2_point_made) 2PM, sum(3_point_attempts) 3PA, sum(3_point_made) 3PM, sum(free_throw_attempts) FTA, sum(free_throw_made) FTM, 
+	sum(fouls) PF, sum(rebounds) REB, sum(steals) STL, sum(blocks) BLK, sum(assists) AST, sum(turnovers) TOV, sum(mvp) MVP, sum(team_mvp) teamMVP
+	from basketball_match_player_result bmpr
+    join football_player fp on fp.id = bmpr.player_id
+    where bmpr.`tournament_match_id` in (select id from tournament_match where tournament_id= #{tournamentId})
+	group by playerId 
+  </select>
+  
+  <select id="getTournamentTeamStatisticRankingById" resultMap="TeamMatchResultMap" parameterType="long" >
+  	select mtr.team_id teamId, t.name teamName, t.abbreviation teamAbbr, t.logo teamLogo, 
+  	sum(goals) goals, sum(shots) shots, sum(assists) assists, sum(pass_finalball) passFinalBall, sum(key_defense) keyDefense, 
+  	sum(save) save,sum(fouls) fouls, sum(yellow_card) yellowCard, sum(red_card) redCard, sum(own_goals) ownGoals
+	from match_team_result mtr
+	join team t on t.id = mtr.team_id  
+	join tournament_match tm on tm.id = mtr.tournament_match_id 
+	where tm.tournament_id = #{tournamentId}
+	group by mtr.team_id
+  </select>
+  
+  
+  <select id="getBasketBallTournamentTeamStatisticRankingById" resultMap="BasketBallTeamMatchResultMap" parameterType="long" >
+  	select bmtr.team_id teamId, t.name teamName, t.abbreviation teamAbbr, t.logo teamLogo, 
+  	sum(pts_for) PTSF, sum(pts_against) PTSA, sum(pts_diff) PTSD,sum(2_point_attempts) 2PA , sum(2_point_made) 2PM, sum(3_point_attempts) 3PA, sum(3_point_made) 3PM, sum(free_throw_attempts) FTA, sum(free_throw_made) FTM, 
+	sum(fouls) PF, sum(rebounds) REB, sum(steals) STL, sum(blocks) BLK, sum(assists) AST, sum(turnovers) TOV
+	from basketball_match_team_result bmtr
+	join team t on t.id = bmtr.team_id  
+	join tournament_match tm on tm.id = bmtr.tournament_match_id 
+	where tm.tournament_id = #{tournamentId}
+	group by teamId
+  </select>
+  
+  <select id="getPlayerTournamentTotalStats" resultMap="PlayerMatchResultMap" parameterType="long" >
+  	select mpr.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, sum(goals) goals, sum(shots) shots, sum(assists) assists, sum(pass_finalball) passFinalBall, sum(key_defense) keyDefense, 
+  	sum(save) save,sum(fouls) fouls, sum(yellow_card) yellowCard, sum(red_card) redCard, sum(own_goals) ownGoals, sum(team_mvp) teamMvp, sum(mvp) mvp
+	from match_player_result mpr
+	join tournament_match tm on tm.id = mpr.tournament_match_id
+	join football_player fp on fp.id = mpr.player_id
+	where tm.tournament_id = #{tournamentId}
+	group by playerId
+  </select>
+  
+  <select id="getBasketBallPlayerTournamentTotalStats" resultMap="BasketBallPlayerMatchResultMap" parameterType="long" >
+  	select bmpr.player_id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, count(*) GP, sum(points) PTS, sum(2_point_attempts) 2PA , sum(2_point_made) 2PM, sum(3_point_attempts) 3PA, sum(3_point_made) 3PM, sum(free_throw_attempts) FTA, sum(free_throw_made) FTM, 
+	sum(fouls) PF, sum(rebounds) REB, sum(steals) STL, sum(blocks) BLK, sum(assists) AST, sum(turnovers) TOV, sum(mvp) MVP, sum(team_mvp) teamMVP,
+	(sum(2_point_made)/sum(2_point_attempts)) 2PT,	(sum(3_point_made)/sum(3_point_attempts)) 3PT, (sum(free_throw_made)/sum(free_throw_attempts)) FT, sum(points)/count(*) PTSG, sum(rebounds)/count(*) REBG,  sum(assists)/count(*) ASTG, sum(steals)/count(*) STLG, sum(blocks)/count(*) BLKG, sum(turnovers)/count(*) TOVG, sum(fouls)/count(*) PFG
+	from basketball_match_player_result bmpr
+	join tournament_match tm on tm.id = bmpr.tournament_match_id
+	join football_player fp on fp.id = bmpr.player_id
+	where tm.tournament_id = #{tournamentId}
+	group by playerId
+  </select>
+  
+  <select id="getTournamentMatchTeamInfo" resultMap="TeamMatchResultMap" parameterType="long" >
+	select mpr.tournament_match_id tournamentMatchId, mpr.team_id teamId, (select name from team where id = teamId) teamName,  (select logo from team where id = teamId) teamLogo,
+	sum(mpr.loose_possession) loosePossession, sum(mpr.distance_coverd) distanceCoverd, sum(mpr.assists) assists, sum(mpr.block) block, sum(mpr.fouls) fouls, sum(mpr.goals) goals, sum(mpr.key_defense) keyDefense, sum(mpr.long_pass) longPass, sum(mpr.long_shot) longShot, sum(mpr.mvp) MVP, sum(mpr.offside) offside, sum(mpr.pass) pass, sum(mpr.pass_completed) passCompleted, sum(mpr.pass_finalball) passFinalBall, sum(mpr.red_card) redCard, sum(mpr.save) save,sum(mpr.shots) shots, sum(mpr.shots_on_target) shotOnTarget, sum(mpr.tackles) tackles, sum(mpr.yellow_card) yellowCard
+	from match_player_result mpr
+	join football_player fp on fp.id = mpr.player_id
+	where tournament_match_id = #{tournamentMatchId}
+	group by teamId
+  </select>
+ 
+  <select id="getTournamentMatchTeamResultInfo" resultMap="TeamMatchResultMap" parameterType="long" >
+	select mtr.tournament_match_id tournamentMatchId, mtr.team_id teamId, t.name teamName,  t.logo teamLogo,
+	mtr.loose_possession loosePossession, mtr.distance_coverd distanceCoverd, mtr.assists assists, mtr.block block, mtr.fouls fouls, mtr.goals goals, mtr.key_defense keyDefense,
+	mtr.long_pass longPass, mtr.long_shot longShot, mtr.offside offside, mtr.pass pass, mtr.pass_completed passCompleted, mtr.pass_finalball passFinalBall, mtr.red_card redCard,
+	mtr.save save,mtr.shots shots, mtr.shots_on_target shotOnTarget, mtr.tackles tackles, mtr.yellow_card yellowCard, mtr.own_goals ownGoals
+	from match_team_result mtr
+	join team t on t.id = mtr.team_id
+	where tournament_match_id = #{tournamentMatchId}
+  </select>
+
+  <select id="getBasketBallTournamentMatchTeamInfo" resultMap="BasketBallTeamMatchResultMap" parameterType="long" >
+	select bmtr.tournament_match_id tournamentMatchId, bmtr.team_id teamId, (select name from team where id = teamId) teamName,  (select logo from team where id = teamId) teamLogo,
+	sum(pts_for) PTSF, sum(2_point_attempts) 2PA , sum(2_point_made) 2PM, sum(3_point_attempts) 3PA, sum(3_point_made) 3PM, sum(free_throw_attempts) FTA, sum(free_throw_made) FTM, 
+	sum(fouls) PF, sum(rebounds) REB, sum(steals) STL, sum(blocks) BLK, sum(assists) AST, sum(turnovers) TOV
+	from basketball_match_team_result bmtr
+	where tournament_match_id = #{tournamentMatchId}
+	group by teamId	
+  </select>
+  
+  
+  <select id="getTeamTournamentCalendar" resultMap="TournamentMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >	
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id = tm.host_team_id) hostTeamName, (select logo from team where id = tm.host_team_id) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id = tm.guest_team_id) guestTeamName, (select logo from team where id = tm.guest_team_id) guestTeamLogo,
+	(select concat(goals+(select own_goals from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.guest_team_id),':',conceded) from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.host_team_id) result, tm.video_url videoUrl
+	from tournament_match tm
+	left join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId} and tm.host_team_id = #{teamId}
+	
+	union
+	
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id = tm.host_team_id) hostTeamName, (select logo from team where id = tm.host_team_id) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id = tm.guest_team_id) guestTeamName, (select logo from team where id = tm.guest_team_id) guestTeamLogo,
+	(select concat(goals+(select own_goals from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.guest_team_id),':',conceded) from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= tm.host_team_id) result, tm.video_url videoUrl
+	from tournament_match tm
+	left join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId} and tm.guest_team_id = #{teamId} 
+  </select>
+  
+  <select id="getTournamentMatchListByTournamentId" resultMap="TournamentMatchResultMap" parameterType="long">
+  	select
+  	     id id,
+  		 tournament_id tournamentId,
+  		 time time,
+  		 host_team_label hostTeamLabel,
+  		 host_team_id hostTeamId,
+		 (select logo from team t where t.id = tm.host_team_id ) hostTeamLogo,
+  		 guest_team_label guestTeamLabel,
+  		 guest_team_id guestTeamId,
+		 (select logo from team t where t.id = tm.guest_team_id ) guestTeamLogo,
+  		 name name,
+  		 type type,
+  		 video_url videoUrl  		 
+  	from tournament_match tm
+  	where tournament_id = #{tournamentId}
+  </select>
+  
+    <select id="getTournamentMatchListByMatchScheduleId" resultMap="TournamentMatchResultMap" parameterType="map">
+  	select
+  	     id id,
+  		 tournament_id tournamentId,
+  		 time time,
+  		 host_team_label hostTeamLabel,
+  		 host_team_id hostTeamId,
+		 (select logo from team t where t.id = tm.host_team_id ) hostTeamLogo,
+  		 guest_team_label guestTeamLabel,
+  		 guest_team_id guestTeamId,
+		 (select logo from team t where t.id = tm.guest_team_id ) guestTeamLogo,
+  		 name name,
+  		 type type,
+  		 video_url videoUrl,
+  		 round round,
+  		 match_schedule_id matchScheduleId  		 
+  	from  tournament_match tm
+  	where tournament_id = #{tournamentId}
+  	  and match_schedule_id = #{matchScheduleId}
+  </select>
+  <select id="getBasketBallTeamTournamentCalendar" resultMap="TournamentMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >	
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id = tm.host_team_id) hostTeamName, (select logo from team where id = tm.host_team_id) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id = tm.guest_team_id) guestTeamName, (select logo from team where id = tm.guest_team_id) guestTeamLogo,
+	(select concat(pts_for,':',pts_against) from basketball_match_team_result bmtc where tm.id=bmtc.tournament_match_id and bmtc.team_id= tm.host_team_id) result
+	from tournament_match tm
+	join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId} and tm.host_team_id = #{teamId} 
+	
+	union
+	
+	select tm.id id, tm.time, f.name fieldName, tm.name typeName,
+	tm.host_team_label hostTeamLabel, tm.host_team_id hostTeamId, (select name from team where id = tm.host_team_id) hostTeamName, (select logo from team where id = tm.host_team_id) hostTeamLogo,
+	tm.guest_team_label guestTeamLabel, tm.guest_team_id guestTeamId, (select name from team where id = tm.guest_team_id) guestTeamName, (select logo from team where id = tm.guest_team_id) guestTeamLogo,
+	(select concat(pts_for,':',pts_against) from basketball_match_team_result bmtc where tm.id=bmtc.tournament_match_id and bmtc.team_id= tm.host_team_id) resul
+	from tournament_match tm
+	join field f on f.id = tm.field_id
+	join tournament tn on tn.id = tm.tournament_id
+	where tn.id = #{tournamentId} and tm.guest_team_id = #{teamId}
+  </select>  
+  
+  
+  <select id="getTeamTournamentStats" resultMap="TeamMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+  	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation teamAbbr, points, goals, conceded, shots, pass_finalball passFinalBall, assists, key_defense keyDefense, fouls, yellow_card yellowCard, red_card redCard, save, own_goals ownGoals  from match_team_result mtr
+	join tournament_match tm on tm.id = mtr.tournament_match_id and mtr.team_id = tm.host_team_id
+	join team t on t.id = tm.guest_team_id
+	where tm.tournament_id = #{tournamentId} and tm.host_team_id =#{teamId} 
+	
+	union
+	
+	select tm.name matchName, tm.time matchTime, t.id opponentTeamId, t.name opponentTeamName, t.logo opponentTeamLogo, t.abbreviation opponentTeamAbbr, points, goals, conceded, shots, pass_finalball passFinalBall, assists, key_defense keyDefense, fouls, yellow_card yellowCard, red_card redCard, save, own_goals ownGoals from match_team_result mtr
+	join tournament_match tm on tm.id = mtr.tournament_match_id and mtr.team_id = tm.guest_team_id
+	join team t on t.id = tm.host_team_id
+	where tm.tournament_id = #{tournamentId} and tm.guest_team_id =#{teamId} 
+	
+	order by matchTime
+  </select>
+  
+  <select id="getBasketBallTeamTournamentStats" resultMap="BasketBallTeamMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation teamAbbr, pts_for PTSF, pts_against PTSA, pts_diff PTSD, 2_point_attempts 2PA , 2_point_made 2PM, 3_point_attempts 3PA, 3_point_made 3PM, free_throw_attempts FTA, free_throw_made FTM, fouls PF, rebounds REB, steals STL, blocks BLK, assists AST, turnovers TOV
+	from basketball_match_team_result bmtr
+	join tournament_match tm on tm.id = bmtr.tournament_match_id and bmtr.team_id = tm.host_team_id
+	join team t on t.id = tm.guest_team_id
+	where tm.tournament_id = #{tournamentId} and tm.host_team_id =#{teamId}
+		
+	union
+		
+	select tm.name matchName, tm.time matchTime, t.id opponentTeamId, t.name opponentTeamName, t.logo opponentTeamLogo, t.abbreviation teamAbbr,pts_for PTSF, pts_against PTSA, pts_diff PTSD, 2_point_attempts 2PA , 2_point_made 2PM, 3_point_attempts 3PA, 3_point_made 3PM, free_throw_attempts FTA, free_throw_made FTM, fouls PF, rebounds REB, steals STL, blocks BLK, assists AST, turnovers TOV
+	from basketball_match_team_result bmtr
+	join tournament_match tm on tm.id = bmtr.tournament_match_id and bmtr.team_id = tm.guest_team_id
+	join team t on t.id = tm.host_team_id
+	where tm.tournament_id = #{tournamentId} and tm.guest_team_id =#{teamId} 
+		
+	order by matchTime  	
+  </select>
+  
+  
+  <select id="getPlayerAllTournamentMatchResultList" resultMap="PlayerMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation nameAbbr,
+	goals, shots, pass_finalball passFinalBall, assists, key_defense keyDefense, fouls, yellow_card yellowCard, red_card redCard, save, own_goals ownGoals
+	from match_player_result mpr
+	join tournament_match tm on tm.id = mpr.tournament_match_id and mpr.team_id = tm.host_team_id
+	join football_player fp on fp.id = mpr.player_id
+	join team t on t.id = tm.guest_team_id
+	where tm.tournament_id = #{tournamentId} and mpr.player_id = #{captainPlayerId}
+	
+	union
+	
+	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation nameAbbr,
+	goals, shots, pass_finalball passFinalBall, assists, key_defense keyDefense, fouls, yellow_card yellowCard, red_card redCard, save, own_goals ownGoals
+	from match_player_result mpr
+	join tournament_match tm on tm.id = mpr.tournament_match_id and mpr.team_id = tm.guest_team_id
+	join football_player fp on fp.id = mpr.player_id
+	join team t on t.id = tm.host_team_id
+	where tm.tournament_id = #{tournamentId} and mpr.player_id = #{captainPlayerId}
+	
+	order by matchTime
+  </select>
+  
+  <select id="getBasketBallPlayerAllTournamentMatchResultList" resultMap="BasketBallPlayerMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation nameAbbr,
+	points PTS, 2_point_attempts 2PA , 2_point_made 2PM, 3_point_attempts 3PA, 3_point_made 3PM, free_throw_attempts FTA, free_throw_made FTM, fouls PF, rebounds REB,  steals  STL, blocks BLK, assists AST, turnovers TOV, mvp MVP, team_mvp teamMVP
+	from basketball_match_player_result bmpr
+	join tournament_match tm on tm.id = bmpr.tournament_match_id and bmpr.team_id = tm.host_team_id
+	join football_player fp on fp.id = bmpr.player_id
+	join team t on t.id = tm.guest_team_id
+	where tm.tournament_id = #{tournamentId} and bmpr.player_id = #{captainPlayerId}
+	
+	union
+	
+	select tm.name matchName, tm.time matchTime, t.id teamId, t.name teamName, t.logo teamLogo, t.abbreviation nameAbbr,
+	points PTS, 2_point_attempts 2PA , 2_point_made 2PM, 3_point_attempts 3PA, 3_point_made 3PM, free_throw_attempts FTA, free_throw_made FTM, fouls PF, rebounds REB,  steals  STL, blocks BLK, assists AST, turnovers TOV, mvp MVP, team_mvp teamMVP
+	from basketball_match_player_result bmpr
+	join tournament_match tm on tm.id = bmpr.tournament_match_id and bmpr.team_id = tm.guest_team_id
+	join football_player fp on fp.id = bmpr.player_id
+	join team t on t.id = tm.host_team_id
+	where tm.tournament_id = #{tournamentId} and bmpr.player_id = #{captainPlayerId}
+	
+	order by matchTime
+  </select>  
+  
+  
+  <select id="getTournamentPlayerBaseInfo" resultMap="TournamentPlayerBaseInfo" parameterType="com.footballer.rest.api.v2.vo.TournamentPlayerBaseInfo" >
+  	select distinct fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, a.wechat_no wechatNo, a.wechat_pic_url wechatLogo,
+	pp.birth, pp.height, pp.weight, pp.heavy_foot heavyFoot, tp.player_number playerNumber, tp.position position,
+	tp.team_id teamId, t.name teamName, t.logo teamLogo, t.abbreviation teamAbbr  
+	from football_player fp
+	join account a on  a.id = fp.id
+	left join player_property pp on pp.id = fp.id
+	join team_player tp on tp.player_id = fp.id
+	join tournament_team tt on tt.team_id = tp.team_id
+	join team t on t.id = tp.team_id
+	where fp.id = #{playerId} and tt.tournament_id = #{tournamentId}
+  </select>
+  
+  <select id="getTeamTournamentMatchResults" resultMap="TournamentMatchResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select tm.id id, tm.time time, tm.name typeName,
+	tm.host_team_label hostTeamLabel,mtr.team_id hostTeamId, (select name from team where id = hostTeamId) hostTeamName,(select logo from team where id = hostTeamId) hostTeamLogo,
+	(select concat(goals,':',conceded) from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= hostTeamId) result,
+	tm.guest_team_label guestTeamLabel,tm.guest_team_id guestTeamId, (select name from team where id = guestTeamId) guestTeamName,(select logo from team where id = guestTeamId) guestTeamLogo
+	from match_team_result mtr
+	join tournament_match tm on tm.id = mtr.`tournament_match_id` and team_id = tm.host_team_id
+	join tournament t on t.id = tm.`tournament_id`
+	where team_id = #{teamId} and t.id = #{tournamentId}
+	
+	union
+	
+	select tm.id id, tm.time time, tm.name typeName,
+	tm.host_team_label hostTeamLabel,tm.host_team_id hostTeamId,  (select name from team where id = hostTeamId) hostTeamName,(select logo from team where id = hostTeamId) hostTeamLogo,
+	(select concat(goals,':',conceded) from match_team_result mtc where tm.id=mtc.tournament_match_id and mtc.team_id= hostTeamId) result,
+	tm.guest_team_label guestTeamLabel,mtr.team_id guestTeamId,(select name from team where id = guestTeamId) guestTeamName,(select logo from team where id = guestTeamId) guestTeamLogo
+	from match_team_result mtr
+	join tournament_match tm on tm.id = mtr.`tournament_match_id` and team_id = tm.guest_team_id
+	join tournament t on t.id = tm.`tournament_id`
+	where team_id = #{teamId} and t.id = #{tournamentId}
+  </select>
+  
+  <select id="getTeamTournamentPlayerInfos" resultMap="TeamTournamentPlayerResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamPlayerInfo" >
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerImg, tp.player_number number, tp.position position , pp.birth birth, pp.height height, pp.weight weight, tp.status status,
+	(select sum(team_mvp) from match_player_result where player_id = fp.id and tournament_match_id in (select id from tournament_match where tournament_id = #{tournamentId})) teamMVP,
+	(select sum(mvp) from match_player_result where player_id = fp.id and tournament_match_id in (select id from tournament_match where tournament_id = #{tournamentId})) MVP
+	from football_player fp
+	left join player_property pp on pp.id = fp.id
+	join team_player tp on tp.player_id = fp.id
+	left join match_player_result mpr on mpr.player_id = fp.id
+	left join tournament_match tm on tm.id = mpr.tournament_match_id and tm.tournament_id = #{tournamentId} 
+	where tp.team_id = #{teamId}
+	group by fp.id
+	
+	union
+
+	(select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerImg, null number, null position , pp.birth birth, pp.height height, pp.weight weight, tpi.status status , null teamMVP, null MVP	
+	from football_player fp
+	left join player_property pp on pp.id = fp.id
+	join team_player_invitation tpi on tpi.player_id = fp.id and status != 'ACCEPT'
+	where tpi.team_id = #{teamId}
+	order by tpi.request_time asc)
+	
+  </select>
+  
+  
+  <select id="getBasketballTeamPlayerInfos" resultMap="TeamTournamentPlayerResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerImg, tp.player_number number, tp.position position , pp.birth birth, pp.height height, pp.weight weight, tp.status status	from football_player fp
+	left join player_property pp on pp.id = fp.id	
+	join team_player tp on tp.player_id = fp.id
+	where tp.team_id = #{teamId}
+	
+	union
+	
+	(select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerImg, null number, null position ,pp.birth birth, pp.height height, pp.weight weight,  tpi.status status	from football_player fp
+	left join player_property pp on pp.id = fp.id
+	join team_player_invitation tpi on tpi.player_id = fp.id and status != 'ACCEPT'
+	where tpi.team_id = #{teamId}
+	order by tpi.request_time asc
+	)
+  </select>
+  
+  <select id="getTournamentTeamBaseInfo" resultMap="TournamentTeamBaseInfoResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+	select distinct t.id teamId, t.name teamName, t.logo teamLogo, t.nation teamNation, t.technical teamTech, fp.id captainPlayerId, fp.nick_name captainName, fp.imageUrl captainLogo, t.create_dt createDt,
+	(select count(*) from team_player where team_id = tt.team_id and status= 'ACTIVE') playerCount
+	from tournament_team tt 
+	join team t on t.id= tt.team_id
+	join football_player fp on fp.id = t.captain_user_id
+	where tt.tournament_id = #{tournamentId} and t.id =#{teamId}	
+  </select>
+  
+  
+  <select id="getBasketballTeamBaseInfo" resultMap="TournamentTeamBaseInfoResultMap" parameterType="long" >
+	select distinct t.id teamId, t.name teamName, t.logo teamLogo, t.nation teamNation, t.technical teamTech, fp.id captainPlayerId, fp.nick_name captainName, fp.imageUrl captainLogo, t.create_dt createDt, (select count(*) from team_player where team_id = t.id and status= 'ACTIVE') playerCount
+	from team t
+	left join football_player fp on fp.id = t.captain_user_id
+	where t.id =#{teamId}	
+  </select>
+  
+  
+  <select id="getTeamPlayerInfos" resultMap="TeamTournamentPlayerResultMap" parameterType="long" >
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerImg, tp.player_number number, tp.position position , tp.status status
+	from football_player fp
+	join team_player tp on tp.player_id = fp.id
+	where tp.team_id = #{teamId} and tp.status = 'ACTIVE'
+  </select>
+  
+  <select id="getTournamentMatchPlayerInfo" resultMap="PlayerMatchResultMap" parameterType="long" >
+	select mpr.tournament_match_id tournamentMatchId, mpr.team_id teamId, (select name from team where id = teamId) teamName,  (select logo from team where id = teamId) teamLogo,
+	fp.id playerId, tp.player_number playerNumber,fp.nick_name playerName, fp.imageUrl playerImg,
+	mpr.loose_possession loosePossession, mpr.distance_coverd distanceCoverd, mpr.assists assists, mpr.block block, mpr.fouls fouls, mpr.goals goals, mpr.key_defense keyDefense, mpr.long_pass longPass, mpr.long_shot longshot, mpr.mvp mvp, mpr.offside offside, mpr.pass pass, mpr.pass_completed passComplelted, mpr.pass_finalball passFinalBall, mpr.red_card redCard, mpr.save save,mpr.shots shots, mpr.shots_on_target shotOnTarget, mpr.tackles tackles, mpr.team_mvp teamMVP, mpr.yellow_card yellowCard, mpr.own_goals ownGoals
+	from match_player_result mpr
+	join football_player fp on fp.id = mpr.player_id
+	join team_player tp on tp.team_id = mpr.team_id and tp.player_id = mpr.player_id
+	where tournament_match_id = #{tournamentMatchId}
+  </select>
+  
+  <select id="getBasketBallTournamentMatchPlayerInfo" resultMap="BasketBallPlayerMatchResultMap" parameterType="long" >
+	select bmpr.tournament_match_id tournamentMatchId, bmpr.team_id teamId, (select name from team where id = teamId) teamName,  (select logo from team where id = teamId) teamLogo,
+	fp.id playerId, tp.player_number playerNumber,fp.nick_name playerName, fp.imageUrl playerImg,
+	points PTS, 2_point_attempts 2PA , 2_point_made 2PM, 3_point_attempts 3PA, 3_point_made 3PM, free_throw_attempts FTA, free_throw_made FTM, 
+	fouls PF, rebounds REB, steals STL, blocks BLK, assists AST, turnovers TOV, mvp MVP, team_mvp teamMVP
+	from basketball_match_player_result bmpr
+	join football_player fp on fp.id = bmpr.player_id
+	join team_player tp on tp.team_id = bmpr.team_id and tp.player_id = bmpr.player_id
+	where tournament_match_id = #{tournamentMatchId}
+  </select>
+  
+ <insert id="insertTournament"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Tournament">
+	<![CDATA[
+   		 insert into tournament (
+   		 	name,
+   		 	arena_id,
+   		 	type,
+   		 	start_dt,
+   		 	end_dt, 
+   		 	logo, 
+   		 	main_organiser_name,
+   		 	main_organiser_logo,
+   		 	status,
+   		 	register_start_dt,
+   		 	register_end_dt,
+   		 	match_type,
+   		 	address,
+   		 	addressId,	
+   		 	create_by,
+   		 	create_dt)
+    	 values (
+    		#{name,jdbcType=INTEGER},
+    		#{arenaId,jdbcType=INTEGER},
+    		#{type,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+    		#{startDt,jdbcType=DATE},
+    		#{endDt,jdbcType=DATE},
+    		#{logo,jdbcType=INTEGER},
+    		#{mainOrganiserName,jdbcType=VARCHAR},
+    		#{mainOrganiserLogo,jdbcType=VARCHAR},
+    		#{status,jdbcType=VARCHAR},
+    		#{registerStartDateTime,jdbcType=DATE},
+    		#{registerEndDateTime,jdbcType=DATE},
+    		#{matchType,jdbcType=VARCHAR},
+    		#{address,jdbcType=VARCHAR},
+    		#{addressId,jdbcType=VARCHAR},
+    		#{createBy,jdbcType=VARCHAR},
+    		#{createDt,jdbcType=DATE}
+     	)
+     ]]>
+  </insert>
+  
+  <update id="updateTournament" parameterType="com.footballer.rest.api.v2.vo.Tournament">
+    update tournament
+    set
+      name = #{name},
+      main_organiser_name = #{mainOrganiserName},
+      address = #{address},
+      addressId = #{addressId},
+      start_dt = #{startDt},
+      end_dt = #{endDt},
+      register_start_dt = #{registerStartDate},
+      register_end_dt = #{registerEndDate},
+      match_type = #{matchType}
+    where id = #{id}
+  </update>
+  
+  <insert id="insertVideo"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Video">
+	<![CDATA[
+   		 insert into video (tournament_id,tournament_match_id,name,url, date, type, thumbnail)
+    	 values (
+    		#{tournamentId,jdbcType=INTEGER},
+    		#{tournamentMatchId,jdbcType=INTEGER},
+    		#{name,jdbcType=VARCHAR},
+    		#{url,jdbcType=VARCHAR},
+    		#{date},
+    		#{typeValue,jdbcType=INTEGER},
+    		#{thumbnail,jdbcType=VARCHAR}
+     	)
+     ]]>
+  </insert>
+  
+  <insert id="insertTeam"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Team">
+	<![CDATA[
+   		 insert into team (name, logo, captain_user_id)
+    	 values (
+    		#{name,jdbcType=VARCHAR},
+    		#{logo,jdbcType=VARCHAR},
+    		#{captainUserId,jdbcType=INTEGER}
+     	)
+     ]]>
+  </insert>
+  
+    <insert id="insertTournamentTeam"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.Team">
+	<![CDATA[
+   		 insert into tournament_team (tournament_id, team_id)
+    	 values (
+    		#{tournamentId,jdbcType=INTEGER},
+    		#{id,jdbcType=INTEGER}
+     	)
+     ]]>
+  </insert>
+  
+  <select id="selectMatchScheduleByTournamentId" resultType="com.footballer.rest.api.v2.vo.TournamentMatchSchedule" parameterType="long">
+    select
+        id                  as id,
+        tournament_id       as tournamentId,
+        match_schedule_type as matchScheduleType,
+        league_setting      as leagueSetting,
+        match_cup_setting   as matchCupSetting,
+        name                as name,
+        status              as status
+    from tournament_match_schedule
+    where tournament_id = #{tournamentId}
+  </select>
+  
+   <insert id="insertTournamentMatchSchdule"  useGeneratedKeys="true" keyProperty="id" parameterType="com.footballer.rest.api.v2.vo.TournamentMatchSchedule">
+	<![CDATA[
+   		 insert into tournament_match_schedule (
+   		 	tournament_id, 
+   		 	match_schedule_type, 
+   		 	league_setting, 
+   		 	match_cup_setting, 
+   		 	name, 
+   		 	status)
+    	 values (
+    		#{tournamentId,jdbcType=INTEGER},
+    		#{matchScheduleType,jdbcType=VARCHAR},
+    		#{leagueSetting,jdbcType=VARCHAR},
+    		#{matchCupSetting,jdbcType=VARCHAR},
+    		#{name,jdbcType=VARCHAR},
+    		#{status,jdbcType=VARCHAR}
+     	)
+     ]]>
+  </insert>
+  
+  <insert id="insertTournamentMatchForSchedule" parameterType="Map">
+    insert into tournament_match(
+        tournament_id,
+        host_team_label,
+        host_team_id,
+        guest_team_label,
+        guest_Team_id,
+        name,
+        match_schedule_id,
+        round)
+   values
+        <foreach collection="scheduleMatchList" item="item" index="index" separator=",">
+          (
+            #{tournamentId,jdbcType=INTEGER},
+            #{item.hostTeam.teamName,jdbcType=VARCHAR},
+            #{item.hostTeam.teamId,jdbcType=INTEGER},
+            #{item.gestTeam.teamName,jdbcType=VARCHAR},
+            #{item.gestTeam.teamId,jdbcType=INTEGER},
+            #{item.name,jdbcType=VARCHAR},
+            #{matchScheduleId,jdbcType=INTEGER},
+            #{item.round,jdbcType=INTEGER}
+          )
+        </foreach>
+  </insert>
+  
+  
+  <delete id="deleteTournamentTeamById" parameterType="Map">
+  	DELETE from tournament_team 
+   	WHERE tournament_id = #{tournamentId}
+      AND team_id IN
+   	  <foreach collection="teamIdList" item="item" index="index"  open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+  </delete>
+  
+  <update id="updateVideoInfo" parameterType="com.footballer.rest.api.v2.vo.Video">
+  	UPDATE video 
+  	set 
+  		tournament_match_id=#{tournamentMatchId},
+  		name=#{name},
+  		url=#{url},
+  		date=#{date},
+  		type=#{typeValue},
+  		thumbnail=#{thumbnail}  		 
+  	WHERE id=#{id}
+  </update>
+  
+  
+  <select id="getTournamentMatchVideoInfo" resultMap="TournamentMatchVideoResultMap" parameterType="long" >
+	select * from video 
+	where tournament_match_id = #{tournamentMatchId}
+  </select>
+  
+  
+  <select id="getVideoInfoById" resultMap="TournamentMatchVideoResultMap" parameterType="long" >
+	select * from video 
+	where id = #{videoId}
+  </select>
+  
+  <select id="getMomentInfoById" resultMap="MomentResultMap" parameterType="long" >
+	select m.*, fp.nick_name playerName, fp.imageUrl playerLogo from moment m
+	join football_player fp on fp.id = m.player_id
+	where m.id = #{momentId}
+  </select>
+  
+  <select id="getVideoInfoByTournamentId" resultMap="TournamentMatchVideoResultMap" parameterType="long" >
+	select * from video 
+	where tournament_id = #{tournament_id}
+	order by id desc
+  </select>
+  
+  
+  <select id="getTournamentStatsContent" resultMap="StatsContent" parameterType="long" >
+	select sc.id, mvp, goals, assists, yellow_card yellowCard, red_card redCard, own_goals ownGoals, shots, long_shot Longshots, shots_on_target shotsOnTarget,
+	pass, long_pass longPass, pass_completed passCompleted, pass_finalball passFinalBall, 
+	tackles, block, key_defense keyDefense,save,
+	loose_possession loosePossession, distance_coverd distanceCoverd,
+	offside, own_goals ownGoals, fouls, team_mvp teamMvp from stats_content sc
+	join tournament t on t.stats_content_id = sc.id
+	where t.id = #{tournament_id}
+  </select>
+  
+  
+  <!-- 新增 视频点击观看次数统计 -->
+  <select id="getTournamentMatchVideoList" resultMap="TournamentMatchVideoResultMap" parameterType="long" >
+  	select v.*,
+	       coalesce(comment_count.count, 0) as commentCount,
+	       coalesce(support_count.count, 0) as supportCount,
+	       coalesce(share_count.count, 0)   as shareCount,
+	       coalesce(watch_count.count, 0) as watchCount
+	from video v
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	left join
+		(select if(INSTR(url, 'matchId=')>0,
+	       		   left(SUBSTRING(url,INSTR(url, 'matchId=')+8) , INSTR(SUBSTRING(url,INSTR(url, 'matchId=')+8), '&amp;')-1),  
+		           SUBSTRING(url,INSTR(url, 'videoId=')+8, (INSTR(url, '&amp;tournamentId=')-INSTR(url, 'videoId=')-8))
+		         ) query_id, 
+		         sum(times) as count from system_access_stats group by query_id) watch_count
+	on v.tournament_match_id = watch_count.query_id or v.id = watch_count.query_id
+	where tournament_id = #{tournamentId}
+	order by date desc
+  </select>
+
+  <!-- 指定球队 指定赛事的视频列表 -->
+  <select id="getTeamTournamentVideoList" resultMap="TournamentMatchVideoResultMap" parameterType="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
+  	select v.*,
+	       coalesce(comment_count.count, 0) as commentCount,
+	       coalesce(support_count.count, 0) as supportCount,
+	       coalesce(share_count.count, 0)   as shareCount,
+	       coalesce(watch_count.count, 0) as watchCount
+	from video v
+	join tournament_match tm on tm.id = v.tournament_match_id and tm.host_team_id = #{teamId} or tm.id = v.tournament_match_id and tm.guest_team_id = #{teamId}
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	left join
+		(select if(INSTR(url, 'matchId=')>0,
+	       		   left(SUBSTRING(url,INSTR(url, 'matchId=')+8) , INSTR(SUBSTRING(url,INSTR(url, 'matchId=')+8), '&amp;')-1),    
+		           SUBSTRING(url,INSTR(url, 'videoId=')+8, (INSTR(url, '&amp;tournamentId=')-INSTR(url, 'videoId=')-8))
+		         ) query_id, 
+		         sum(times) as count from system_access_stats group by query_id) watch_count
+	on v.tournament_match_id = watch_count.query_id
+	where v.tournament_id = #{tournamentId}
+	order by date desc
+  </select>	
+
+
+  <select id="getMatchVideoListWithoutThumbnail" resultMap="TournamentMatchVideoResultMap">
+	select * from video 
+	where thumbnail is null or thumbnail = ""
+  </select>
+  
+  <select id="checkPlayerisTournamentRegisteredPlayer" resultType="int" parameterType="com.footballer.rest.api.v2.vo.TournamentPlayerBaseInfo" >
+  	select count(*) from tournament_team tt
+	join team t on t.id = tt.team_id
+	join team_player tp on tp.team_id = t.id and tp.status = 'ACTIVE'
+	where tt.tournament_id = #{tournamentId} and tp.player_id= #{playerId}
+  </select>
+  
+  
+  <select id="getTournamentMatchIdByTimeAndTeamName" resultType="long" parameterType="com.footballer.rest.api.v2.vo.TournamentMatch" >
+  	select id  from tournament_match
+	where tournament_id = #{tournamentId} and time = #{time} and host_team_label = #{hostTeamName} or tournament_id = #{tournamentId} and time = #{time} and guest_team_label = #{hostTeamName}
+  </select>
+  
+  
+  
+  <select id="getTournamentMatchWinLoseList" resultMap="BasketBallTeamMatchResultMap" parameterType="long" >
+	select tournament_match_id tournamentMatchId, team_id teamId, wins, losses from basketball_match_team_result bmtr
+	join tournament_match tm on tm.id = bmtr.tournament_match_id
+	where tm.tournament_id = #{tournamentId}  	
+  </select>
+  
+  
+  <!-- 获取赛事的动态信息 -->
+  <select id="getTournamentPagingTimeLines" resultMap="TimeLineResultMap" parameterType="com.footballer.rest.api.v2.domain.PagingInfo" >
+	<!-- 转发-比赛集锦 --> 
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'forward' eventAction, 'video' eventType, v.type eventDetailType,  
+	       if(v.type=0, v.tournament_match_id, v.id) eventId, s.url eventUrl, v.name eventContent, v.url eventVideoUrl, v.thumbnail eventPicUrl,null eventComment,
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       t.id teamId, t.name teamName, t.logo teamLogo, 
+	       coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from share s
+	join share_video sv on sv.`share_id` = s.id
+	join video v on v.id = sv.video_id
+	join football_player fp on fp.id = s.player_id 
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = v.tournament_id) )
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId} 
+
+	union
+
+    <!-- 转发-赛事链接  
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'forward' eventAction, 'link' eventType, null eventDetailType, s.url eventUrl, content eventContent, null eventVideoUrl, null eventPicUrl, null eventComment
+	from share s
+	join football_player fp on fp.id = s.player_id 
+	where content != 'HighLights' and content != 'Moments'
+
+	union
+	-->
+
+	<!-- 转发-动态 --> 
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo,  s.date eventDate, 'forward' eventAction, 'moment' eventType, m.type eventDetailType,
+		   m.id eventId, s.url eventUrl, m.content eventContent, m.url eventVideoUrl, m.url eventPicUrl, null eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   t.id teamId, t.name teamName, t.logo teamLogo, 
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from share s
+	join football_player fp on fp.id = s.player_id 
+	join share_moment sm on sm.share_id = s.id
+	join moment m on m.id = sm.moment_id and m.player_id != s.player_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = m.tournament_id) ) 
+	left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 评论-比赛集锦 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo,  comments_Time eventDate, 'comment' eventAction, 'video' eventType, v.type eventDetailType,
+		   if(v.type=0, v.tournament_match_id, v.id) eventId, v.url eventUrl, v.name eventContent,  v.url eventVideoUrl, v.thumbnail eventPicUrl, c.comments eventComment,
+		   null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+		   t.id teamId, t.name teamName, t.logo teamLogo, 
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from comment c
+	join football_player fp on fp.id = c.player_id
+	join comment_video cv on cv.comment_id = c.id
+	join video v on v.id = cv.video_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = v.tournament_id) )
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 评论-动态 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, comments_Time eventDate, 'comment' eventAction, 'moment' eventType, m.type eventDetailType,
+		   m.id eventId, m.url eventUrl, m.content eventContent, m.url eventVideoUrl, m.url eventPicUrl, c.comments eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   t.id teamId, t.name teamName, t.logo teamLogo, 
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from comment c
+	join football_player fp on fp.id = c.player_id
+	join comment_moment cm on cm.comment_id =  c.`id`
+	join moment m on m.id = cm.moment_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = m.tournament_id) )
+	left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 点赞-比赛集锦 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'video' eventType,  v.type eventDetailType,
+	       if(v.type=0, v.tournament_match_id, v.id) eventId, v.url eventUrl, v.name eventContent,  v.url eventVideoUrl, v.thumbnail eventPicUrl, null eventComment,
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       t.id teamId, t.name teamName, t.logo teamLogo, 
+	       coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_video sv on sv.support_id =s.id
+	join video v on v.id = sv.video_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = v.tournament_id) ) 
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 点赞-动态分享 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'moment' eventType,  m.type eventDetailType,
+		   m.id eventId,  m.url eventUrl, m.content eventContent,  m.url eventVideoUrl, m.url eventPicUrl, null eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   t.id teamId, t.name teamName, t.logo teamLogo, 
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_moment sm on sm.support_id =s.id
+	join moment m on m.id = sm.moment_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = m.tournament_id) ) 
+	left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 点赞-评论
+	
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'comment' eventType,  null eventDetailType, null eventUrl, null eventContent,  null eventVideoUrl, null eventPicUrl, c.comments eventComment
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_comment sc on sc.support_id =s.id
+	join comment c on c.id = sc.comment_id 
+	where s.player_id =1
+	
+	union
+	-->
+	
+	<!-- 分享-视频 -->
+	
+	
+	<!-- 分享-图片 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, m.date eventDate, 'share' eventAction, 'moment' eventType,  m.type eventDetailType,
+	       m.id eventId, m.url eventUrl, m.content eventContent,  null eventVideoUrl, m.url eventPicUrl, null eventComment, 
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+		   t.id teamId, t.name teamName, t.logo teamLogo, 
+		   coalesce((select count(1) from comment_moment cm where cm.moment_id = m.id), 0) as commentCount,
+		   coalesce((select count(1) from support_moment sm where sm.moment_id = m.id), 0) as supportCount,
+		   coalesce((select count(1) from share_moment shm where shm.moment_id = m.id), 0)   as shareCount 
+	from moment m
+	join football_player fp on fp.id = m.player_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = m.tournament_id) ) 
+	where m.type = 'pic' and m.tournament_id = #{tournamentId}
+	
+	union
+	
+	<!-- 分享-文字 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, m.date eventDate, 'share' eventAction, 'moment' eventType,  m.type eventDetailType, 
+	       m.id eventId,  null eventUrl, m.content eventContent,  null eventVideoUrl, null eventPicUrl, null eventComment, 
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       t.id teamId, t.name teamName, t.logo teamLogo, 
+	       coalesce((select count(1) from comment_moment cm where cm.moment_id = m.id), 0) as commentCount,
+		   coalesce((select count(1) from support_moment sm where sm.moment_id = m.id), 0) as supportCount,
+		   coalesce((select count(1) from share_moment shm where shm.moment_id = m.id), 0)   as shareCount 
+	from moment m
+	join football_player fp on fp.id = m.player_id
+	left join team t on  t.id = (select team_id from team_player tp where tp.player_id = fp.id and tp.team_id in (select team_id from tournament_team where tournament_id = m.tournament_id) ) 
+	where m.type = 'text' and m.tournament_id = #{tournamentId}
+	
+	order by eventDate  desc
+	limit #{pageIndex}, #{pageSize}
+  </select>
+  
+  
+  <!-- 获取球员个人赛事的动态信息 -->
+  <select id="getPlayerTournamentPagingTimeLines" resultMap="TimeLineResultMap" parameterType="com.footballer.rest.api.v2.domain.PagingInfo" >
+	<!-- 转发-比赛集锦 --> 
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'forward' eventAction, 'video' eventType, v.type eventDetailType,  
+	       if(v.type=0, v.tournament_match_id, v.id) eventId, s.url eventUrl, v.name eventContent, v.url eventVideoUrl, v.thumbnail eventPicUrl,null eventComment,
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from share s
+	join share_video sv on sv.`share_id` = s.id
+	join video v on v.id = sv.video_id
+	join football_player fp on fp.id = s.player_id 
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId} and fp.id = #{playerId}
+
+	union
+
+    <!-- 转发-赛事链接  
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'forward' eventAction, 'link' eventType, null eventDetailType, s.url eventUrl, content eventContent, null eventVideoUrl, null eventPicUrl, null eventComment
+	from share s
+	join football_player fp on fp.id = s.player_id 
+	where content != 'HighLights' and content != 'Moments'
+
+	union
+	-->
+
+	<!-- 转发-动态 --> 
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo,  s.date eventDate, 'forward' eventAction, 'moment' eventType, m.type eventDetailType,
+		   m.id eventId, s.url eventUrl, m.content eventContent, m.url eventVideoUrl, m.url eventPicUrl, null eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from share s
+	join football_player fp on fp.id = s.player_id 
+	join share_moment sm on sm.share_id = s.id
+	join moment m on m.id = sm.moment_id and m.player_id != s.player_id
+	left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 评论-比赛集锦 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo,  comments_Time eventDate, 'comment' eventAction, 'video' eventType, v.type eventDetailType,
+		   if(v.type=0, v.tournament_match_id, v.id) eventId, v.url eventUrl, v.name eventContent,  v.url eventVideoUrl, v.thumbnail eventPicUrl, c.comments eventComment,
+		   null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from comment c
+	join football_player fp on fp.id = c.player_id
+	join comment_video cv on cv.comment_id = c.id
+	join video v on v.id = cv.video_id
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 评论-动态 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, comments_Time eventDate, 'comment' eventAction, 'moment' eventType, m.type eventDetailType,
+		   m.id eventId, m.url eventUrl, m.content eventContent, m.url eventVideoUrl, m.url eventPicUrl, c.comments eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from comment c
+	join football_player fp on fp.id = c.player_id
+	join comment_moment cm on cm.comment_id =  c.`id`
+	join moment m on m.id = cm.moment_id
+	left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 点赞-比赛集锦 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'video' eventType,  v.type eventDetailType,
+	       if(v.type=0, v.tournament_match_id, v.id) eventId, v.url eventUrl, v.name eventContent,  v.url eventVideoUrl, v.thumbnail eventPicUrl, null eventComment,
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_video sv on sv.support_id =s.id
+	join video v on v.id = sv.video_id
+	left join
+		(select video_id, count(1) as count from comment_video group by video_id) comment_count
+	on v.id = comment_count.video_id
+	left join
+		(select video_id, count(1) as count from support_video sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by video_id) support_count
+	on v.id = support_count.video_id 
+	left join
+		(select video_id, count(1) as count from share_video group by video_id) share_count
+	on v.id = share_count.video_id
+	where v.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 点赞-动态分享 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'moment' eventType,  m.type eventDetailType,
+		   m.id eventId,  m.url eventUrl, m.content eventContent,  m.url eventVideoUrl, m.url eventPicUrl, null eventComment, 
+		   (select id from football_player fp where fp.id = m.player_id) primaryPlayerId, (select nick_name from football_player fp where fp.id = m.player_id) primaryPlayerName , (select imageUrl from football_player fp where fp.id = m.player_id) primaryPlayerLogo,
+		   coalesce(comment_count.count, 0) as commentCount,
+		   coalesce(support_count.count, 0) as supportCount,
+		   coalesce(share_count.count, 0)   as shareCount
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_moment sm on sm.support_id =s.id
+	join moment m on m.id = sm.moment_id
+		left join
+		(select moment_id, count(1) as count from comment_moment group by moment_id) comment_count
+	on m.id = comment_count.moment_id
+	left join
+		(select moment_id, count(1) as count from support_moment sv
+		 join support s on s.id = sv.support_id and s.status = 1
+		 group by moment_id) support_count
+	on m.id = support_count.moment_id
+	left join
+		(select moment_id, count(1) as count from share_moment group by moment_id) share_count
+	on m.id = share_count.moment_id
+	where m.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 点赞-评论
+	
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, s.date eventDate, 'support' eventAction, 'comment' eventType,  null eventDetailType, null eventUrl, null eventContent,  null eventVideoUrl, null eventPicUrl, c.comments eventComment
+	from support s
+	join football_player fp on fp.id = s.player_id
+	join support_comment sc on sc.support_id =s.id
+	join comment c on c.id = sc.comment_id 
+	where s.player_id =1
+	
+	union
+	-->
+	
+	<!-- 分享-视频 -->
+	
+	
+	<!-- 分享-图片 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, m.date eventDate, 'share' eventAction, 'moment' eventType,  m.type eventDetailType,
+	       m.id eventId, m.url eventUrl, m.content eventContent,  null eventVideoUrl, m.url eventPicUrl, null eventComment, 
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+		   coalesce((select count(1) from comment_moment cm where cm.moment_id = m.id), 0) as commentCount,
+		   coalesce((select count(1) from support_moment sm where sm.moment_id = m.id), 0) as supportCount,
+		   coalesce((select count(1) from share_moment shm where shm.moment_id = m.id), 0)   as shareCount 
+	from moment m
+	join football_player fp on fp.id = m.player_id
+	where m.type = 'pic' and m.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	union
+	
+	<!-- 分享-文字 -->
+	select fp.id playerId, fp.nick_name playerName, fp.imageUrl playerLogo, m.date eventDate, 'share' eventAction, 'moment' eventType,  m.type eventDetailType, 
+	       m.id eventId,  null eventUrl, m.content eventContent,  null eventVideoUrl, null eventPicUrl, null eventComment, 
+	       null primaryPlayerId, null primaryPlayerName , null primaryPlayerLogo,
+	       coalesce((select count(1) from comment_moment cm where cm.moment_id = m.id), 0) as commentCount,
+		   coalesce((select count(1) from support_moment sm where sm.moment_id = m.id), 0) as supportCount,
+		   coalesce((select count(1) from share_moment shm where shm.moment_id = m.id), 0)   as shareCount 
+	from moment m
+	join football_player fp on fp.id = m.player_id
+	where m.type = 'text' and m.tournament_id = #{tournamentId} and fp.id = #{playerId}
+	
+	order by eventDate  desc
+	limit #{pageIndex}, #{pageSize}
+  </select>
+  
+  
+  <update id="updateBatchVideoThumbnails" parameterType="ArrayList">
+  	<foreach collection="list" item="item"  index="index"  separator=";" >
+        UPDATE video set thumbnail=#{item.thumbnail, jdbcType=VARCHAR} 
+        WHERE id=#{item.id, jdbcType=INTEGER}
+    </foreach>
+  </update>
+  
+  <update id="updateVideoThumbnail" parameterType="com.footballer.rest.api.v2.vo.Video">
+  	UPDATE video set thumbnail=#{thumbnail} WHERE id=#{id}
+  </update>
+  
+   <insert id="saveTournamentMatchPlayerStatistics"  parameterType="ArrayList">
+   	insert into match_player_result(tournament_match_id,team_id,player_id,loose_possession,distance_coverd,long_shot,shots,shots_on_target,goals,pass_finalball,assists,fouls,tackles,block,key_defense,pass,long_pass,pass_completed,yellow_card,red_card,offside,save,mvp,team_mvp,own_goals)
+   	values 
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.tournamentMatchId,jdbcType=INTEGER},
+    		#{item.teamId,jdbcType=INTEGER},
+    		#{item.playerId,jdbcType=INTEGER},
+    		#{item.loosePossession,jdbcType=INTEGER},
+    		#{item.distanceCoverd,jdbcType=INTEGER},
+    		#{item.longShot,jdbcType=INTEGER},
+    		#{item.shots,jdbcType=INTEGER},
+    		#{item.shotOnTarget,jdbcType=INTEGER},
+    		#{item.goals,jdbcType=INTEGER},
+    		#{item.passFinalBall,jdbcType=INTEGER},
+    		#{item.assists,jdbcType=INTEGER},
+    		#{item.fouls,jdbcType=INTEGER},
+    		#{item.tackles,jdbcType=INTEGER},
+    		#{item.block,jdbcType=INTEGER},
+    		#{item.keyDefense,jdbcType=INTEGER},
+    		#{item.pass,jdbcType=INTEGER},
+    		#{item.longPass,jdbcType=INTEGER},
+    		#{item.passCompleted,jdbcType=INTEGER},
+    		#{item.yellowCard,jdbcType=INTEGER},
+    		#{item.redCard,jdbcType=INTEGER},
+    		#{item.offside,jdbcType=INTEGER},
+    		#{item.save,jdbcType=INTEGER},
+    		#{item.mvp,jdbcType=INTEGER},
+    		#{item.teamMVP,jdbcType=INTEGER},
+    		#{item.ownGoals,jdbcType=INTEGER}
+     		)  
+    	</foreach>  
+  </insert>
+  
+   <insert id="saveTournamentMatchTeamStatistics"  parameterType="ArrayList">
+   	insert into match_team_result (tournament_match_id,team_id,points,goals,conceded,loose_possession,distance_coverd,long_shot,shots,shots_on_target,pass_finalball,assists,fouls,tackles,block,key_defense,pass,long_pass,pass_completed,yellow_card,red_card,offside,save,own_goals)
+   	values 
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.tournamentMatchId,jdbcType=INTEGER},
+    		#{item.teamId,jdbcType=INTEGER},
+    		#{item.points,jdbcType=INTEGER},
+    		#{item.goals,jdbcType=INTEGER},
+    		#{item.conceded,jdbcType=INTEGER},
+    		#{item.loosePossession,jdbcType=INTEGER},
+    		#{item.distanceCoverd,jdbcType=INTEGER},
+    		#{item.longShot,jdbcType=INTEGER},
+    		#{item.shots,jdbcType=INTEGER},
+    		#{item.shotOnTarget,jdbcType=INTEGER},
+    		#{item.passFinalBall,jdbcType=INTEGER},
+    		#{item.assists,jdbcType=INTEGER},
+    		#{item.fouls,jdbcType=INTEGER},
+    		#{item.tackles,jdbcType=INTEGER},
+    		#{item.block,jdbcType=INTEGER},
+    		#{item.keyDefense,jdbcType=INTEGER},
+    		#{item.pass,jdbcType=INTEGER},
+    		#{item.longPass,jdbcType=INTEGER},
+    		#{item.passCompleted,jdbcType=INTEGER},
+    		#{item.yellowCard,jdbcType=INTEGER},
+    		#{item.redCard,jdbcType=INTEGER},
+    		#{item.offside,jdbcType=INTEGER},
+    		#{item.save,jdbcType=INTEGER},
+    		#{item.ownGoals,jdbcType=INTEGER}
+     		)  
+    	</foreach>  
+  </insert>
+  
+  <!-- 篮球 数据录入 -->
+  
+  <insert id="saveBasketBallTournamentMatchPlayerStatistics"  parameterType="ArrayList">
+   	INSERT INTO `basketball_match_player_result` (`tournament_match_id`, `team_id`, `player_id`, `2_point_attempts`, `2_point_made`, `3_point_attempts`, `3_point_made`, `free_throw_attempts`, `free_throw_made`, `points`, `fouls`, `rebounds`, `steals`, `blocks`, `assists`, `turnovers`, `technical_fouls`, `mvp`, `team_mvp`)
+	VALUES
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.tournamentMatchId,jdbcType=INTEGER},
+    		#{item.teamId,jdbcType=INTEGER},
+    		#{item.playerId,jdbcType=INTEGER},
+    		#{item.P2A,jdbcType=INTEGER},
+    		#{item.P2M,jdbcType=INTEGER},
+    		#{item.P3A,jdbcType=INTEGER},
+    		#{item.P3M,jdbcType=INTEGER},
+    		#{item.FTA,jdbcType=INTEGER},
+    		#{item.FTM,jdbcType=INTEGER},
+    		#{item.PTS,jdbcType=INTEGER},
+    		#{item.PF,jdbcType=INTEGER},
+    		#{item.REB,jdbcType=INTEGER},
+    		#{item.STL,jdbcType=INTEGER},
+    		#{item.BLK,jdbcType=INTEGER},
+    		#{item.AST,jdbcType=INTEGER},
+    		#{item.TOV,jdbcType=INTEGER},
+    		0,
+    		#{item.mvp,jdbcType=INTEGER},
+    		0)  
+    	</foreach>  
+  </insert>
+  
+   <insert id="saveBasketBallTournamentMatchTeamStatistics"  parameterType="ArrayList">
+   	INSERT INTO `basketball_match_team_result` (`tournament_match_id`, `team_id`, `league_points`, `wins`, `losses`, `pts_for`, `pts_against`, `pts_diff`, `2_point_attempts`, `2_point_made`, `3_point_attempts`, `3_point_made`, `free_throw_attempts`, `free_throw_made`, `fouls`, `rebounds`, `steals`, `blocks`, `assists`, `turnovers`, `technical_fouls`)
+	VALUES
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.tournamentMatchId,jdbcType=INTEGER},
+    		#{item.teamId,jdbcType=INTEGER},
+    		#{item.leaguePoints,jdbcType=INTEGER},
+    		#{item.wins,jdbcType=INTEGER},
+    		#{item.losses,jdbcType=INTEGER},
+    		#{item.PTSF,jdbcType=INTEGER},
+    		#{item.PTSA,jdbcType=INTEGER},
+    		#{item.PTSD,jdbcType=INTEGER},
+    		#{item.P2A,jdbcType=INTEGER},
+    		#{item.P2M,jdbcType=INTEGER},
+    		#{item.P3A,jdbcType=INTEGER},
+    		#{item.P3M,jdbcType=INTEGER},
+    		#{item.FTA,jdbcType=INTEGER},
+    		#{item.FTM,jdbcType=INTEGER},
+    		#{item.PF,jdbcType=INTEGER},
+    		#{item.REB,jdbcType=INTEGER},
+    		#{item.STL,jdbcType=INTEGER},
+    		#{item.BLK,jdbcType=INTEGER},
+    		#{item.AST,jdbcType=INTEGER},
+    		#{item.TOV,jdbcType=INTEGER},
+    		0)  
+    	</foreach>  
+  </insert>
+  
+  
+  <!-- 足球多场次仅录入比分 -->
+  <insert id="saveMatchTeamResult"  parameterType="ArrayList">
+   	insert into match_team_result (tournament_match_id,team_id,points,goals,conceded,loose_possession,distance_coverd,long_shot,shots,shots_on_target,pass_finalball,assists,fouls,tackles,block,key_defense,pass,long_pass,pass_completed,yellow_card,red_card,offside,save,own_goals)
+   	values 
+    	 <foreach collection="list" item="item" index="index" separator=",">  
+       		(
+    		#{item.tournamentMatchId,jdbcType=INTEGER},
+    		#{item.teamId,jdbcType=INTEGER},
+    		#{item.points,jdbcType=INTEGER},
+    		#{item.goals,jdbcType=INTEGER},
+    		#{item.conceded,jdbcType=INTEGER},
+    		#{item.loosePossession,jdbcType=INTEGER},
+    		#{item.distanceCoverd,jdbcType=INTEGER},
+    		#{item.longShot,jdbcType=INTEGER},
+    		#{item.shots,jdbcType=INTEGER},
+    		#{item.shotOnTarget,jdbcType=INTEGER},
+    		#{item.passFinalBall,jdbcType=INTEGER},
+    		#{item.assists,jdbcType=INTEGER},
+    		#{item.fouls,jdbcType=INTEGER},
+    		#{item.tackles,jdbcType=INTEGER},
+    		#{item.block,jdbcType=INTEGER},
+    		#{item.keyDefense,jdbcType=INTEGER},
+    		#{item.pass,jdbcType=INTEGER},
+    		#{item.longPass,jdbcType=INTEGER},
+    		#{item.passCompleted,jdbcType=INTEGER},
+    		#{item.yellowCard,jdbcType=INTEGER},
+    		#{item.redCard,jdbcType=INTEGER},
+    		#{item.offside,jdbcType=INTEGER},
+    		#{item.save,jdbcType=INTEGER},
+    		#{item.ownGoals,jdbcType=INTEGER}
+     		)  
+    	</foreach>   
+  </insert>
+  
+  
+  <!-- 根据tournament_match_ids 移除 多条球队比赛数据记录 -->
+  <delete id="removeMatchesResultByIds" parameterType="ArrayList">
+  	DELETE FROM match_team_result
+    WHERE tournament_match_id in
+        <foreach collection="list" item="item" index="index"  open="(" close=")" separator=",">
+             #{item}
+        </foreach>
+  </delete>
+  
+  <!-- 根据tournament_match_id 移除某场比赛的比赛球员数据 -->
+  <delete id="deletePlayerMatchResultByMatchId" parameterType="long" >
+  	DELETE FROM match_player_result
+    WHERE tournament_match_id = #{matchId}
+  </delete>
+  
+  
+</mapper>

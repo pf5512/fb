@@ -1,0 +1,2085 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="robots" content="none" />
+<title>技术统计</title>
+<link rel="icon" href="img/analysis/auf_title.png" type="image/x-icon"/>
+<link href="backadmin/assets/css/base.css" rel="stylesheet" type="text/css">
+<link href="backadmin/assets/css/dataAnalysis_manual.css" rel='stylesheet' type='text/css' />
+<link href="backadmin/assets/css/tabStyle.css" rel="stylesheet" type="text/css">
+<link href="backadmin/assets/css/digitalClock.css" rel="stylesheet" type="text/css">
+<link href="css/button.min.css" rel="stylesheet" type="text/css">
+<link href="backadmin/assets/css/superman.css" rel="stylesheet" type="text/css">
+<link href="css/jquery-ui-1.11.4.css" rel="stylesheet" type="text/css">
+<link href="css/toggle_style.css" rel="stylesheet" type="text/css">
+<link href="css/justin_common.css" rel="stylesheet" type="text/css">
+<link href="css/jquery-ui.dialog.1.11.4.min.css" rel="stylesheet" type="text/css">
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script src="js/jquery-1.11.2.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui.dialog.1.11.4.min.js" type="text/javascript"></script>
+<script src="js/handlebars-v2.0.0.js" type="text/javascript"></script>
+<script src="js/tabScript.js" type="text/javascript"></script>
+<script src="js/underscore.js" type="text/javascript"></script>
+<script src="js/justin_common.js" type="text/javascript"></script>
+<script src="js/vue.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+	<div class="mainheader">
+		<div>
+			<img  src="img/analysis/rank.png" onerror="this.style.display='none'" class="pageLogo">
+			<label style="padding-top: 20px;" class="titleLabel">详细技术统计</label>
+			<img style="padding-top: 6px;" src="img/analysis/zqsy_logo.png" onerror="this.style.display='none'" class="smallLogo">
+			<!-- <img style="padding-top: 6px;" src="img/analysis/fdsp_logo.png" onerror="this.style.display='none'" class="smallLogo"> -->
+			<img style="padding-top: 6px;" src="img/analysis/auf_logo.png" onerror="this.style.display='none'" class="smallLogo">
+		</div>
+		
+		
+	</div>
+
+	<div id="dialog-form" title="请先登陆"  style="display:none;">
+		  <p class="validateTips"></p>
+		 
+		  <form>
+		    <fieldset>
+		      <div class="HBox">
+		      	<label for="name">用户</label>
+		      	<input type="text" name="name" id="name"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <br>
+		      <div class="HBox">
+		      	<label for="password">密码</label>
+		      	<input type="password" name="password" id="password"  class="text ui-widget-content ui-corner-all">
+		      </div>
+		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+		      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+		    </fieldset>
+		  </form>
+	</div>
+
+
+	<div id="web" class="mainbody">
+		<div id="container">
+			
+			<div>
+				<div>
+				<label class="dataLabel" style="padding-left:6px;padding-top: 16px;padding-bottom: 6px;width:100%;font-size: 18px;">实时数据</label>
+				
+				<div>
+					<table class="middleTable">
+						<tr>
+							<td colspan="6">
+								<div style="float: left; padding: 5px 0 0 192px;">
+									<table>
+										<tr>
+											<td style="text-align: right;">
+												<img id="titleHostTeamLogo" style="width: 40px; height: 40px; margin-bottom: -8px; cursor: pointer;border-radius: 13px;">
+												<label id="teamA" class="label0">Team1</label>
+												
+											</td>
+											<td style="text-align: right;padding-left: 20px;"><label id="teamA_score"
+												class="label1">0</label></td>
+											
+											<td style="width: 34px;"><label class="label3" style="padding-left: 5px;color:red;"> vs </label></td>
+											
+											<td style="text-align: left;padding-right: 20px;"><label id="teamB_score"
+												class="label1">0</label></td>
+											
+											<td style="text-align: left;">
+												<img id="titleGuestTeamLogo"  style="width: 40px; height: 40px; margin-bottom: -8px; cursor: pointer;border-radius: 13px;">
+												<label id="teamB" class="label0">Team2</label>
+											</td>
+											
+										</tr>
+										<tr style="color: #00c6ff;">
+											<!-- <td>
+												<li id="point" style="list-style: none; font-size: 28px; font-weight: bold; color: #00c6ff; width: 10px; padding-left: 26px;">:</li>
+											</td> -->
+											<td>
+												<!-- 犯规次数 -->
+											</td>
+										</tr> 
+									</table>
+								</div>
+								
+							</td>
+							<td  colspan="1">
+								<table>
+										<tr>
+										</tr>
+										<tr style="color: #00c6ff;">
+										</tr> 
+								</table>
+							</td>
+							<td  colspan="3">
+								<div style="float: right;">
+									<div id="Date" style="float: left; padding: 4px 0 0 0;"></div>
+									<!-- <div class="clock" style="float: right;">
+										<img style="padding: 5px 8px 0 8px;" alt="miss"
+											src="img/analysis/Clock.png">
+										<ul class="time"
+											style="margin: 0 auto; padding: 0px; list-style: none; display: -webkit-inline-box; font-size: 2em; font-family: 'BebasNeueRegular', Arial, Helvetica, sans-serif; text-shadow: 0 0 5px #00c6ff;">
+											<li id="hours"></li>
+											<li id="point">:</li>
+											<li id="min"></li>
+											<li id="point">:</li>
+											<li id="sec"></li>
+										</ul>
+									</div> -->
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan=6>
+								<table style="width: 100%;">
+									<tr style="vertical-align: top;">
+										<td style="vertical-align: top;width:190px;">
+											<div>
+												<div class="HBox">
+													<img src="img/analysis/MVP.png" onerror="this.style.display='none'" style="width:36px;height: 30px;margin-top: 6px;">
+													<div id="mvpInfo" style="padding-left:10px">
+													
+													
+													</div>
+												</div>
+												<br>
+												<div class="HBox">
+													<img src="img/analysis/teamMVP.png" onerror="this.style.display='none'" style="width:36px;height: 30px;margin-top: 6px;">
+													<div id="teamMvpInfo" style="padding-left:10px">
+													</div>
+												</div>
+											</div>
+										</td>
+										<td style="vertical-align: top;width:300px;">
+											<div style="overflow-y:scroll;height:103px;">
+											<template v-for="item in teamA_goalList">
+												<tr style="font-size:14px;">
+													<td><img src="img/analysis/goals.png" onerror="this.style.display='none'" class="smallIcon" style="margin-bottom: -2px;height: 15px;width: 20px;"/></td>
+													<td style="width: 125px;">{{item.name}}</td>
+													<td style="color:seagreen;">{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+										<td  style="vertical-align: top;">
+											<div style="overflow-y:scroll;height:103px;">
+											<template v-for="item in teamB_goalList">
+												<tr style="font-size:14px;">
+													<td><img src="img/analysis/goals.png" onerror="this.style.display='none'" class="smallIcon" style="margin-bottom: -2px;height: 15px;width: 20px;"/></td>
+													<td style="width: 125px;">{{item.name}}</td>
+													<td style="color:seagreen;">{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+									</tr>
+								</table>	
+							</td>
+							<td colspan=3>
+								<table style="width: 100%;">
+									<tr>
+										<th colspan=1>
+											<a href="#" class="toggle toggle--on"></a>
+										</th>
+										<th colspan=2><label id="foul_teamA">Team1</label></th>
+										<th colspan=2><label id="foul_teamB">Team2</label></th>
+									</tr>
+									<tr v-if="halfTimeFlag == '1st'" style="vertical-align: top;">
+										<td>犯规记录<br>(上半场)</td>
+										<td style="vertical-align: top;">
+											<div style="overflow-y:scroll;height:60px;">
+											<template v-for="item in teamA_1st_FoulList">
+												<tr style="font-size:14px;">
+													<td style="width: 125px;">{{item.name}}</td>
+													<td style="color:seagreen;">{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+										<td>
+											<label id="teamA_1st_foulTimes"  class="foulNoTd">0</label>
+										</td>
+										<td  style="vertical-align: top;">
+											<div style="overflow-y:scroll;height:60px;">
+											<template v-for="item in teamB_1st_FoulList">
+												<tr style="font-size:14px;">
+													<td style="width: 125px;">{{item.name}}</td>
+													<td style="color:seagreen;">{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+										<td>
+											<label id="teamB_1st_foulTimes"  class="foulNoTd">0</label>
+										</td>
+									</tr>
+									<tr v-if="halfTimeFlag == '2nd'" style="vertical-align: top;">
+										<td>犯规记录<br>(下半场)</td>
+										<td  style="vertical-align: top;">
+											<div style="overflow-y:scroll;height:60px;">
+											<template v-for="item in teamA_2nd_FoulList">
+												<tr style="font-size:14px;">
+													<td>{{item.name}}</td>
+													<td>{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+										<td>
+											<label id="teamA_2nd_foulTimes"  class="foulNoTd">0</label>
+										</td>
+										<td  style="vertical-align: top;">
+											<div style="overflow-y:scroll;height:60px;">
+											<template v-for="item in teamB_2nd_FoulList">
+												<tr style="font-size:14px;">
+													<td>{{item.name}}</td>
+													<td>{{item.time}}</td>
+												</tr>
+											</template>
+											</div>
+										</td>
+										<td>
+											<label id="teamB_2nd_foulTimes"  class="foulNoTd">0</label>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td><br></td>
+						</tr>
+						<tr>
+							<th colspan="4" class="th1">
+								<!-- <img alt="mis" src="img/analysis/attack.gif" height="20px" width="55px"> -->
+								<label style="color: crimson;font-weight: bold;font-size: medium;">进攻端 TOP3</label>	
+							</th>
+							<th colspan="2" class="th1">
+								<!-- <img alt="mis" src="img/analysis/defense.gif" height="50px" width="120px"> -->
+								<label style="color: seagreen;font-weight: bold;font-size: medium;">防守端 TOP3</label>
+							</th>
+							<th colspan="3" class="th1">
+								<!-- <img alt="mis" src="img/analysis/mistake.png" height="50px" width="50px"> -->
+								<label style="color: black;font-weight: bold;font-size: medium;">犯规 TOP3</label>
+							</th>
+						</tr>
+									
+						<tr>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td><img src="img/analysis/goals.png" onerror="this.style.display='none'" class="smallIcon">
+											<label class="dataLabel">进球goals</label>
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'goals'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											<img src="img/analysis/assists.png" onerror="this.style.display='none'" class="smallIcon">
+											<label class="dataLabel">助攻assists</label>
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'assists'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											<img src="img/analysis/pass_finalball.png" onerror="this.style.display='none'" class="smallIcon">
+											<label class="dataLabel">威胁球 final ball</label>
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'pass_finalball'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											<img src="img/analysis/shots.png" onerror="this.style.display='none'" class="smallIcon">
+											<label class="dataLabel">射门 shots</label>
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'shots'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											<img src="img/analysis/key_defense.png" onerror="this.style.display='none'" class="smallIcon">
+											<label class="dataLabel">关键防守  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  key defense</label>
+											
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'key_defense'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											 
+								<img src="img/analysis/save.png" onerror="this.style.display='none'" class="smallIcon">
+								<label class="dataLabel">扑救 save</label> 
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'save'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											<img src="img/analysis/foul.png" onerror="this.style.display='none'" class="smallIcon">
+								<label class="dataLabel">犯规 foul</label>
+								
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'fouls'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+								
+								<img src="img/analysis/yellowCard.png" onerror="this.style.display='none'" class="smallIcon">
+								<label class="dataLabel" style="color:yellow;">黄牌 yellowCard</label>
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'yellowCard'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+							<td>
+								<table class="smallTable">
+									<tr>
+										<td>
+											
+								<img src="img/analysis/redCard.png" onerror="this.style.display='none'" class="smallIcon">
+								<label class="dataLabel" style="color:red;">红牌 redCard</label> 
+										</td>
+										 
+									</tr>
+									<template v-for="row in rankList">
+										<div v-if="row.property == 'redCard'" style="height:66px;">
+											<template v-for="item in row.list">
+												<tr style="font-size:14px;">
+													<td>{{item.playerName}}</td>
+													<td class="rankNoTd">{{item.no}}</td>
+												</tr>
+											</template>
+										</div>
+									</template>
+								</table>
+							</td>
+						</tr>
+						
+						
+					
+					</table>
+				</div>
+			
+			<!-- 	<hr style="margin-top: -1px;width: 100%;"> -->
+			</div>
+			
+			<ul class="tabs" style="margin-top: 20px;width: 100%;">
+				<li><a href="#" id="operate">操作页面</a></li>
+				<li><a href="#" id="report">图表报告</a></li>
+				<li><a href="#" id="log">时间日志</a></li>
+			</ul>
+			<!-- <hr style="margin-top: -1px;"> -->
+			
+			<div id="selectArea" style="display:block;">
+				<div>
+					<label class="dataLabel" style="padding-left:6px;padding-top: 16px;padding-bottom: 6px;width:120px;font-size: 18px;">选择赛事</label>
+					
+					<select id="eventName" style="font-size: 30px;" v-on:change="eventSelectChange">
+						<option>请选择</option>
+                        <option v-for="item in eventList" v-bind:value="option" id="{{item.tournamentId}}">{{item.eventName}}</option>
+					</select>
+				</div>
+				<div>
+					<label class="dataLabel" style="padding-left:6px;padding-top: 16px;padding-bottom: 6px;width:120px;font-size: 18px;">选择赛程</label>
+					
+					<select id="matchName" style="font-size: 30px;" v-on:change="matchSelectChange">
+						<option>请选择</option>
+                        <option v-for="item in tournamentMatchList" value="{{item.id}}">
+                        	{{item.typeName}}-{{item.hostTeamLabel}} vs {{item.guestTeamLabel}}
+                        </option>
+					</select>
+				</div>
+<!-- 				<div v-if="eventName && eventName!='请选择'">
+					<label class="dataLabel" style="padding-left:6px;padding-top: 16px;padding-bottom: 6px;width:120px;font-size: 18px;">选择对战球队</label>
+					
+					<select id="hostTeam" style="font-size: 30px;" v-on:change="hostTeamSelectChange">
+                        <option v-for="item in teamList" v-bind:value="option">{{item.teamName}}</option>
+					</select>
+					
+					<label style="color:red;font-size: 18px;padding: 0 10px 0px 10px;"> VS </label>
+					
+					<select id="guestTeam" style="font-size: 30px;" v-on:change="guestTeamSelectChange">
+						<option v-for="item in teamList" v-bind:value="option">{{item.teamName}}</option>
+                        <option v-for="name in teamList" v-bind:value="option">{{name}}</option>
+					</select>
+					
+					<button v-if="hostPlayerList&&guestPlayerList" v-on:click="begin" style="font-size: 16px;margin-left:20px;">开始统计</button>
+				</div> -->
+				<br>
+				<div style="display: inline-flex;">
+					<div v-if="hostPlayerList">
+						<label class="dataLabel" style="padding-left:6px;padding-top: 16px;padding-bottom: 6px;width:120px;font-size: 18px;">确认到场队员</label>
+					</div>
+					<div style="width: 250px;">
+						<div v-if="hostPlayerList"  class="HBox" style="height: 55px;">
+							<img id="hostTeamLogo" style="width: 50px; height: 50px;  cursor: pointer;border-radius: 13px;">
+       					 	<label id="hostTeam" style="font-size:25px;padding-top: 9px;padding-left: 10px;">Team 1</label>
+						</div>
+						<div v-if="hostPlayerList" style="height: 30px;">
+							<input type="checkbox" id="allhost" v-model="allHost">
+       					 	<label for="allhost" style="color:green;">全勤</label>
+						</div> 
+						<div v-for="player in hostPlayerList">
+       					 	<div class="HBox">
+       					 		<input type="checkbox" id="{{player.id}}" value="{{player}}" v-model="selectedHostPlayer">
+       					 		<div class="HBox" style="height:35px;">
+       					 			<label for="{{player.id}}" style="font-size:15px;padding-right: 5px;">{{player.number}}</label>
+       					 			<!-- <img for="{{player.id}}" src="{{player.imgUrl}}" style="width: 30px; height: 30px; margin-top:-5px; cursor: pointer;border-radius: 9px;"> --> 
+									<label for="{{player.id}}" style="font-size:15px;padding-left: 5px;">{{player.name}}</label>	
+       					 		</div>
+       					 	</div>
+     					</div>
+					</div>
+					<div>
+						<div v-if="guestPlayerList" class="HBox" style="height: 55px;">
+							<img id="guestTeamLogo" style="width: 50px; height: 50px;  cursor: pointer;border-radius: 13px;">
+       					 	<label id="guestTeam" style="font-size:25px;padding-top: 9px;padding-left: 10px;">Team 2</label>
+						</div>
+						 <div v-if="guestPlayerList" style="height: 30px;">
+							<input type="checkbox" id="all" v-model="allGuest">
+       					 	<label for="all" style="color:green;">全勤</label>
+						</div> 
+						<div v-for="player in guestPlayerList" >
+	        				<div class="HBox">
+       					 		<input type="checkbox" id="{{player.id}}" value="{{player}}" v-model="selectedGuestPlayer">
+       					 		<div class="HBox" style="height:35px;">
+       					 			<label for="{{player.id}}" style="font-size:15px;padding-right: 5px;">{{player.number}}</label>
+       					 			<!-- <img for="{{player.id}}" src="{{player.imgUrl}}" style="width: 30px; height: 30px; margin-top:-5px; cursor: pointer;border-radius: 9px;"> --> 
+									<label for="{{player.id}}" style="font-size:15px;padding-left: 5px;">{{player.name}}</label>	
+       					 		</div>
+       					 	</div>
+	     				</div>
+					</div>
+					<button v-if="hostPlayerList&&guestPlayerList" v-on:click="begin" style="font-size: 16px;margin-left:20px;height: 35px;">开始统计</button>
+				</div>	
+			</div>
+			
+			<div id="mainArea" style="display:none;">
+				<div id="mainAreaOperate" style="float: left;padding: 8px 0 8px 5px;">
+								<button id="subtractBtn" class="button button-rounded button-tiny">
+									<label style="font-size:10px;color:red">-</label>
+								</button>
+								<button id="addBtn" class="button button-rounded button-tiny">
+									<label style="font-size:10px;color:green">+</label>
+								</button>
+				</div>
+				
+				<div id="operateArea" style="display: inline-block;">
+<!-- 					<div id="dataAnalysisHeaderArea"></div>
+					<div id="dataAnalysisArea" style="display: inline-block;"></div> -->
+					
+					<div id="dataAnalysisHeaderArea">
+						<div  class="titleFrame" style="width:150px;">
+
+							<label style="cursor: pointer;  font-family: 微软雅黑; font-size: 16px; text-align: right;float:left;
+														    width: auto;padding: 7px 0px 0px 9px; ">球员</label>
+					  	</div>
+						<template v-for="item in headerLabelList">
+					  	<div id="{{item.property}}" class="titleFrame">
+
+							<img src="{{item.icon_url}}" onerror="this.style.display='none'" class="smallIcon" style="margin-top: 3px;margin-left: 3px;">
+							<label style="cursor: pointer;  font-family: 微软雅黑; font-size: 14px; text-align: right;float:left;
+														    width: auto;padding: 7px 0px 0px 0px; ">{{item.name}}</label>
+					  	</div>
+					  	</template>
+					</div>
+					
+					<div id="dataAnalysisArea" style="display: inline-block;">
+						<template  v-for="row in dataContent">
+							<div v-if="row == null">
+								<hr style="margin-top: -1px;width: 100%;">
+								<br><br>
+						 	</div>
+						 	
+							<div id="rowData" v-if="row.player.id !=null &&  row.player.name !=null" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)" style="height:42px;" data-playerId="{{row.player.id}}" data-teamId="{{row.player.teamId}}">
+								<div class="playerNoFrame" onclick="mvpClick(this)" ondblclick="mvpCancelClick(this)">
+									<img id="mvp" src="img/analysis/MVP.png" onerror="this.style.display='none'" style="display:none;width:36px;height:36px;border-radius: 8px;margin-top: 2px;margin-left: -44px;position: absolute">
+									<img id="teamMvp" src="img/analysis/teamMVP.png" onerror="this.style.display='none'" style="display:none;width:36px;height:36px;border-radius: 8px;margin-top: 2px;margin-left: -44px;position: absolute">
+									<label style="cursor: pointer; font-family: Tahoma,Helvetica,Arial, '\5b8b\4f53',sans-serif;font-size: 26px;float:left;width: 40px;padding: 4px 0px 0px 0px;text-align: center;color: deepskyblue;text-shadow: 0 0 1px black;">
+										{{row.player.no}}
+									</label>
+							 	</div>
+							 	<div class="playerNameFrame">
+							 		<img src="{{row.player.img}}" onerror="this.style.display='none'" style="width:36px;height:36px;border-radius: 8px;margin-top: 2px;margin-left: 2px;">
+									<label style="font-family: 微软雅黑; font-size: 16px; text-align: left;float:left;width: 80px;padding: 12px 0px 0px 5px; display:block;overflow:hidden;white-space:nowrap;color: cadetblue;">
+										{{row.player.name}}
+									</label>
+							 	</div>
+								<template v-for="item in row.datacount">
+										<div class="operateframe">
+											<label for="{{row.player.no}}-{{row.player.name}}" style="font-family: serif; font-size: 21px; float:left;padding: 10px 0px 0px 25px; ">
+												{{item.no}}
+											</label>
+											<div v-if="item.no != null">
+												<button v-on:click="synRankingAndRecord"  id="{{row.player.teamId}}-{{row.player.no}}-{{row.player.name}}" value="{{row.team_id}}" name="{{item.property}}" class="subtract" style="font-size:20px; color:red;display:none;width: 30px;margin: 5px 10px 0px 0px;float: right;">-</button>
+												<button v-on:click="synRankingAndRecord" id="{{row.player.teamId}}-{{row.player.no}}-{{row.player.name}}" value="{{row.team_id}}" name="{{item.property}}" class="add" style="font-size: 20px;color: green;width: 30px;margin: 5px 10px 0px 0px;float: right;">+</button>
+												<!-- <div v-if="item.property == 'goals'">
+													<button v-on:click="ownGoalsRecord" id="{{row.player.no}}-{{row.player.name}}" value="{{row.team_id}}" name="{{item.property}}" class="ownGoals button button-caution button-box button-small" style="float: right;margin: 5px 10px 0px 0px;display:none;">乌龙</button>
+												</div> -->
+											</div>
+							 			</div>
+								</template>
+							</div>
+							
+						</template>
+					</div>
+					
+					
+				</div>
+				<div id="reportArea" style="display:none;width:1200px;height:500px;">
+						<div class="HBox">
+							<img id="teamsort" alt="mis" src="img/analysis/dataAnalysis.png" style="width: 60px; height: 50px; margin-bottom: -6px; cursor: pointer;">
+							<button v-on:click="importData2DB" id="importBtn" class="button button-action button-rounded button-small" style="margin: 12px 0px 0px 5px;">
+								<label style="font-size:10px;color:green;cursor:pointer;">数据导入</label>
+							</button>
+						</div><br>
+							
+						<div class="HBox">
+							<table class="middleTable">
+							<tr>
+								<template v-for="item in teamChartDataList">
+								<td>
+								<table>
+								<tr>
+									<td style="text-align: center;height:70px;">
+										<img v-if="item.teamLogo != null" src="{{item.teamLogo}}" style="width: 40px; height: 40px; margin-bottom: -8px; cursor: pointer;border-radius: 13px;">
+										<label class="tableHeaderLabel">{{item.teamName}}</label>
+										<label v-if="item.teamName == null" class="tableHeaderLabel" style="color:red;">VS</label>
+									</td>
+									
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.goals_logo != null" src="{{item.goals_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.goals}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.ownGoals_logo != null" src="{{item.ownGoals_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.ownGoals}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.shots_logo != null" src="{{item.shots_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.shots}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.passFinalBall_logo != null" src="{{item.passFinalBall_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.passFinalBall}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.assists_logo != null" src="{{item.assists_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.assists}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.keyDefense_logo != null" src="{{item.keyDefense_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.keyDefense}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.save_logo != null" src="{{item.save_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.save}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.fouls_logo != null" src="{{item.fouls_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.fouls}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.yellowCard_logo != null" src="{{item.yellowCard_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.yellowCard}}</label>
+									</td>
+								</tr>
+								<tr>
+									<td style="height:51px;width:200px;text-align: center;">
+										<img v-if="item.redCard_logo != null" src="{{item.redCard_logo}}" style="width: 30px; height: 30px; margin-bottom: -6px; cursor: pointer;">
+										<label class="tableContentLabel">{{item.redCard}}</label>
+									</td>
+								</tr>
+								</table>
+								</td>
+								</template>
+							</tr>	
+							</table>
+							
+							<div id="superman" style="display:none;">
+								<div class="cssload-body">
+									<span>
+										<span></span>
+										<span></span>
+										<span></span>
+										<span></span>									
+									</span>
+									<div class="cssload-base">
+											<span></span>
+											<div class="cssload-face"></div>
+									</div>
+								</div>
+								<div class="cssload-longfazers">
+									<span></span>
+									<span></span>
+									<span></span>
+									<span></span>
+								</div>
+							</div>
+							
+							<!-- <table class="middleTable">
+								<template v-for="item in importPlayerDataList">
+								<tr>
+									<td>{{item.playerId}}</td>
+									<td>{{item.key_defense}}</td>
+									<td>{{item.save}}</td>
+									<td>{{item.pass_finalball}}</td>
+									<td>{{item.assists}}</td>
+									<td>{{item.shots}}</td>
+									<td>{{item.goals}}</td>
+									<td>{{item.foul}}</td>
+									<td>{{item.yellowCard}}</td>
+									<td>{{item.redCard}}</td>
+								<tr>	
+								</template>
+							</table>  -->						
+							</div>	
+					
+						
+				</div>
+				
+				<div id="logArea" style="display:none;">
+					<textarea id="logContent" rows="" cols="" style="width:1200px;height:500px;"></textarea>
+				</div>
+				<br></br>
+		</div>
+	</div>
+			
+	</div>
+	<div class="footer"></div>
+	<script type="text/javascript">
+	
+	
+	$.fn.fixedDiv = function(actCls){
+        var pos = 0,
+            that = $(this),
+            topVal;
+
+        if(that.length > 0){
+            topVal = that.offset().top-750;
+        }
+
+    function fix(){
+    	pos = $(document).scrollTop();
+
+       	if (pos > topVal) {
+        	that.addClass(actCls);
+            if (!window.XMLHttpRequest) {
+            	that.css({
+                	position: 'absolute',
+                	top     : pos
+                    });
+                }
+		} else {
+        	that.removeClass(actCls);
+			if (!window.XMLHttpRequest) {
+				that.css({
+             	   position: 'static',
+                   top     : 'auto'
+                });
+           	  }
+
+        	}
+        }
+        fix();
+        $(window).scroll(fix);
+    }
+	
+	//toggle Btn
+	$('.toggle').click(function(e) {
+		  var toggle = this;
+		  
+		  e.preventDefault();
+		  
+		  $(toggle).toggleClass('toggle--on')
+		         .toggleClass('toggle--off')
+		         .addClass('toggle--moving');
+		
+		  if(toggle.className.indexOf('on') >0){
+			  vm.$data.halfTimeFlag =  '1st';
+		  }
+		  
+		  if(toggle.className.indexOf('off') >0){
+			  vm.$data.halfTimeFlag =  '2nd';
+		  }
+		  
+		  
+		  setTimeout(function() {
+		    $(toggle).removeClass('toggle--moving');
+		  }, 200)
+	});  
+	
+	
+	var logList= [];
+
+ 	var header = {
+			labelLists: [
+			              //	{property: '',name: '姓名',icon_url: ''},
+			               //	{property: 'loose_possesion',name: '失去球权', icon_url: 'img/analysis/'},
+			              //	{property: 'tackles',name: '抢断', icon_url: 'img/analysis/'},
+			              //	{property: 'block',name: '拦截', icon_url: 'img/analysis/'},
+			              	{property: 'shots',name: '射门', icon_url: 'img/analysis/shots.png'},
+			              	{property: 'goals',name: '进球', icon_url: 'img/analysis/goals.png'},
+			              	{property: 'passFinalBall',name: '传威胁球', icon_url: 'img/analysis/pass_finalball.png'},
+			              	{property: 'assists',name: '助攻', icon_url: 'img/analysis/assists.png'},
+			              	{property: '-',name: '', icon_url: ''},
+			              	{property: 'keyDefense',name: '关键防守', icon_url: 'img/analysis/key_defense.png'},
+			              	{property: 'save',name: '扑救', icon_url: 'img/analysis/save.png'},
+			              	{property: '-',name: '', icon_url: ''},
+			             //  	{property: 'mistake',name: '严重失误', icon_url: 'img/analysis/'}, 
+			              	
+			              	{property: 'fouls',name: '犯规',icon_url: 'img/analysis/foul.png'},
+			              	{property: 'yellowCard',name: '黄牌',icon_url: 'img/analysis/yellowCard.png'},
+			              	{property: 'redCard',name: '红牌',icon_url: 'img/analysis/redCard.png'},
+			              	{property: 'ownGoals',name: '乌龙球',icon_url: 'img/analysis/ownGoals.png'}
+			  			  ]
+	}; 
+	
+	var content ={};
+	var CIFL_teamList = [{teamName:'As Classe',players:[{name:'Nadhir',no:1},{name:'Josh ',no:2},{name:'Liberace',no:3},{name:'Avfv',no:4},{name:'Joey',no:5},{name:'Drew',no:6},{name:'Sam',no:7},{name:'Bin Bin',no:9},{name:'Tyrie',no:10},{no:11,name:'Nick'},{no:12,name:'U XiaoBo'},{no:14,name:'Noam'},{no:18,name:'Lao Zhou'},{no:19,name:'Tim'},{no:20,name:'John O'},{no:77,name:'Yang Yang'},{no:79,name:'Dan'},{no:92,name:'Marcel'}]},{teamName:'CDRU',players:[{no:1,name:''},{no:2,name:''},{no:3,name:''},{no:4,name:''},{no:5,name:''},{no:6,name:''},{no:7,name:''},{no:8,name:''},{no:9,name:''},{no:10,name:''},{no:11,name:''},{no:12,name:''},{no:13,name:''},{no:14,name:''},{no:15,name:''},{no:16,name:''},{no:17,name:''},{no:18,name:''},{no:19,name:''},{no:20,name:''},{no:21,name:''},{no:22,name:''}]},{teamName:'Deportivo Paname',players:[{no:3,name:'Josue'},{no:4,name:'Zach'},{no:7,name:'Manuel'},{no:8,name:'Vincent'},{no:9,name:'Armando'},{no:10,name:'Mike'},{no:11,name:'Ting Ting'},{no:13,name:'Leslie'},{no:14,name:'Ishaq'},{no:15,name:'Kris'},{no:16,name:'David'},{no:17,name:'Simon'},{no:18,name:'Christian'},{no:20,name:'Gabrielle'},{no:24,name:'Filip'},{no:25,name:'Toby'},{no:51,name:'Gabriele'},{no:55,name:'Ivan'},{no:260,name:'Arrey'},{no:360,name:'Ray'}]},{teamName:'WMD FC',players:[{no:1,name:'Terry'},{no:24,name:'Kam'},{no:69,name:'Lee'},{no:3,name:'Mike'},{no:18,name:'Martin'},{no:30,name:'Samuel'},{no:99,name:'Richard'},{no:10,name:'Joe'},{no:12,name:'Danny'},{no:45,name:'David'},{no:13,name:'Dawei'},{no:15,name:'Josh'},{no:88,name:'Anthony'},{no:13,name:'Gabriele'},{no:11,name:'Maron'},{no:21,name:'David'},{no:99,name:'Jonny'}]}]
+	//var teamList = [{teamName:'叔叔不约',players:[{name:'徐野',no:1},{name:'李飞达',no:3},{name:'周昊',no:7},{name:'林竞雄',no:8},{name:'薛嵘俊',no:19},{name:'李佳文',no:21},{name:'陈飞',no:23},{name:'范世杰',no:31},{name:'张浩',no:78}]},{teamName:'一生所爱',players:[{name:'高云',no:1},{name:'裘劼',no:2},{name:'刘斯一',no:3},{name:'沈畅',no:4},{name:'钟家举',no:5},{name:'蒋涛',no:6},{name:'白天',no:7},{name:'周嘉杰',no:8},{name:'李航',no:9},{name:'MAX',no:11}]},{teamName:'左脚右脚',players:[{name:'杨光辛',no:6},{name:'漆龙',no:7},{name:'江章刘伟',no:9},{name:'杨光未',no:13},{name:'罗宇浩',no:19},{name:'邓习文',no:24},{name:'杨世奇',no:77}]},{teamName:'艾信龙柒點叁拾',players:[{name:'叶桂明',no:1},{name:'李军',no:6},{name:'李欢',no:7},{name:'周磊',no:11},{name:'景鑫',no:15},{name:'朱刚',no:16},{name:'万科',no:17},{name:'张磊',no:22},{name:'张树东',no:23},{name:'王懂',no:30}]},{teamName:'村委会',players:[{name:'周宥箐',no:2},{name:'黄夔',no:3},{name:'王海另',no:4},{name:'李伟',no:5},{name:'刘强',no:7},{name:'周瑜',no:8},{name:'周兴建',no:9},{name:'李楠',no:19},{name:'朱珉煜',no:20},{name:'辛宇',no:28}]},{teamName:'老友记',players:[{name:'张幻',no:1},{name:'肖伟',no:4},{name:'曾晋',no:9},{name:'陈颜',no:10},{name:'陈睿',no:11},{name:'冯煜',no:18},{name:'史更静',no:53},{name:'徐鹏',no:66},{name:'陈昌静',no:77},{name:'吴应鹏',no:88}]},{teamName:'嘿嗨森',players:[{name:'吴硕',no:1},{name:'张帆',no:2},{name:'陈治彦',no:6},{name:'俞昊',no:8},{name:'马继书',no:9},{name:'陈樟',no:11},{name:'张宇',no:13},{name:'张平',no:16},{name:'王喆',no:22},{name:'尹淇锋',no:23}]},{teamName:'活跃',players:[{name:'Smart',no:1},{name:'雷宇',no:5},{name:'Greg',no:6},{name:'梅吹',no:7},{name:'Arlin',no:8},{name:'Joey',no:10},{name:'David',no:13},{name:'Ian',no:14},{name:'Joe',no:21},{name:'邓阳',no:77}]},{teamName:'布拉热',players:[{name:'庞浠颉',no:1},{name:'姚佳伟',no:01},{name:'郭广平',no:6},{name:'李杰',no:8},{name:'徐秋平',no:9},{name:'汪林',no:14},{name:'王继',no:19},{name:'鲜文华',no:22},{name:'王志强',no:25},{name:'辛勇',no:27}]},{teamName:'老司机',players:[{name:'范鑫宇',no:4},{name:'刘典',no:7},{name:'刘以薰',no:8},{name:'刘国超',no:10},{name:'邓裕翔',no:11},{name:'高跃',no:13},{name:'吕鹏举',no:17},{name:'唐堂',no:18},{name:'钟远鹏',no:29},{name:'王明理',no:92}]},{teamName:'锦尚名仕',players:[{name:'潘先宇',no:6},{name:'钟成亮',no:8},{name:'郭强',no:9},{name:'郭瑞',no:10},{name:'李传薪',no:11},{name:'江东林',no:12},{name:'孙杰',no:23},{name:'张俊',no:33},{name:'刘成志',no:88},{name:'范明军',no:99}]}]
+	//var eventList= [{eventName:'FDSP_春季杯赛', teamList: teamList},{eventName:'Chengdu International Football League', teamList: CIFL_teamList}]
+	var eventList= [{eventName:'CIFL 2017', tournamentId: 8,teamList: teamList}]
+	var teamList=[]
+	
+	var rankList = [
+	                {property: 'goals', list:[]},
+	                {property: 'shots', list:[]},
+	                {property: 'assists', list:[]},
+	                {property: 'pass_finalball', list:[]},
+	                {property: 'save', list:[]},
+	                {property: 'key_defense', list:[]},
+	                {property: 'fouls', list:[]},
+	                {property: 'yellowCard', list:[]},
+	                {property: 'redCard', list:[]},
+	                {property: 'mistake', list:[]},
+	                {property: 'tackles', list:[]},
+	                {property: 'block', list:[]}
+	                ]
+	
+	prepareTime();
+	
+	var urlPre ='',iaa='';
+	
+	var vm = new Vue(
+				{
+					el : '#web',
+					data : {
+						beginTime:null,
+						hostTeam:null,
+						guestTeam:null,
+						hostTeamLogo:null,
+						guestTeamLogo:null,
+						hostTeamId:null,
+						guestTeamId:null,
+						eventName:null,
+						eventList: eventList,
+						teamList : teamList,
+						hostPlayerList:null,
+						guestPlayerList:null,
+						allHost:false,
+						allGuest:false,
+						selectedHostPlayer:[],
+						selectedGuestPlayer:[],
+						rankList:rankList,
+						headerLabelList: header.labelLists,
+						dataContent: [],
+						teamA_goalList:[],
+						teamB_goalList:[],
+						teamA_1st_FoulList:[],
+						teamB_1st_FoulList:[],
+						teamA_2nd_FoulList:[],
+						teamB_2nd_FoulList:[],
+						halfTimeFlag:'1st',
+						tournamentId:null,
+						matchId:null,
+						tournamentMatchList:[],
+						tournamentTeamBaseInfoList:[],
+						importPlayerDataList:[],
+						importTeamDataList:[],
+						teamChartDataList:[],
+						mvpPlayerId:null,
+						teamMvpPlayerId:null
+				
+					},
+					watch : {
+						allHost : function(val) {
+							switch (val) {
+							case true:
+								$.each(vm.$data.hostPlayerList, function(i,v){
+									vm.$data.selectedHostPlayer.push(v);
+								})
+								break;
+							case false:
+								vm._data.selectedHostPlayer =[] 
+								break;
+							default:
+							}
+						},
+						allGuest : function(val) {
+							switch (val) {
+							case true:
+								$.each(vm.$data.guestPlayerList, function(i,v){
+									vm.$data.selectedGuestPlayer.push(v);
+								})
+								break;
+							case false:
+								vm._data.selectedGuestPlayer =[] 
+								break;
+							default:
+							}
+						},
+						teamA_1st_FoulList: function(){
+							$('#teamA_1st_foulTimes').text(vm.$data.teamA_1st_FoulList.length);
+						},
+						teamA_2nd_FoulList: function(){
+							$('#teamA_2nd_foulTimes').text(vm.$data.teamA_2nd_FoulList.length);
+						},
+						teamB_1st_FoulList: function(){
+							$('#teamB_1st_foulTimes').text(vm.$data.teamB_1st_FoulList.length);
+						},
+						teamB_2nd_FoulList: function(){
+							$('#teamB_2nd_foulTimes').text(vm.$data.teamB_2nd_FoulList.length);
+						},
+						halfTimeFlag:function(val){
+							switch (val) {
+							case '1st':
+								setTimeout(function() {
+									$('#teamA_1st_foulTimes').text(vm.$data.teamA_1st_FoulList.length);
+									$('#teamB_1st_foulTimes').text(vm.$data.teamB_1st_FoulList.length);
+								  }, 100)
+								
+								break;
+							case '2nd':
+								setTimeout(function() {
+									$('#teamA_2nd_foulTimes').text(vm.$data.teamA_2nd_FoulList.length);
+									$('#teamB_2nd_foulTimes').text(vm.$data.teamB_2nd_FoulList.length);
+								  }, 100)
+								
+								break;
+							default:
+							}
+						}
+					},
+					methods : {
+						begin:function(){
+							
+							init();
+							/* if(vm.$data.selectedHostPlayer.length >=5 && vm.$data.selectedGuestPlayer.length >= 5){
+								init();	
+							}else{
+								alert('确保至少双方球队出场球员达成5名及以上');
+							} */
+						},
+						eventSelectChange: function(e){
+							
+							vm.$data.eventName = e.target.value
+							if(vm.$data.eventName == '请选择'){
+								return
+							}
+							 
+							var eventInfo = _.where(vm.$data.eventList, {eventName: vm.$data.eventName});
+							vm.$data.tournamentId = eventInfo[0].tournamentId;
+							
+							vm.getTournamentFullCalendarInfo()							
+						},
+						matchSelectChange: function(e){
+							matchId = parseInt(e.target.value)
+							if(matchId == '请选择'){
+								return
+							}
+							vm.$data.matchId = matchId
+							 
+							var calendarInfo = _.where(vm.$data.tournamentMatchList, {id: matchId});
+							vm.$data.hostTeamId = calendarInfo[0].hostTeamId;
+							vm.$data.guestTeamId = calendarInfo[0].guestTeamId;
+							
+							if(vm.$data.hostTeamId && vm.$data.guestTeamId){
+								TeamUrl=  urlPre+'tournament-service/getTournamentMatchTeamPlayerInfos/'+ vm.$data.tournamentId +'/' + vm.$data.matchId +iaa
+								$.GetJSON(TeamUrl, null,function(data) {
+									 if (data) {
+										 hostList = data.hostTeamPlayerInfoList;
+										 hostPlayerList = [];
+										 $.each(hostList, function(i,v){
+											 var player = {}
+											 player.number = v.number
+											 player.name = v.playerName
+											 player.id  = v.playerId
+											 player.imgUrl = 'http://static.footballer.cc/'+v.playerImg
+											 player.teamId = vm.$data.hostTeamId
+											 hostPlayerList.push(player);
+										 })
+										 vm.$data.hostPlayerList = _.sortBy(hostPlayerList, 'number');
+										 
+										 guestList = data.guestTeamPlayerInfoList;
+										 guestPlayerList = [];
+										 $.each(guestList, function(i,v){
+											 var player = {}
+											 player.number = v.number
+											 player.name = v.playerName
+											 player.id  = v.playerId
+											 player.imgUrl = 'http://static.footballer.cc/'+v.playerImg
+											 player.teamId = vm.$data.guestTeamId
+											 guestPlayerList.push(player);
+										 })
+										 vm.$data.guestPlayerList = _.sortBy(guestPlayerList, 'number');
+										 
+										 setTimeout(function() {
+											 var hostTeamInfo = _.where(vm._data.tournamentTeamBaseInfoList, {teamId: vm.$data.hostTeamId});
+											 $('#hostTeam').text(hostTeamInfo[0].teamName);
+											 vm.$data.hostTeamLogo = 'http://static.footballer.cc/'+hostTeamInfo[0].teamLogo
+											 $('#hostTeamLogo').attr("src", vm.$data.hostTeamLogo);
+											 $('#titleHostTeamLogo').attr("src", vm.$data.hostTeamLogo);
+											 
+											 var guestTeamInfo = _.where(vm._data.tournamentTeamBaseInfoList, {teamId: vm.$data.guestTeamId});
+											 $('#guestTeam').text(guestTeamInfo[0].teamName);
+											 vm.$data.guestTeamLogo = 'http://static.footballer.cc/'+guestTeamInfo[0].teamLogo
+											 $('#guestTeamLogo').attr("src", vm.$data.guestTeamLogo);
+											 $('#titleGuestTeamLogo').attr("src", vm.$data.guestTeamLogo);
+										 }, 200);
+									 } 
+								});	  
+								
+								
+								
+								//-----   test data  ------    //
+								/* data = {"status":"success","tournamentTeamPlayerInfoList":[{"playerId":1,"playerName":"来碗豆腐司机","playerImg":"2015-10/979f710c-4f2a-49b1-a64c-65927e0c39b5.png","number":9,"position":"striker","status":"ACTIVE","teamMVP":2,"mvp":1},{"playerId":2,"playerName":"17722630589","playerImg":"ball.png","number":0,"position":"striker","status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":3,"playerName":"阿林","playerImg":"2015-10/5aa68194-c6d0-42e5-b8e0-816e4cf11b38.png","number":8,"position":"secondStriker","status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":4,"playerName":"张锐","playerImg":"2015-10/20b0bf2f-5cb2-4526-8af6-7ea34071d816.png","number":0,"position":"rightMidfielder","status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":10,"playerName":"罗贝里","playerImg":"2015-10/b4227e1a-0de8-4df3-9478-0f727701238c.png","number":7,"position":"leftWing","status":"ACTIVE","teamMVP":null,"mvp":null}]}
+								hostList = data.tournamentTeamPlayerInfoList;
+								 hostPlayerList = [];
+								 $.each(hostList, function(i,v){
+									 var player = {}
+									 player.number = v.number
+									 player.name = v.playerName
+									 player.id  = v.playerId
+									 player.imgUrl = 'http://static.footballer.cc/'+v.playerImg
+									 player.teamId = vm.$data.hostTeamId
+									 hostPlayerList.push(player);
+								 })
+								 vm.$data.hostPlayerList = _.sortBy(hostPlayerList, 'number');
+								 
+								 setTimeout(function() {
+									 var hostTeamInfo = _.where(vm._data.tournamentTeamBaseInfoList, {teamId: vm.$data.hostTeamId});
+									 $('#hostTeam').text(hostTeamInfo[0].teamName);
+									 vm.$data.hostTeamLogo = 'http://static.footballer.cc/'+hostTeamInfo[0].teamLogo
+									 $('#hostTeamLogo').attr("src", vm.$data.hostTeamLogo);
+									 $('#titleHostTeamLogo').attr("src", vm.$data.hostTeamLogo);
+		  		                 }, 200);
+								
+								 data = {"status":"success","tournamentTeamPlayerInfoList":[{"playerId":3,"playerName":"阿林","playerImg":"2015-10/5aa68194-c6d0-42e5-b8e0-816e4cf11b38.png","number":null,"position":null,"status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":6,"playerName":"吴二","playerImg":"2015-10/d174ed04-2055-41ff-93ec-ae3b13dfe13c.png","number":null,"position":null,"status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":8,"playerName":"小四","playerImg":"2015-10/43389e3e-9f89-4888-9f09-80b837593177.png","number":null,"position":null,"status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":9,"playerName":"五妹","playerImg":"2015-10/f999c497-aab7-4115-bf72-71b23ad7a6da.png","number":null,"position":null,"status":"ACTIVE","teamMVP":null,"mvp":null},{"playerId":87,"playerName":"薛嵘俊","playerImg":"","number":0,"position":"striker","status":"ACTIVE","teamMVP":null,"mvp":4}]}
+								 guestList = data.tournamentTeamPlayerInfoList;
+								 guestPlayerList = [];
+								 $.each(guestList, function(i,v){
+									 var player = {}
+									 player.number = v.number
+									 player.name = v.playerName
+									 player.id  = v.playerId
+									 player.imgUrl = 'http://static.footballer.cc/'+v.playerImg
+									 player.teamId = vm.$data.guestTeamId
+									 guestPlayerList.push(player);
+								 })
+								 vm.$data.guestPlayerList = _.sortBy(guestPlayerList, 'number');
+								 
+								 setTimeout(function() {
+								 var guestTeamInfo = _.where(vm._data.tournamentTeamBaseInfoList, {teamId: vm.$data.guestTeamId});
+									 $('#guestTeam').text(guestTeamInfo[0].teamName);
+									 vm.$data.guestTeamLogo = 'http://static.footballer.cc/'+guestTeamInfo[0].teamLogo
+									 $('#guestTeamLogo').attr("src", vm.$data.guestTeamLogo);
+									 $('#titleGuestTeamLogo').attr("src", vm.$data.guestTeamLogo);
+								 }, 200); */
+								
+								
+							}else{
+								alert('赛程还未确定');
+							}
+							
+						},
+						hostTeamSelectChange: function(e){
+							var selectOption = e.target.value
+										
+							var teamInfo = _.where(vm.$data.teamList, {teamName: selectOption});
+							
+							vm.$data.hostPlayerList = [];
+							$.each(teamInfo[0].players, function(i,v){
+								vm.$data.hostPlayerList.push(v.no +'-'+v.name);
+							})
+							
+						},
+						guestTeamSelectChange: function(e){
+							var selectOption = e.target.value
+										
+							
+							var teamInfo = _.where(vm.$data.teamList, {teamName: selectOption});
+							
+							vm.$data.guestPlayerList = [];
+							$.each(teamInfo[0].players, function(i,v){
+								vm.$data.guestPlayerList.push(v.no +'-'+v.name);
+							})
+							
+						},
+						getTournamentFullCalendarInfo: function(){
+							
+							//获取完整赛程
+							url=  urlPre+'tournament-service/getTournamentFullCalendarInfo/'+ vm.$data.tournamentId +iaa
+							$.GetJSON(url, null,function(data) {
+								 if (data) {
+									 //vm._data.tournamentMatchList = data.tournamentMatchList;
+									 //获取 最新赛程 （比赛日之后5天内的可以获取比赛日的赛程）
+									 latestList = _.filter(data.tournamentMatchList, function(item){ return item.time > $.now()- 5*24 * 60 * 60 *1000})
+									 vm._data.tournamentMatchList = latestList
+								 } 
+							});	 
+							 
+							//获取所有参赛球队信息
+							url=  urlPre+'tournament-service/getTournamentTeamsInfo/'+ vm.$data.tournamentId +iaa
+							$.GetJSON(url, null,function(data) {
+								 if (data) {
+									 vm._data.tournamentTeamBaseInfoList = data.tournamentTeamBaseInfoList;
+								 } 
+							}); 
+							
+							//test
+							/* temp = {"status":"success","tournamentMatchList":[{"id":1,"time":1465645200000,"fieldName":"1号球场","typeName":"GroupA_R1","hostTeamLabel":"A1","hostTeamId":1,"hostTeamName":"踢球者","hostTeamLogo":"2015-10/2cc6af62-ee4e-4678-88d2-b3d2e5fbc3ab.png","guestTeamLabel":"A2","guestTeamId":4,"guestTeamName":"小菜菜","guestTeamLogo":"2015-10/f70dd4d1-86ff-4d59-bab3-599fdbf365f2.png","result":"5:2"},{"id":2,"time":1465731600000,"fieldName":"1号球场","typeName":"GroupA_R1","hostTeamLabel":"A3","hostTeamId":2,"hostTeamName":"Madrid","hostTeamLogo":"2015-10/8705030c-6c99-43c4-a52a-0869e95512c4.png","guestTeamLabel":"A4","guestTeamId":18,"guestTeamName":"牛人","guestTeamLogo":"2015-10/5fddb022-0a62-46aa-b93c-1ef616b73669.png","result":"2:2"},{"id":3,"time":1465818000000,"fieldName":"1号球场","typeName":"GroupB_R1","hostTeamLabel":"B1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B2","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":4,"time":1465904400000,"fieldName":"1号球场","typeName":"GroupB_R1","hostTeamLabel":"B3","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":5,"time":1465990800000,"fieldName":"1号球场","typeName":"GroupC_R1","hostTeamLabel":"C1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C2","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":6,"time":1466077200000,"fieldName":"1号球场","typeName":"GroupC_R1","hostTeamLabel":"C3","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":7,"time":1466163600000,"fieldName":"1号球场","typeName":"GroupD_R1","hostTeamLabel":"D1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D2","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":8,"time":1466250000000,"fieldName":"1号球场","typeName":"GroupD_R1","hostTeamLabel":"D3","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":9,"time":null,"fieldName":"1号球场","typeName":"GroupA_R2","hostTeamLabel":"A1","hostTeamId":1,"hostTeamName":"踢球者","hostTeamLogo":"2015-10/2cc6af62-ee4e-4678-88d2-b3d2e5fbc3ab.png","guestTeamLabel":"A3","guestTeamId":2,"guestTeamName":"Madrid","guestTeamLogo":"2015-10/8705030c-6c99-43c4-a52a-0869e95512c4.png","result":"0:1"},{"id":10,"time":null,"fieldName":"1号球场","typeName":"GroupA_R2","hostTeamLabel":"A2","hostTeamId":4,"hostTeamName":"小菜菜","hostTeamLogo":"2015-10/f70dd4d1-86ff-4d59-bab3-599fdbf365f2.png","guestTeamLabel":"A4","guestTeamId":18,"guestTeamName":"牛人","guestTeamLogo":"2015-10/5fddb022-0a62-46aa-b93c-1ef616b73669.png","result":"5:0"},{"id":11,"time":null,"fieldName":"1号球场","typeName":"GroupB_R2","hostTeamLabel":"B1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":12,"time":null,"fieldName":"1号球场","typeName":"GroupB_R2","hostTeamLabel":"B2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":13,"time":null,"fieldName":"1号球场","typeName":"GroupC_R2","hostTeamLabel":"C1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":14,"time":null,"fieldName":"1号球场","typeName":"GroupC_R2","hostTeamLabel":"C2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":15,"time":null,"fieldName":"1号球场","typeName":"GroupD_R2","hostTeamLabel":"D1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":16,"time":null,"fieldName":"1号球场","typeName":"GroupD_R2","hostTeamLabel":"D2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":17,"time":null,"fieldName":"1号球场","typeName":"GroupA_R3","hostTeamLabel":"A1","hostTeamId":1,"hostTeamName":"踢球者","hostTeamLogo":"2015-10/2cc6af62-ee4e-4678-88d2-b3d2e5fbc3ab.png","guestTeamLabel":"A4","guestTeamId":18,"guestTeamName":"牛人","guestTeamLogo":"2015-10/5fddb022-0a62-46aa-b93c-1ef616b73669.png","result":null},{"id":18,"time":null,"fieldName":"1号球场","typeName":"GroupA_R3","hostTeamLabel":"A2","hostTeamId":4,"hostTeamName":"小菜菜","hostTeamLogo":"2015-10/f70dd4d1-86ff-4d59-bab3-599fdbf365f2.png","guestTeamLabel":"A3","guestTeamId":2,"guestTeamName":"Madrid","guestTeamLogo":"2015-10/8705030c-6c99-43c4-a52a-0869e95512c4.png","result":null},{"id":19,"time":null,"fieldName":"1号球场","typeName":"GroupB_R3","hostTeamLabel":"B1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":20,"time":null,"fieldName":"1号球场","typeName":"GroupB_R3","hostTeamLabel":"B2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":21,"time":null,"fieldName":"1号球场","typeName":"GroupC_R3","hostTeamLabel":"C1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":22,"time":null,"fieldName":"1号球场","typeName":"GroupC_R3","hostTeamLabel":"C2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":23,"time":null,"fieldName":"1号球场","typeName":"GroupD_R3","hostTeamLabel":"D1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D4","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":24,"time":null,"fieldName":"1号球场","typeName":"GroupD_R3","hostTeamLabel":"D2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D3","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":34,"time":1466509200000,"fieldName":"1号球场","typeName":"quarterfinals","hostTeamLabel":"A1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B2","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":40,"time":1466509200000,"fieldName":"1号球场","typeName":"quarterfinals","hostTeamLabel":"A2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"B1","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":41,"time":1466595600000,"fieldName":"1号球场","typeName":"quarterfinals","hostTeamLabel":"C1","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D2","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":42,"time":1466682000000,"fieldName":"1号球场","typeName":"quarterfinals","hostTeamLabel":"C2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"D1","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":43,"time":1466854800000,"fieldName":"1号球场","typeName":"semifinals","hostTeamLabel":"A1/B2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"A2/B1","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":44,"time":1466941200000,"fieldName":"1号球场","typeName":"semifinals","hostTeamLabel":"C1/D2","hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":"C2/D1","guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":45,"time":1467200400000,"fieldName":"1号球场","typeName":"third","hostTeamLabel":null,"hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":null,"guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null},{"id":46,"time":1467286800000,"fieldName":"1号球场","typeName":"final","hostTeamLabel":null,"hostTeamId":null,"hostTeamName":null,"hostTeamLogo":null,"guestTeamLabel":null,"guestTeamId":null,"guestTeamName":null,"guestTeamLogo":null,"result":null}]}
+							vm._data.tournamentMatchList = temp.tournamentMatchList;
+							
+							team = {"status":"success","tournamentTeamBaseInfoList":[{"tournamentId":null,"teamId":1,"groupName":"A","groupNumber":1,"teamName":"踢球者","teamLogo":"2015-10/2cc6af62-ee4e-4678-88d2-b3d2e5fbc3ab.png","playerCount":6},{"tournamentId":null,"teamId":4,"groupName":"A","groupNumber":2,"teamName":"小菜菜","teamLogo":"2015-10/f70dd4d1-86ff-4d59-bab3-599fdbf365f2.png","playerCount":5},{"tournamentId":null,"teamId":2,"groupName":"A","groupNumber":3,"teamName":"Madrid","teamLogo":"2015-10/8705030c-6c99-43c4-a52a-0869e95512c4.png","playerCount":3},{"tournamentId":null,"teamId":18,"groupName":"A","groupNumber":4,"teamName":"牛人","teamLogo":"2015-10/5fddb022-0a62-46aa-b93c-1ef616b73669.png","playerCount":2},{"tournamentId":null,"teamId":34,"groupName":"B","groupNumber":1,"teamName":"东山坡","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":50,"groupName":"B","groupNumber":2,"teamName":"草木人禾","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":51,"groupName":"B","groupNumber":3,"teamName":"左脚右脚","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":52,"groupName":"B","groupNumber":4,"teamName":"洪河老友记","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":53,"groupName":"C","groupNumber":1,"teamName":"山卡卡","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":54,"groupName":"C","groupNumber":2,"teamName":"东拉西扯","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":55,"groupName":"C","groupNumber":3,"teamName":"6780聚乐部","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":66,"groupName":"C","groupNumber":4,"teamName":"银河战舰队","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":68,"groupName":"D","groupNumber":1,"teamName":"金刚芭比队","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":69,"groupName":"D","groupNumber":2,"teamName":"叔叔不约","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":70,"groupName":"D","groupNumber":3,"teamName":"一塌糊涂","teamLogo":null,"playerCount":1},{"tournamentId":null,"teamId":71,"groupName":"D","groupNumber":4,"teamName":"龙城一号","teamLogo":null,"playerCount":1}]}
+							vm._data.tournamentTeamBaseInfoList = team.tournamentTeamBaseInfoList */
+						},
+						refreshRanking: function(type){
+				        	var tempData = [];
+				        	$.extend(true, tempData, vm.$data.dataContent);
+				        	
+				        	//remove null item
+				        	$.each(tempData,function(i,v){
+				        		if(v){
+				        			
+				        		}else{
+				        			tempData.splice(i,1)
+				        		}
+				        	})
+				        	
+				        	tempData.sort(function(b,a){ 
+				        		var x = _.findWhere(a.datacount, {property: type});
+				         		var y = _.findWhere(b.datacount, {property: type});
+				         		return x.no-y.no	
+				     		});
+				        	
+				        	
+				        	var obj={};
+				        	obj.type = type;
+				        	obj.list = [];
+				        	
+				        	//清空
+				        	$.each(vm.$data.rankList, function(i,v){
+				        		if(v.property == type){
+				        			v.list =[]		
+				        		}
+				        	})
+				        	
+				        	var currentlist =[];
+				        	
+				        	$.each(tempData, function(i,v){
+				        		if(i<3) //just get Top 3 item.
+				        		{
+				        			data = _.findWhere(v.datacount, {property: type});
+				            		if(data.no>0){
+				            			var row = {};
+				            			row.playerName = v.player.no +'-'+ textLengthFormat(v.player.name,4);
+				                		row.no = data.no	
+				                		currentlist.push(row);
+				            		}
+				        		}
+				        	})
+				        	
+				        	$.each(vm.$data.rankList, function(i,v){
+				        		if(v.property == type){
+				        			v.list =currentlist		
+				        		}
+				        	})
+				        },
+				        /* ownGoalsRecord: function(e){
+				        	var that = e.target;
+				        	var currentData;
+				        	
+				        	refreshScores(that);
+				        	vm.timeTracking(that,'乌龙一次',1);
+				        }, */
+						synRankingAndRecord: function(e){
+				        	var that = e.target;
+				        	var currentData;
+				    		
+				    		$.each(vm.$data.dataContent, function(index,value){
+				    			if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				    				currentData = vm.$data.dataContent[index].datacount;
+				    				
+				    				$.each(currentData, function(i,v){
+				    					if(v && v.property == that.name){
+				    						var newValue = parseInt($(that).parent().parent().find("label").text());
+				    						if(that.className == 'add'){
+					    						v.no++;
+				        						newValue++;
+				        						vm.timeTracking(that,'新增一次',newValue);
+				        						
+				        						if(that.name == 'goals'){
+				    								//同步增加射门次数
+													$.each(vm.$data.dataContent,function(index,value){
+				    									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				    										$.each(value.datacount, function(index,value){
+				    											if(value && value.property == 'shots'){
+				    												value.no++;
+				    												$(that).parent().parent().prev().find('label').text(value.no);
+				    												
+				    												var temp = {};
+				    												$.extend(true, temp, that);
+				    												temp.name = 'shots';
+				    												vm.timeTracking(temp,'新增一次',value.no);
+				    												vm.refreshRanking('shots');
+				    											}
+				    										})
+				    									}	
+				    								}) 
+				    							}
+				        						
+				        						if(that.name == 'yellowCard'){
+				    								//同步增加犯规次数
+													$.each(vm.$data.dataContent,function(index,value){
+				    									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				    										$.each(value.datacount, function(index,value){
+				    											if(value && value.property == 'fouls'){
+				    												value.no++;
+				    												$(that).parent().parent().prev().find('label').text(value.no);
+				    												
+				    												var temp = {};
+				    												$.extend(true, temp, that);
+				    												temp.name = 'fouls';
+				    												vm.timeTracking(temp,'新增一次',value.no);
+				    												vm.refreshRanking('fouls');
+				    											}
+				    										})
+				    									}	
+				    								}) 
+				    							}
+				        						
+				        						if(that.name == 'redCard'){
+				    								//同步增加犯规次数
+													$.each(vm.$data.dataContent,function(index,value){
+				    									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				    										$.each(value.datacount, function(index,value){
+				    											if(value && value.property == 'fouls'){
+				    												value.no++;
+				    												$(that).parent().parent().prev().prev().find("label").text(value.no);
+				    												
+				    												var temp = {};
+				    												$.extend(true, temp, that);
+				    												temp.name = 'fouls';
+				    												vm.timeTracking(temp,'新增一次',value.no);
+				    												vm.refreshRanking('fouls');
+				    											}
+				    										})
+				    									}	
+				    								}) 
+				    							}
+				        						
+				    						}else if(that.className == 'subtract'){
+				    							v.no--;
+				    							if(v.no >= 0){
+				    								if(that.name == 'goals'){
+				        								//同步撤销射门次数
+				    									$.each(vm.$data.dataContent,function(index,value){
+				        									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				        										$.each(value.datacount, function(index,value){
+				        											if(value && value.property == 'shots'){
+				        												value.no--;
+				        												if(value.no < 0 ){
+				        													value.no=0;
+				        				    							}
+				        												$(that).parent().parent().prev().find('label').text(value.no);
+				        												
+				        												var temp = {};
+				        												$.extend(true, temp, that);
+				        												temp.name = 'shots';
+				        												vm.timeTracking(temp,'撤销一次',value.no);
+				        												vm.refreshRanking('shots');
+				        											}
+				        										})
+				        									}	
+				        								}) 
+				        							}
+				    								
+				    								if(that.name == 'yellowCard'){
+				        								//同步撤销犯规次数
+				    									$.each(vm.$data.dataContent,function(index,value){
+				        									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				        										$.each(value.datacount, function(index,value){
+				        											if(value && value.property == 'fouls'){
+				        												value.no--;
+				        												if(value.no < 0 ){
+				        													value.no=0;
+				        				    							}
+				        												$(that).parent().parent().prev().find('label').text(value.no);
+				        												
+				        												var temp = {};
+				        												$.extend(true, temp, that);
+				        												temp.name = 'fouls';
+				        												vm.timeTracking(temp,'撤销一次',value.no);
+				        												vm.refreshRanking('fouls');
+				        											}
+				        										})
+				        									}	
+				        								}) 
+				        							}
+				    								
+				    								if(that.name == 'redCard'){
+				        								//同步撤销犯规次数
+				    									$.each(vm.$data.dataContent,function(index,value){
+				        									if(value && (value.player.teamId+'-'+value.player.no+'-'+value.player.name) == that.id){
+				        										$.each(value.datacount, function(index,value){
+				        											if(value && value.property == 'fouls'){
+				        												value.no--;
+				        												if(value.no < 0 ){
+				        													value.no=0;
+				        				    							}
+				        												$(that).parent().parent().prev().prev().find("label").text(value.no);
+				        												
+				        												var temp = {};
+				        												$.extend(true, temp, that);
+				        												temp.name = 'fouls';
+				        												vm.timeTracking(temp,'撤销一次',value.no);
+				        												vm.refreshRanking('fouls');
+				        											}
+				        										})
+				        									}	
+				        								}) 
+				        							}
+				    							}
+				    							if(v.no < 0 ){
+				    								v.no=0;
+				    							}
+				        						newValue--;
+				        						if(newValue < 0){
+				        							newValue =0;
+				        						}
+				        						
+				        						vm.timeTracking(that,'撤销一次',newValue);
+				        						
+				        						
+				    						}else{
+				    							return;
+				    						}
+				    						
+				    						//$(that).parent().find(":first-child").text(newValue);
+				    						$(that).parent().parent().find("label").text(newValue);
+				    						return;
+				    					}
+				    				});
+				    				return;
+				    			}
+				    		});
+				    		
+				    		if(that.name == 'goals' || that.name =='ownGoals'){
+				    			refreshScores(that);
+				    		}
+				    		vm.refreshRanking(that.name);
+				    		
+				    		
+				        },
+				        timeTracking: function(data,type,value){
+				        	var lastIndex, checkName = data.id,
+				        	log = {};
+				        	log.name = data.id;
+				        	log.property = data.name;
+				        	
+				        	
+				        	
+				        	log.time = timeBetween(vm.$data.beginTime, new Date())
+				        	log.type = type;
+				        	log.totalValue = value;
+				        	logList.push(log);
+				        	
+				        	if(data.name == 'goals'){ //进球记录与撤销
+				        		if(type != '撤销一次'){ //正常记录
+				        			if(data.value == 1){
+					        				vm.$data.teamA_goalList.push(log);	
+					        		}else{
+					        			vm.$data.teamB_goalList.push(log);
+					        		}	
+				        		}else{ //误操作 需要移除 之前的操作
+				        			if(data.value == 1){
+					        			 	$.each(vm.$data.teamA_goalList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamA_goalList.splice(lastIndex,1);	
+					        				}
+					        		}else{
+					        			$.each(vm.$data.teamB_goalList, function(i,v){
+				        					if(v.name == checkName){
+				        						lastIndex = i
+				        					}
+				        				}) 
+				        				if(lastIndex !== void 0){
+				        					vm.$data.teamB_goalList.splice(lastIndex,1);	
+				        				}
+					        		}
+				        		}
+				        		
+				        	}
+				        	
+							if(data.name == 'ownGoals'){ //乌龙记录与撤销
+				        		if(type != '撤销一次'){ //正常记录
+				        			if(data.value == 1){
+					        				vm.$data.teamB_goalList.push(log);	
+					        		}else{
+					        			vm.$data.teamA_goalList.push(log);
+					        		}	
+				        		}else{ //误操作 需要移除 之前的操作
+				        			if(data.value == 1){
+					        			 	$.each(vm.$data.teamB_goalList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamB_goalList.splice(lastIndex,1);	
+					        				}
+					        		}else{
+					        			$.each(vm.$data.teamA_goalList, function(i,v){
+				        					if(v.name == checkName){
+				        						lastIndex = i
+				        					}
+				        				}) 
+				        				if(lastIndex !== void 0){
+				        					vm.$data.teamA_goalList.splice(lastIndex,1);	
+				        				}
+					        		}
+				        		}
+	        				} 
+				        	
+				        	
+				        	if(data.name == 'fouls'){   //犯规记录与撤销
+				        		if(type != '撤销一次'){ //正常记录
+				        			if(data.value == 1){
+					        			if(vm.$data.halfTimeFlag == '1st'){ //上半场
+					        				vm.$data.teamA_1st_FoulList.push(log);	
+					        			}else{
+					        				vm.$data.teamA_2nd_FoulList.push(log);
+					        			}
+					        			
+					        		}else{
+					        			if(vm.$data.halfTimeFlag == '1st'){//上半场
+					        				vm.$data.teamB_1st_FoulList.push(log);	
+					        			}else{
+					        				vm.$data.teamB_2nd_FoulList.push(log);
+					        			}
+					        		}	
+				        		}else{ //误操作 需要移除 之前的操作
+				        			if(data.value == 1){
+					        			if(vm.$data.halfTimeFlag == '1st'){//上半场
+					        			 	$.each(vm.$data.teamA_1st_FoulList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamA_1st_FoulList.splice(lastIndex,1);	
+					        				}
+					        			}else{
+					        				$.each(vm.$data.teamA_2nd_FoulList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamA_2nd_FoulList.splice(lastIndex,1);
+					        				}
+					        			}
+					        			
+					        		}else{
+					        			if(vm.$data.halfTimeFlag == '1st'){//上半场
+					        				$.each(vm.$data.teamB_1st_FoulList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamB_1st_FoulList.splice(lastIndex,1);
+					        				}	
+					        			}else{
+					        				$.each(vm.$data.teamB_2nd_FoulList, function(i,v){
+					        					if(v.name == checkName){
+					        						lastIndex = i
+					        					}
+					        				}) 
+					        				if(lastIndex !== void 0){
+					        					vm.$data.teamB_2nd_FoulList.splice(lastIndex,1);
+					        				}
+					        			}
+					        		}
+				        		}
+				        		
+				        	}
+				        },
+				        chartData: function(){
+				        	 var playerDataList = [];
+				        	
+				        	 var dataRows = $('#dataAnalysisArea>div#rowData')
+				        	 $.each(dataRows, function(i,row){
+				        		 var player ={};
+				        		 player.playerId = $(row).attr('data-playerId')
+				        		 player.teamId = $(row).attr('data-teamId')
+								 player.a = [];
+				        		 
+				        		 var dataColumns =$(row).find('div.operateframe')
+				        		 $.each(dataColumns, function(i,v){
+				        			 player.a.push($(v).find('label').text().trim())
+				        		 })
+				        		 
+				        		 playerDataList.push(player);
+				        	 });
+				        	 
+				        	
+				        	var importPlayerDataList = []
+				        	$.each(playerDataList, function(i,v){
+				        		var importPlayerData = {}
+				        		
+				        		importPlayerData['tournamentMatchId'] = vm.$data.matchId
+				        		importPlayerData['playerId'] = v.playerId
+				        		importPlayerData['teamId'] = v.teamId
+				        		$.each(vm.$data.headerLabelList, function(index,value){
+				        			if(value.property != '-'){
+				        				importPlayerData[''+value.property] = v.a[index]	
+				        			}
+				        		})
+				        		importPlayerDataList.push(importPlayerData)
+				        	})
+				        	console.log(importPlayerDataList)
+							vm.$data.importPlayerDataList = importPlayerDataList;
+				        	
+				        	//汇总球员数据到球队数据
+				        	var importTeamDataList = []
+				        	//初始化 球队数据对象
+				        	var importHostTeamData = {}
+				        	var propertyNames = [] 
+				        	if(importPlayerDataList[0]){
+				        		var propertyNames = Object.getOwnPropertyNames(importPlayerDataList[0])
+				        	}
+				        	$.each(propertyNames,function(i,v){
+				        		importHostTeamData[''+v] = 0;
+				        	})
+				        	
+				        	//主队数据汇总
+				        	$.each(_.where(importPlayerDataList,{teamId: vm.$data.hostTeamId.toString()}), function(i,v){
+				        		$.each(propertyNames,function(index, value){
+				        			importHostTeamData[''+value] += parseInt(v[value])
+				        		})
+				        	})
+				        	importHostTeamData.teamId = vm.$data.hostTeamId
+				        	importHostTeamData['tournamentMatchId'] = vm.$data.matchId
+							
+				        	//客队数据汇总
+				        	var importGuestTeamData = {}
+				        	$.each(propertyNames,function(i,v){
+				        		importGuestTeamData[''+v] = 0;
+				        	})
+				        	$.each(_.where(importPlayerDataList,{teamId: vm.$data.guestTeamId.toString()}), function(i,v){
+				        		$.each(propertyNames,function(index, value){
+				        			importGuestTeamData[''+value] += parseInt(v[value])
+				        		})
+				        	})
+				        	importGuestTeamData.teamId = vm.$data.guestTeamId
+				        	importGuestTeamData['tournamentMatchId'] = vm.$data.matchId
+				        	
+				        	//自动计算出积分和得失球
+				        	importHostTeamData.conceded = importGuestTeamData.goals + importHostTeamData.ownGoals
+				        	importGuestTeamData.conceded = importHostTeamData.goals + importGuestTeamData.ownGoals
+				        	
+				        	if(importHostTeamData.goals + importGuestTeamData.ownGoals > importGuestTeamData.goals + importHostTeamData.ownGoals){
+				        		importHostTeamData.points = 3
+				        		importGuestTeamData.points = 0
+				        	}else if(importHostTeamData.goals + importGuestTeamData.ownGoals  < importGuestTeamData.goals + importHostTeamData.ownGoals){
+				        		importHostTeamData.points = 0
+				        		importGuestTeamData.points = 3
+				        	}else{
+				        		importHostTeamData.points = 1
+				        		importGuestTeamData.points = 1
+				        	}
+				        	
+				        	importTeamDataList.push(importHostTeamData);
+				        	importTeamDataList.push(importGuestTeamData);
+				        	
+				        	console.log(importTeamDataList)
+				        	vm.$data.importTeamDataList = importTeamDataList;
+				        	
+				        	//图表展示球队整体数据
+				        	var teamChartDataList = [];
+				        	$.each(importTeamDataList, function(i,v){
+								var teamChartData = {};
+								
+								teamChartData.teamId = v.teamId
+								if(i==0){
+									teamChartData.teamName = vm.$data.hostTeam	
+									teamChartData.teamLogo = vm.$data.hostTeamLogo
+								}else{
+									teamChartData.teamName = vm.$data.guestTeam
+									teamChartData.teamLogo = vm.$data.guestTeamLogo
+								}
+								
+								$.each(vm.$data.headerLabelList, function(index,value){
+					        		if(value.property != '-'){
+					       				teamChartData[''+value.property] = v[''+value.property]	
+					       			}
+					       		})
+					        		teamChartDataList.push(teamChartData);
+								
+								//组合展示用的 数据 把中间文字和图片部分放到第二个数据加入
+								if(i==0){	
+									teamChartData = {};
+									$.each(vm.$data.headerLabelList, function(index,value){
+					        			if(value.property != '-'){
+					        				teamChartData[''+value.property] = value.name
+					        				teamChartData[''+value.property+'_logo'] = value.icon_url
+					        			}
+					        		})
+					        		teamChartDataList.push(teamChartData);
+								}
+				        		
+				        	})
+				        	vm.$data.teamChartDataList = teamChartDataList
+				        	console.log(teamChartDataList)
+				        },
+				        importData2DB:function(){
+				        	$('#importBtn').hide();
+				        	$('#superman').show();
+				        	
+				        	//加入mvp ,teamMvp 数据项
+				        	vm.$data.teamMvpPlayerId
+				        	vm.$data.mvpPlayerId
+				        	
+				        	$.each(vm.$data.importPlayerDataList, function(i,v){
+				        		if(v.playerId == vm.$data.mvpPlayerId){
+				        			v.mvp = 1
+				        		}
+				        		
+				        		if(v.playerId == vm.$data.teamMvpPlayerId){
+				        			v.teamMVP = 1
+				        		}
+				        	})
+				        	
+				        	
+				        	//插入球队,球员各项数据统计
+				        	var saveMatchDataStatisticsUrl = urlPre+'tournament-service/saveTournamentMatchDataStatistics'+iaa
+				        	var parameter = {
+				        		importPlayerDataList : vm.$data.importPlayerDataList,
+				        		importTeamDataList : vm.$data.importTeamDataList
+							};
+
+							$.postJSON(saveMatchDataStatisticsUrl, parameter, function(data) {
+								
+								//$('#importBtn').show();
+								if(data.status =='success'){
+									$('#superman').hide();
+								}else{
+									alert(data.message);
+									$('#importBtn').show();
+									$('#superman').hide();
+								}
+							});
+				        }
+					}
+				}); 
+
+		 
+         $(document).ready(function() {
+        	
+        	loginStatusCheck(function(){}); 
+        	
+        	urlPre = window.localStorage["urlPre"]
+	 		iaa = window.localStorage["iaa"]
+        	 
+        	$("#addBtn").click(function() {
+            	$('.add').toggle();
+            	$('.subtract').hide();
+            	//$('.ownGoals').hide();
+            });
+        	
+        	$("#subtractBtn").click(function() {
+        		$('.subtract').toggle();
+        		$('.add').hide();
+            	//$('.ownGoals').hide();
+            });
+        	
+        	/* $("#ownGoalsBtn").click(function() {
+        		$('.ownGoals').toggle();
+        		$('.add').hide();
+        		$('.subtract').hide();
+        	}) */
+        	
+        	$('#operate').click(displayOperateArea); 
+        	$('#report').click(displayReportArea);
+        	$('#log').click(displayLogArea);
+            
+/*             $('.clickLabel').click(function(){
+            	var that = this;
+             	if($(this).text().trim()=='姓名'){
+             		content.rows.sort(function(a,b){return a.player.localeCompare(b.player);});
+             	}else{
+             		content.rows.sort(function(b,a){ 
+             			if(a && b){
+             				var x = _.findWhere(a.datacount, {property: that.id});
+                 			var y = _.findWhere(b.datacount, {property: that.id});
+							if(x && y){
+								return x.no-y.no	
+							}else{
+								return -999;	
+							}
+         				}else{
+         					return -999;
+         				}
+             			});
+             	}
+             	addListener();
+            }); 
+            
+            //sort by team 
+            $('#teamsort').click(function(){
+             	content.rows.sort(function(a,b)
+             			{	
+             				if(a && b){
+             					return a.team_id-b.team_id;	
+             				}else{
+             					return 20;
+             				}
+             			});
+             	addListener();
+            });*/
+            
+        }); 
+        
+        function init(){
+        	
+        	$("#mainArea").fadeIn();
+			$("#selectArea").fadeOut();
+			
+			vm.$data.hostTeam = $('#hostTeam').text();
+			vm.$data.guestTeam = $('#guestTeam').text();
+			
+			vm.$data.beginTime = new Date();
+			
+        	loadTab();
+        	
+        	$('#teamA').text(vm.$data.hostTeam);
+        	$('#teamB').text(vm.$data.guestTeam);
+        	$('#foul_teamA').text(vm.$data.hostTeam);
+			$('#foul_teamB').text(vm.$data.guestTeam);
+        	
+			var datacount= [ 
+							{property: 'shots',           no: "0"},
+							{property: 'goals',           no: "0"},
+							{property: 'pass_finalball',  no: "0"},
+							{property: 'assists',         no: "0"},
+							null,
+				    		{property: 'key_defense',     no: "0"},
+							{property: 'save', no: "0"},
+							null,
+							{property: 'fouls',         no: "0"},
+							{property: 'yellowCard',           no: "0"},
+							{property: 'redCard',         no: "0"},
+							{property: 'ownGoals',         no: "0"}
+	            			];   	
+        	
+			$.each(vm.$data.selectedHostPlayer, function(i,v){
+	       		 var obj = {};
+	       		 obj.team_id = 1
+	       		 
+	       	     var player={};
+       		 	 player.no = v.number
+       		 	 player.name = v.name
+       		 	 player.id = v.id
+       		 	 player.img = v.imgUrl
+       		 	 player.teamId = v.teamId
+	       		 
+	       		 obj.player = player
+	       		 var tempData = [];
+	            	 $.extend(true, tempData, datacount);
+	        		 obj.datacount = tempData;
+	       		 
+	        		 vm.$data.dataContent.push(obj)
+	       	});
+			
+			vm.$data.dataContent.push(null)
+			
+			$.each(vm.$data.selectedGuestPlayer, function(i,v){
+	       		 var obj = {};
+	       		 obj.team_id = 2
+	       		 var player={};
+       		 	 player.no = v.number
+       		 	 player.name = v.name
+       		 	 player.id = v.id
+       		 	 player.img = v.imgUrl
+       		 	 player.teamId = v.teamId
+       		 
+	       		 obj.player = player
+	       		 var tempData = [];
+	            	 $.extend(true, tempData, datacount);
+	        		 obj.datacount = tempData;
+	       		 
+	        		 vm.$data.dataContent.push(obj)
+	       	});
+			
+			//技术指标浮动
+        	$("#dataAnalysisHeaderArea").fixedDiv('fix-div');
+			
+			//高亮进球项
+            $('#goals').css('background','greenyellow')
+            
+            //高亮助攻项
+            $('#assists').css('background','aquamarine')
+        } 
+        
+        function displayOperateArea(){
+        	$('#operateArea').show();
+        	$('#mainAreaOperate').show();
+    		$('#reportArea').hide();
+    		$('#logArea').hide();
+        }
+        
+        function displayReportArea(){
+        	vm.chartData();
+        	$('#operateArea').hide();
+        	$('#mainAreaOperate').hide();
+    		$('#reportArea').css('display','inline-block');
+    		$('#logArea').hide();
+        }
+        
+        function displayLogArea(){
+        	$('#mainAreaOperate').hide();
+        	$('#operateArea').hide();
+    		$('#reportArea').hide();
+    		$('#logArea').css('display','inline-block');
+    		
+    		var content ='';
+    		$.each(logList, function(index,item){
+    			content +=  item.time +'---' + item.name + item.type + item.property +'('+ item.totalValue +')' + '\n';
+    		})
+    		$('#logContent').text(content);
+        }
+         
+        function refreshScores(that){
+        	if(that.name == 'goals'){
+        		if(that.className == 'add'){
+            		if(that.value == '1'){ //team A
+            			var teamAscore = $('#teamA_score').text();
+            			teamAscore++;
+            			$('#teamA_score').text(teamAscore);
+            		}else{// team B
+            			var teamBscore = $('#teamB_score').text();
+            			teamBscore++;
+            			$('#teamB_score').text(teamBscore);
+            		}
+            	}else if(that.className == 'subtract' && $(that).parent().prev().text() >=0){
+    				if(that.value == '1'){ //team A
+    					var teamAscore = $('#teamA_score').text();
+            			teamAscore--;
+            			if(teamAscore >0){
+            				$('#teamA_score').text(teamAscore);
+            			}else{
+            				$('#teamA_score').text(0);
+            			}
+            		}else{// team B
+            			var teamBscore = $('#teamB_score').text();
+            			teamB_score--;
+            			if(teamB_score >0){
+            				$('#teamB_score').text(teamB_score);
+            			}else{
+            				$('#teamB_score').text(0);
+            			}
+            		}
+            	}
+        	}
+        	
+        	if(that.name == 'ownGoals'){
+        		if(that.className == 'add'){
+            		if(that.value == '1'){ //team A
+            			var teamBscore = $('#teamB_score').text();
+            			teamBscore++;
+            			$('#teamB_score').text(teamBscore);
+            		}else{// team B
+            			var teamAscore = $('#teamA_score').text();
+            			teamAscore++;
+            			$('#teamA_score').text(teamAscore);
+            		}
+            	}else if(that.className == 'subtract' && $(that).parent().prev().text() >=0){
+    				if(that.value == '1'){ //team A
+    					var teamBscore = $('#teamB_score').text();
+            			teamBscore--;
+            			if(teamBscore >0){
+            				$('#teamB_score').text(teamBscore);
+            			}else{
+            				$('#teamB_score').text(0);
+            			}
+            		}else{// team B
+            			var teamAscore = $('#teamA_score').text();
+            			teamAscore--;
+            			if(teamAscore >0){
+            				$('#teamA_score').text(teamAscore);
+            			}else{
+            				$('#teamA_score').text(0);
+            			}
+            		}
+            	}
+        	}
+        	
+        	/* if(that.className.indexOf('ownGoals')>=0){
+        		if(that.value == '1'){ //team A
+					var teamBscore = $('#teamB_score').text();
+					teamBscore++;
+        			if(teamBscore >0){
+        				$('#teamB_score').text(teamBscore);
+        			}else{
+        				$('#teamB_score').text(0);
+        			}
+        		}else{// team B
+        			var teamAscore = $('#teamA_score').text();
+        			teamAscore++;
+        			if(teamAscore >0){
+        				$('#teamA_score').text(teamAscore);
+        			}else{
+        				$('#teamA_score').text(0);
+        			}
+        		}
+        	} */
+        }
+        function mvpClick(e){
+        	if($(e).children('img#teamMvp').is(":hidden") && $(e).children('img#mvp').is(":hidden")){
+        	    mvpVisibaleTag =false 
+        		mvpHiddenTag = false
+        		teamMvpVisibleTag = false
+        		teamMvpHiddenTag = false
+        		
+        		$.each($('img#mvp'), function(i,v){
+        			if($(v).is(':visible')){
+        				mvpVisibaleTag= true
+        				return false;
+        			}
+        		})
+        		if(mvpVisibaleTag == false){
+        			mvpHiddenTag = true
+        		}
+        		
+        		$.each($('img#teamMvp'), function(i,v){
+        			if($(v).is(':visible')){
+        				teamMvpVisibleTag= true
+        				return false;
+        			}
+        		})
+        		if(teamMvpVisibleTag == false){
+        			teamMvpHiddenTag = true
+        		}
+        		
+        		
+        		if(mvpVisibaleTag && teamMvpHiddenTag){
+            		$(e).children('img#teamMvp').show()
+            		synMVPInfo('teamMvp',e)
+            		return
+        		}
+        		
+        		if(teamMvpVisibleTag && mvpHiddenTag){
+            		$(e).children('img#mvp').show()
+            		synMVPInfo('mvp',e)
+            		return
+        		}
+        			
+        		if(mvpVisibaleTag && teamMvpVisibleTag || mvpHiddenTag && teamMvpHiddenTag){
+        			$('img#mvp').hide()
+               		$(e).children('img#teamMvp').hide()
+               		$(e).children('img#mvp').show()
+                	synMVPInfo('mvp',e)
+                	return	
+        		}
+        	}        		
+        	
+        	if($(e).children('img#mvp').is(":hidden")){
+        		$('img#mvp').hide()
+        		$(e).children('img#teamMvp').hide()
+        		$(e).children('img#mvp').show()
+        		synMVPInfo('mvp',e)
+        		$('#teamMvpInfo').empty()
+        		return
+        	}
+        	if($(e).children('img#teamMvp').is(":hidden")){
+        		$('img#teamMvp').hide()
+        		$(e).children('img#mvp').hide()
+        		$(e).children('img#teamMvp').show()
+        		synMVPInfo('teamMvp',e)
+        		$('#mvpInfo').empty()
+        		return
+        	}
+        }
+        
+        function synMVPInfo(type,e){
+        	_playerid = $(e).parent().attr('data-playerid')
+    		_teamId = $(e).parent().attr('data-teamid')
+			if(type=='mvp'){
+				$('#mvpInfo').empty()
+				playerHtmlElement = $(e).next().clone()
+				$('#mvpInfo').append($(playerHtmlElement).css('width','120px'))
+				vm.$data.mvpPlayerId = _playerid
+			}
+        	if(type=='teamMvp'){
+        		$('#teamMvpInfo').empty()
+				playerHtmlElement = $(e).next().clone()
+				$('#teamMvpInfo').append($(playerHtmlElement).css('width','120px'))
+				vm.$data.teamMvpPlayerId = _playerid
+        	}
+        	if(type=='remove'){
+        		$('#mvpInfo').empty()
+        		$('#teamMvpInfo').empty()
+        		vm.$data.mvpPlayerId = null
+        		vm.$data.teamMvpPlayerId = null
+        	}
+        }
+        
+        function mvpCancelClick(e){
+        	$(e).children('img#mvp').hide()
+        	$(e).children('img#teamMvp').hide()
+        	
+        	synMVPInfo('remove',e)
+        }
+        
+        function mouseOver(e){
+        	$(e).css('background', 'lightskyblue');
+        }
+        
+		function mouseOut(e){
+			$(e).css('background', 'transparent');
+        }
+      
+</script>
+</body>
+</html>
