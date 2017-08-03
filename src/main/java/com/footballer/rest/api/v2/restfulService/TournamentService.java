@@ -8,8 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import jersey.repackaged.com.google.common.collect.Lists;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,15 +30,19 @@ import com.footballer.rest.api.v2.manager.UserShareRecordManager;
 import com.footballer.rest.api.v2.request.DeleteTournamentTeamByIdRequest;
 import com.footballer.rest.api.v2.request.GetThumbnailByUrlRequest;
 import com.footballer.rest.api.v2.request.GetTournamentVideoListRequest;
+import com.footballer.rest.api.v2.request.SaveMatchResultScoreRequest;
 import com.footballer.rest.api.v2.request.ShareRequest;
 import com.footballer.rest.api.v2.vo.Moment;
 import com.footballer.rest.api.v2.vo.Team;
+import com.footballer.rest.api.v2.vo.TeamMatchResult;
 import com.footballer.rest.api.v2.vo.Tournament;
 import com.footballer.rest.api.v2.vo.TournamentMatch;
 import com.footballer.rest.api.v2.vo.TournamentMatchSchedule;
 import com.footballer.rest.api.v2.vo.Video;
 import com.footballer.util.ObjectUtil;
 import com.utils.restful.YoukuClient;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Path("/mobile/v2/tournament-service")
 public class TournamentService {
@@ -701,6 +703,17 @@ public class TournamentService {
 		JsonResponse response = new JsonResponse();
 		tMgr.updateTournamentMatchById(request);
 		response.setStatus(JsonResponse.SUCCESS);
+		return response;
+	}
+	
+	@POST
+	@Path("/saveMatchResultScore/{identity}/{appId}/{apptoken}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public JsonResponse saveMatchResultScore(SaveMatchResultScoreRequest request) {
+		List<TeamMatchResult> list = request.getList();
+		Long tournamentMatchId = request.getTournamentMatchId();
+		JsonResponse response = new JsonResponse();
+		tMgr.saveMatchResultScore(list, tournamentMatchId);
 		return response;
 	}
 	

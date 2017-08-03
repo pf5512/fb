@@ -113,12 +113,12 @@
 							<span style="font-size: 12px;">{{schedule_no_opponent}}</span>
 						</div>
 					</li>
-					<li class="ui-col ui-flex-pack-center"
+					<li class="ui-col ui-flex-pack-center" v-on:click="selectScore"
 						style="width: 40%; text-align: center; padding: 5px 0px 5px 0px">
 						<div style="display: inline-flex;">
 							<span
 								style="margin-top: 15px; font-size: 16px; background-color: darkseagreen; width: 5rem; display: inline-table; color: white;">
-								vs </span>
+								{{score}} </span>
 						</div>
 
 					</li>
@@ -179,7 +179,7 @@
 				    <li style="display: inline-block" v-for="i in matchList" v-on:click="clickRoundFooter($index)">
 						<span class="numberCircle">{{$index + 1}}</span>
 					</li>
-				</il>
+				</ul>
 
 		    </form>
 		</div>
@@ -400,6 +400,7 @@ $(document).ready(function() {
                     	location.href = mobilePath + 'schedule/leagueScheduleMatchEdit.html?tournamentId='+ navigateParams
 	    			},
 	    			selectScore : function() {
+	    				var that = this
 	    				weui.picker(maxScoreList, maxScoreList, {
 	    				             defaultValue: ['0', '0'],
 	    				             onChange: function (result) {
@@ -407,6 +408,7 @@ $(document).ready(function() {
 	    				             },
 	    				             onConfirm: function (result) {
 	    				                 vm.$data.score = result[0] + ' : ' + result[1]
+	    				                 that.saveScore()
 	    				             },
 	    				             id: 'score'
 	    				         })
@@ -437,7 +439,7 @@ $(document).ready(function() {
 
 		    		startMatch : function() {
 		    			vm.$data.isStartMatch = true
-		    			if (vm.$data.startDate == null || vm.$data.field == null || vm.$data.score == null) {
+		    			if (vm.$data.startDate == null || vm.$data.field == null) {
 		    				weui.topTips('Fill in all fields!', 3000)
 		    				return
 		    			}
@@ -452,17 +454,75 @@ $(document).ready(function() {
 		    			})
 		    		},
 		    		
+		    		saveScore : function() {
+		    			var matchItem = vm.$data.matchItem
+		    			
+		    			//parse score
+		    			// 1. No opponent should be filtered
+		    			// 2. parse score to build data structure
+		    			if (matchItem.guestTeamId == null || matchItem.hostTeamId == null) {
+		    				weui.topTips("Score can't be updated when No opponent!", 3000)
+		    				this.score = '0 : 0'
+		    				return
+		    			}
+		    			
+		    			$('.ui-loading-block').addClass("show")
+		    			
+		    			var scoreList = vm.$data.score.split(':'),
+		    				tournamentMatchId = matchItem.id,
+		    				hostScore =  parseInt(scoreList[0], 10),
+		    				guestScore = parseInt(scoreList[1], 10),
+		    				hostPoint,
+		    				guestPoint
+	    				
+	    				hostPoint  = hostScore == guestScore ? 1 : (hostScore > guestScore ? 3 : 1)
+	    				guestPoint = hostScore == guestScore ? 1 : (hostScore < guestScore ? 3 : 1)
+	    						
+		    			var TeamMatchResultList = [
+			    			{
+			    				tournamentMatchId : matchItem.id,
+			    				teamId : matchItem.hostTeamId,
+			    				points : hostPoint,
+			    				goals  : hostScore
+			    			},
+			    			{
+				    			tournamentMatchId : matchItem.id,
+				    			teamId : matchItem.guestTeamId,
+				    			points : guestPoint,
+				    			goals  : guestScore
+				    		}]
+		    			
+		    			f$.saveMatchResultScore(vm.$data.domain,vm.$data.suffix, {
+		    				tournamentMatchId : tournamentMatchId,
+		    				list  : TeamMatchResultList
+		    			}).done(function() {
+		    				weui.toast('Success!', 3000);
+		    				$('.ui-loading-block').removeClass("show")
+		    			})
+		    		},
+		    		
 		    		preRoundBtn : function() {
 	    				var length = vm.$data.matchList.length
 	    				    currentIndex = vm.$data.currentIndex - 1,
 	    					index = currentIndex < 0 ? length - 1 : currentIndex
+	    							
+	    				this.startDate = null
+	    				this.endDate = null
+	    				this.field = null
+	    				this.score = '0 : 0'
 	    						
 	    				this.clickRoundFooter(index)
 	    			},
 	    			nextRoundBtn : function() {
 	    				var length = vm.$data.matchList.length
     				    	currentIndex = (vm.$data.currentIndex + 1) % length
-	    				this.clickRoundFooter(currentIndex)
+    	    			
+    				    this.startDate = null
+    	    			this.endDate = null
+    	    			this.field = null
+    	    			this.score = '0 : 0'
+	    				
+    	    			this.clickRoundFooter(currentIndex)
 	    			},
 	    			clickRoundFooter : function(index) {
     					var matchItem = vm.$data.matchList[index]

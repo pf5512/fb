@@ -1661,6 +1661,32 @@
     	</foreach>  
   </insert>
   
+  <insert id="insertMatchTeamResultTwoTeams" parameterType="ArrayList">
+  	insert into match_team_result (tournament_match_id, team_id, points, goals)
+  	values
+  		<foreach collection="list" item="item" index="index" separator=",">  
+       		(
+	    		#{item.tournamentMatchId,jdbcType=INTEGER},
+	    		#{item.teamId,jdbcType=INTEGER},
+	    		#{item.points,jdbcType=INTEGER},
+	    		#{item.goals,jdbcType=INTEGER}
+     		)  
+    	</foreach>
+  </insert>
+  
+  <update id="updateMatchTeamResultOneTeam" parameterType="com.footballer.rest.api.v2.vo.TeamMatchResult">
+  	update match_team_result
+  	set points = #{points},
+  	    goals = #{goals}
+  	where tournament_match_id = #{tournamentMatchId}
+  	  and team_id = #{teamId}
+  </update>
+  
+  <select id="selectMatchResultByMatchId" resultType="int">
+  	select count(1) from match_team_result
+  	where tournament_match_id = #{tournamentMatchId}
+  </select>
+  
    <insert id="saveTournamentMatchTeamStatistics"  parameterType="ArrayList">
    	insert into match_team_result (tournament_match_id,team_id,points,goals,conceded,loose_possession,distance_coverd,long_shot,shots,shots_on_target,pass_finalball,assists,fouls,tackles,block,key_defense,pass,long_pass,pass_completed,yellow_card,red_card,offside,save,own_goals)
    	values 

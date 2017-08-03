@@ -607,6 +607,34 @@ public class TournamentManager {
 		return mybatisBaseDao.update("updateTournamentMatchById", tournamentMatch);
 	}
 	
+	/**
+	 * Insert or update match score
+	 * @param list
+	 * @param tournamentMatchId
+	 */
+	public void saveMatchResultScore(List<TeamMatchResult> list, Long tournamentMatchId) {
+		Integer count = selectMatchResultByMatchId(tournamentMatchId);
+		if (count >= 1) { // already inserted
+			updateMatchTeamResultOneTeam(list);
+		} else {
+			insertMatchTeamResultTwoTeams(list);
+		}
+	}
+	
+	public Integer selectMatchResultByMatchId(Long tournamentMatchId) {
+		return (Integer)mybatisBaseDao.selectOne("selectMatchResultByMatchId", tournamentMatchId);
+	}
+	
+	public int insertMatchTeamResultTwoTeams(List<TeamMatchResult> list) {
+		return mybatisBaseDao.insert("insertMatchTeamResultTwoTeams", list);
+	}
+	
+	public void updateMatchTeamResultOneTeam(List<TeamMatchResult> list) {
+		for (TeamMatchResult teamMatchResult : list) {
+			mybatisBaseDao.update("updateMatchTeamResultOneTeam", teamMatchResult);
+		}
+	}
+	
 	public static void main(String[] args) {
 		Video video = new Video();
 		video.setTournamentId(1L);
