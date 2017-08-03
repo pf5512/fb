@@ -143,11 +143,21 @@
 				
 				<div class="ui-form ui-border-t">
 				    <form action="#">
+				    
+				    	<div class="ui-form-item ui-border-b">
+				            <label>
+				                比赛比分
+				            </label>
+				            <input id="score" type="text" v-model="score" v-on:click="selectScore">
+				            <a href="#" class="ui-icon-close">
+				            </a>
+				        </div>
+				        
 				        <div class="ui-form-item ui-border-b">
 				            <label>
 				                开始日期
 				            </label>
-				            <input id="startDate" type="text" v-on:click="selectStartDate">
+				            <input id="startDate" type="text" v-model="startDate" v-on:click="selectStartDate">
 				            <a href="#" class="ui-icon-close">
 				            </a>
 				        </div>
@@ -155,16 +165,16 @@
 				            <label>
 				                结束日期
 				            </label>
-				            <input id="endDate" type="text" v-on:click="selectEndDate">
+				            <input id="endDate" type="text" v-model="endDate" v-on:click="selectEndDate">
 				            <a href="#" class="ui-icon-close">
 				            </a>
 				        </div>
 				        <div class="ui-form-item ui-border-b">
 				            <label>
-				                选择场地
+				                场地
 				            </label>
-				            <input type="text" id="field" v-on:click="selectField">
-				            <a href="#" class="ui-icon-close" v-on:click="selectField">
+				            <input type="text" id="field" v-model="field">
+				            <a href="#" class="ui-icon-close">
 				            </a>
 				        </div>
 				        
@@ -205,23 +215,50 @@
 <script src="../../../js/jquery.i18n.properties-min-1.2.2.js" type="text/javascript" ></script>
 <script src="../../js/iscroll.min.js"></script>
 <script src="../../js/drawer.min.js"></script>
+<!--  
 <script src="../../js/weui.min.js"></script>
+-->
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.1/weui.min.js"></script>
+
 <script src="../../js/lib/anime.min.js"></script>
 
 
-<script>
+<script type="text/javascript" charset="utf-8">
+
+/**
+ *
+ * tournament_match
+	1. time： 比赛时间
+	2. 增加一列存储比赛场地
+
+match_team_result
+	1. 比赛比分
+ /
 
 h5Init()
 
 $(document).ready(function() {
 	
     		var vm,
-			lang = f$.cache('lang'),
-	    	tournamentId = getParameter(window.location.href ,"tournamentId"),
-	    	roundSize = getParameter(window.location.href ,"roundSize"),
-	    	currentIndex = getParameter(window.location.href ,"currentIndex"),
-	    	roundNumber = getParameter(window.location.href ,"roundNumber"),
-	    	urlLang = getParameter(window.location.href ,"lang") 
+				lang = f$.cache('lang'),
+		    	tournamentId = getParameter(window.location.href ,"tournamentId"),
+		    	roundSize = getParameter(window.location.href ,"roundSize"),
+		    	currentIndex = getParameter(window.location.href ,"currentIndex"),
+		    	roundNumber = getParameter(window.location.href ,"roundNumber"),
+		    	urlLang = getParameter(window.location.href ,"lang"),
+		    	scoreFun = function(max) {
+    				var scoreList = []
+    				for (var i=0; i<max; i++) {
+    					scoreList.push({
+    						label : i,
+    						value : i
+    					})		
+    				}
+    				return scoreList
+    			},
+    			maxScoreList = scoreFun(30)
+		    	
+	    	
 	    	if(urlLang){
 	    		lang = urlLang
 	    		f$.cache('lang', urlLang)
@@ -249,8 +286,11 @@ $(document).ready(function() {
     		    	roundSize : null,
     		    	currentIndex : null,
     		    	roundNumber : null,
-    		    	matchList : []
-
+    		    	matchList : [],
+    		    	startDate : null,
+    		    	endDate : null,
+    		    	field : null,
+    		    	score : null
 	    		},
 	    		methods: {
 	    			init:function() {
@@ -359,136 +399,50 @@ $(document).ready(function() {
                     	
                     	location.href = mobilePath + 'schedule/leagueScheduleMatchEdit.html?tournamentId='+ navigateParams
 	    			},
+	    			selectScore : function() {
+	    				weui.picker(maxScoreList, maxScoreList, {
+	    				             defaultValue: ['0', '0'],
+	    				             onChange: function (result) {
+	    				                 console.log(result);
+	    				             },
+	    				             onConfirm: function (result) {
+	    				                 vm.$data.score = result[0] + ' : ' + result[1]
+	    				             },
+	    				             id: 'score'
+	    				         })
+	    			},
 	    			selectStartDate : function() {
 	    				weui.datePicker({
-	    				    start: 1990,
-	    				    end: 2000,
-	    				    defaultValue: [1991, 6, 9],
-	    				    onChange: function(result){
-	    				        console.log(result);
-	    				    },
+	    				    start: new Date(),
+	    				    end: 2020,
 	    				    onConfirm: function(result){
 	    				        console.log(result);
+	    				        var value = result[0].value + '-' + result[1].value + '-' + result[2].value
+	    				        vm.$data.startDate = value
 	    				    },
 	    				    id: 'startDate'
 	    				});
 	    			},
 	    			selectEndDate : function() {
 	    				weui.datePicker({
-	    				    start: 1990,
-	    				    end: 2000,
-	    				    defaultValue: [1991, 6, 9],
-	    				    onChange: function(result){
-	    				        console.log(result);
-	    				    },
+	    				    start: new Date(),
+	    				    end: 2020,
 	    				    onConfirm: function(result){
-	    				        console.log(result);
+	    				    	var value = result[0].value + '-' + result[1].value + '-' + result[2].value
+	    				        vm.$data.endDate = value
 	    				    },
 	    				    id: 'endDate'
 	    				});
 	    			},
-	    			selectField : function() {
-	    				// 单列picker
-	    				weui.picker([
-	    				{
-	    				    label: '第1场地',
-	    				    value: 0,
-	    				    disabled: true // 不可用
-	    				},
-	    				{
-	    				    label: '第2场地',
-	    				    value: 1
-	    				},
-	    				{
-	    				    label: '第3场地',
-	    				    value: 3
-	    				},
-	    				{
-	    				    label: '第4场地',
-	    				    value: 4,
-	    				}
-	    				], {
-	    				   className: 'custom-classname',
-	    				   defaultValue: [3],
-	    				   onChange: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   onConfirm: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   id: 'singleLinePicker'
-	    				});
-	    				return false;
-	    			},
-	    			changeHostScore : function() {
-		    			// 单列picker
-	    				weui.picker([
-	    				{
-	    				    label: '0',
-	    				    value: 0,
-	    				    disabled: true // 不可用
-	    				},
-	    				{
-	    				    label: '1',
-	    				    value: 1
-	    				},
-	    				{
-	    				    label: '2',
-	    				    value: 3
-	    				},
-	    				{
-	    				    label: '3',
-	    				    value: 4,
-	    				}
-	    				], {
-	    				   className: 'custom-classname',
-	    				   defaultValue: [3],
-	    				   onChange: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   onConfirm: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   id: 'hostScore'
-	    				});
-		    			return false;
-		    		},
-		    		
-		    		changeGuestScore : function() {
-		    			// 单列picker
-	    				weui.picker([
-	    				{
-	    				    label: '0',
-	    				    value: 0,
-	    				    disabled: true // 不可用
-	    				},
-	    				{
-	    				    label: '1',
-	    				    value: 1
-	    				},
-	    				{
-	    				    label: '2',
-	    				    value: 3
-	    				},
-	    				{
-	    				    label: '3',
-	    				    value: 4,
-	    				}
-	    				], {
-	    				   className: 'custom-classname',
-	    				   defaultValue: [3],
-	    				   onChange: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   onConfirm: function (result) {
-	    				       console.log(result)
-	    				   },
-	    				   id: 'hostScore'
-	    				});
-	    				return false;
-		    		},
+
 		    		startMatch : function() {
 		    			vm.$data.isStartMatch = true
+		    			if (vm.$data.startDate == null || vm.$data.endDate == null 
+		    					|| vm.$data.field == null || vm.$data.score == null) {
+		    				weui.topTips('请填写完整信息', 3000)
+		    				return
+		    			}
+		    			
 		    		},
 		    		
 		    		preRoundBtn : function() {
