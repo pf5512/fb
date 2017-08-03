@@ -694,6 +694,15 @@ public class TournamentService {
 		return response;
 	}
 	
+	@POST
+	@Path("/updateTournamentMatchById/{identity}/{appId}/{apptoken}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public JsonResponse updateTournamentMatchById(TournamentMatch request) {
+		JsonResponse response = new JsonResponse();
+		tMgr.updateTournamentMatchById(request);
+		response.setStatus(JsonResponse.SUCCESS);
+		return response;
+	}
 	
 	@POST
 	@Path("/getThumbnailByUrl/{identity}/{appId}/{apptoken}")

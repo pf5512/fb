@@ -2,8 +2,11 @@ package com.footballer.rest.api.v2.vo;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.springframework.util.StringUtils;
 
+import com.footballer.adapter.DateAdapter;
 import com.footballer.util.DateUtil;
 
 public class TournamentMatch {
@@ -29,6 +32,9 @@ public class TournamentMatch {
 	
 	private Long matchScheduleId;
 	private Integer round;
+	private String areana;
+	@XmlJavaTypeAdapter(DateAdapter.class)
+	private Date startDate;
 	
 	public String getDisplayName() {
 		StringBuffer buffer = new StringBuffer();
@@ -153,6 +159,18 @@ public class TournamentMatch {
 	}
 	public void setRound(Integer round) {
 		this.round = round;
+	}
+	public String getAreana() {
+		return areana;
+	}
+	public void setAreana(String areana) {
+		this.areana = areana;
+	}
+	public Date getStartDate() {
+		return this.time;
+	}
+	public void setStartDate(Date startDate) {
+		this.time = startDate;
 	}
 	
 }

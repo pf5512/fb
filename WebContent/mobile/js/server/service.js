@@ -695,6 +695,17 @@ var FService = (function() {
 		})
 	}
 	
+	Service.updateTournamentMatchById = function(domain, suffix, param) {
+		var  url = domain + v2 + '/tournament-service/updateTournamentMatchById/' + suffix
+		return $.ajax({
+			url : url,
+			data : JSON.stringify(param),
+			contentType : 'application/json;charset=utf8',
+			type : 'post',
+			dataType : 'json'
+		})
+	}
+	
 	Service.deleteTournamentTeamById = function(domain, suffix, param) {
 		var  url = domain + v2 + '/tournament-service/deleteTournamentTeamById/' + suffix
 		return $.ajax({

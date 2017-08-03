@@ -45,7 +45,7 @@
 	<div id="app" v-cloak>
     	<header class="ui-header ui-header-positive ui-border-b">
      	    <i class="ui-icon-return" onclick="historyBack('football')"></i>   	
-    		<center>联赛赛程编辑</center>
+    		<center>{{schedule_league_edit}}</center>
             <button id="langBtn" class="ui-btn" v-on:click="toggleLanguage">{{changeToLang}}</button>	
         </header>
         
@@ -62,7 +62,7 @@
 			    		<span class="fs12" style="color: darkgrey;">{{lableDate}}: &nbsp;{{tournament.tournamentDate}}</span>
 			    	</div>
 			    	<div>
-			    		<span class="fs14"><i>Round: </i><b style="color:deepskyblue;">{{roundNumber}}</b></span>,
+			    		<span class="fs14"><i>{{schedule_match_round}}: </i><b style="color:deepskyblue;">{{roundNumber}}</b></span>,
 			    		<span class="fs14"><b style="color:green">{{matchList.length}}</b>&nbsp;<i>Match(es)</i></span>
 			    	</div>
 			    	<div><img v-bind:src="tournament.tournamentOrgLogo" style="width:33.13px; height:20.19px; float: left;"><span class="fs12 pl5">{{tournamentOrgName}}</span></div>
@@ -78,7 +78,7 @@
 					</button>
 					
 					<div style="margin: auto;">
-						<span>Match : </span><span id="topRoundNumber" style="background: #64bd63" class="numberCircle"> {{currentIndex + 1}}</span>
+						<span>{{schedule_match_match}} : </span><span id="topRoundNumber" style="background: #64bd63" class="numberCircle"> {{currentIndex + 1}}</span>
 					</div>
 					
 
@@ -110,7 +110,7 @@
 							<span style="font-size: 12px;">{{matchItem.hostTeamLabel}}</span>
 						</div>
 						<div v-else class="font_long_ellipsis">
-							<span style="font-size: 12px;">轮空</span>
+							<span style="font-size: 12px;">{{schedule_no_opponent}}</span>
 						</div>
 					</li>
 					<li class="ui-col ui-flex-pack-center"
@@ -136,7 +136,7 @@
 							<span style="font-size: 12px;">{{matchItem.guestTeamLabel}}</span>
 						</div>
 						<div v-else class="font_long_ellipsis">
-							<span style="font-size: 12px;">轮空</span>
+							<span style="font-size: 12px;">{{schedule_no_opponent}}</span>
 						</div>
 					</li>
 				</ul>
@@ -146,7 +146,7 @@
 				    
 				    	<div class="ui-form-item ui-border-b">
 				            <label>
-				                比赛比分
+				                {{schedule_match_score}}
 				            </label>
 				            <input id="score" type="text" v-model="score" v-on:click="selectScore">
 				            <a href="#" class="ui-icon-close">
@@ -155,23 +155,16 @@
 				        
 				        <div class="ui-form-item ui-border-b">
 				            <label>
-				                开始日期
+				                {{schedule_match_date}}
 				            </label>
 				            <input id="startDate" type="text" v-model="startDate" v-on:click="selectStartDate">
 				            <a href="#" class="ui-icon-close">
 				            </a>
 				        </div>
+				        
 				        <div class="ui-form-item ui-border-b">
 				            <label>
-				                结束日期
-				            </label>
-				            <input id="endDate" type="text" v-model="endDate" v-on:click="selectEndDate">
-				            <a href="#" class="ui-icon-close">
-				            </a>
-				        </div>
-				        <div class="ui-form-item ui-border-b">
-				            <label>
-				                场地
+				                {{schedule_match_areana}}
 				            </label>
 				            <input type="text" id="field" v-model="field">
 				            <a href="#" class="ui-icon-close">
@@ -194,7 +187,7 @@
 	   
 	   <div v-on:click="createEvent" class="ui-btn-wrap">
 		    <button class="ui-btn-lg ui-btn-primary" v-on:click="startMatch">
-		      开始比赛
+		     {{schedule_match_save}}
 		    </button>
 		</div>	
 
@@ -224,17 +217,6 @@
 
 
 <script type="text/javascript" charset="utf-8">
-
-/**
- *
- * tournament_match
-	1. time： 比赛时间
-	2. 增加一列存储比赛场地
-
-match_team_result
-	1. 比赛比分
- /
-
 h5Init()
 
 $(document).ready(function() {
@@ -290,7 +272,17 @@ $(document).ready(function() {
     		    	startDate : null,
     		    	endDate : null,
     		    	field : null,
-    		    	score : null
+    		    	score : '0 : 0',
+    		    	
+    		    	//label
+    		    	schedule_match_match  : '',
+    		    	schedule_match_round  : '',
+    		    	schedule_league_edit  : '',
+    		    	schedule_no_opponent  : '',
+    		    	schedule_match_score  : '',
+    		    	schedule_match_date   : '',
+    		    	schedule_match_areana : '',
+    		    	schedule_match_save   : ''
 	    		},
 	    		methods: {
 	    			init:function() {
@@ -331,6 +323,14 @@ $(document).ready(function() {
 	    	    		    	vm.$data.labelTeams =  $.i18n.prop('teams');
 	    	    		    	vm.$data.labelPlayers =  $.i18n.prop('players');
 	    	    		    	vm.$data.lableDate = $.i18n.prop('date');
+	    	    		    	vm.$data.schedule_match_match = $.i18n.prop('schedule_match_match')
+	    	    		    	vm.$data.schedule_match_round = $.i18n.prop('schedule_match_round')
+	    	    		    	vm.$data.schedule_league_edit = $.i18n.prop('schedule_league_edit')
+	    	    		    	vm.$data.schedule_no_opponent = $.i18n.prop('schedule_no_opponent')
+	    	    		    	vm.$data.schedule_match_score = $.i18n.prop('schedule_match_score')
+	    	    		    	vm.$data.schedule_match_date  = $.i18n.prop('schedule_match_date')
+	    	    		    	vm.$data.schedule_match_areana  = $.i18n.prop('schedule_match_areana')
+	    	    		    	vm.$data.schedule_match_save  = $.i18n.prop('schedule_match_save')
 	    	    		    }
 	    	    		});
 	    			},
@@ -437,12 +437,19 @@ $(document).ready(function() {
 
 		    		startMatch : function() {
 		    			vm.$data.isStartMatch = true
-		    			if (vm.$data.startDate == null || vm.$data.endDate == null 
-		    					|| vm.$data.field == null || vm.$data.score == null) {
-		    				weui.topTips('请填写完整信息', 3000)
+		    			if (vm.$data.startDate == null || vm.$data.field == null || vm.$data.score == null) {
+		    				weui.topTips('Fill in all fields!', 3000)
 		    				return
 		    			}
-		    			
+		    			$('.ui-loading-block').addClass("show")
+		    			f$.updateTournamentMatchById(vm.$data.domain,vm.$data.suffix, {
+		    				id         : vm.$data.matchItem.id,
+		    				startDate  : vm.$data.startDate + ":00:00",
+		    				areana     : vm.$data.field
+		    			}).done(function() {
+		    				weui.toast('Success!', 3000);
+		    				$('.ui-loading-block').removeClass("show")
+		    			})
 		    		},
 		    		
 		    		preRoundBtn : function() {

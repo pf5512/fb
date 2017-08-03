@@ -1,0 +1,1 @@
+alter table tournament_match add areana VARCHAR(100);

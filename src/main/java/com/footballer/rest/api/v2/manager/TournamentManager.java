@@ -602,7 +602,10 @@ public class TournamentManager {
 		video.setDate(date);
 		return  mybatisBaseDao.update("updateVideoInfo", video);
 	}
-
+	
+	public int updateTournamentMatchById(TournamentMatch tournamentMatch) {
+		return mybatisBaseDao.update("updateTournamentMatchById", tournamentMatch);
+	}
 	
 	public static void main(String[] args) {
 		Video video = new Video();

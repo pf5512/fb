@@ -52,6 +52,7 @@
     <result column="videoUrl" property="videoUrl" jdbcType="VARCHAR" />
     <result column="match_schedule_id" property="matchScheduleId" jdbcType="INTEGER" />
     <result column="round" property="round" jdbcType="INTEGER" />
+    <result column="areana" property="areana" jdbcType="VARCHAR" />
   </resultMap>
   
   <resultMap id="TournamentTeamBaseInfoResultMap" type="com.footballer.rest.api.v2.vo.TournamentTeamBaseInfo" >
@@ -913,6 +914,13 @@
      	)
      ]]>
   </insert>
+  
+  <update id="updateTournamentMatchById" parameterType="com.footballer.rest.api.v2.vo.TournamentMatch">
+  	update tournament_match
+  	set time = #{time},
+  	    areana = #{areana}
+  	where id = #{id}
+  </update>
   
   <update id="updateTournament" parameterType="com.footballer.rest.api.v2.vo.Tournament">
     update tournament
